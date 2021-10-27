@@ -3,7 +3,7 @@ from django.http import HttpResponse
 
 
 def index(request):
-    return HttpResponse("Go to <a href='https://beta.yourvisionnow.com/kiosk'>Kiosk</a>")
+    return HttpResponse("Go to <a href='./kiosk'>Kiosk</a>")
 
 
 def kiosk(request):

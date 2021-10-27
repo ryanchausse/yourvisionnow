@@ -15,10 +15,9 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import include, path
-from kiosk import views as kioskviews
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('kiosk/', include('kiosk.urls'), name='kiosk'),
-    path('', kioskviews.index, name='index'),
+    path('accounts/', include('allauth.urls')),
+    path('', include('kiosk.urls'), name='index'),
 ]
