@@ -116,5 +116,5 @@ GitHub.sublime-settings
 !.vscode/extensions.json 
 .history
 
-# Additional ignored items
+# Additional ignored items (removed from repo via git rm --cached <filename>
 yourvisionnow/settings.py
