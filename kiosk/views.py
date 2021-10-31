@@ -9,8 +9,11 @@ def index(request):
                         <br /> or Log Out <a href="./accounts/logout">Here</a>.')
 
 
-def kiosk(request):
-    return HttpResponse("Kiosk app - Your Vision Now")
+class Kiosk(TemplateView):
+    """
+    Simplified Kiosk mode
+    """
+    template_name = 'kiosk.html'
 
 
 class WelcomePage(TemplateView):

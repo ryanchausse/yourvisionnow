@@ -19,6 +19,6 @@ from . import views
 
 urlpatterns = [
     path('', views.WelcomePage.as_view(), name='index'),
-    path('kiosk/', views.kiosk, name='kiosk'),
+    path('kiosk/', views.Kiosk.as_view(), name='kiosk'),
 
 ]
