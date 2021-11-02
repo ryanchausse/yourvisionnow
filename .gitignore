@@ -118,3 +118,4 @@ GitHub.sublime-settings
 
 # Additional ignored items (removed from repo via git rm --cached <filename>
 yourvisionnow/settings.py
+.env
