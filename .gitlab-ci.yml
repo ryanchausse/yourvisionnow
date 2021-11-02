@@ -3,7 +3,7 @@
 # The test CI/CD variables MYSQL_DB, MYSQL_USER and MYSQL_PASS can be set in the project settings at:
 #     Settings --> CI/CD --> Variables
 #
-# The Django settings in settings.py, used in tests, might look similar to :
+# The Django settings in settings.py, used in tests, might look similar to:
 #
 #  DATABASES = {
 #      'default': {
