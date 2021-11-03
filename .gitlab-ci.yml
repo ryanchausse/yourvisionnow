@@ -57,7 +57,7 @@ test_ssh:
   - ls -la ~/.ssh
   - cat /etc/ssh/ssh_config
   - cat /etc/ssh/sshd_config
-  - ssh -vvv -i ~/.ssh/id_rsa -o "HostKeyAlgorithms +sk-ecdsa-sha2-nistp256@openssh.com" root@ryanchausse.com "ls -la"
+  - ssh -vvv -i ~/.ssh/id_rsa root@beta.yourvisionnow.com "ls -la"
 
 run_migrations:
   stage: initialize
