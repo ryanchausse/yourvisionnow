@@ -17,7 +17,7 @@ default:
   before_script:
     - apt -y update
     - apt -y install apt-utils
-    - apt -y install net-tools python3.8 python3-pip postgresql openssh-server openssh-client
+    - apt -y install net-tools python3.8 python3-pip postgresql openssh-server openssh-client git
     - apt -y upgrade
     - pip3 install -r requirements.txt
     - 'which ssh-agent || ( apt-get update -y && apt-get install openssh-client git -y )'
