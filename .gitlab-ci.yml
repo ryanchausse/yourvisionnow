@@ -55,7 +55,8 @@ test_ssh:
   - echo "$SSH_PRIVATE_KEY" > ~/.ssh/id_rsa
   - chmod 0600 ~/.ssh/id_rsa
   - ls -la ~/.ssh
-  - ssh -vvvv -i ~/.ssh/id_rsa root@ryanchausse.com "ls -la"
+  - - '[[ -f /.dockerenv ]] && echo -e "Host *\n\tStrictHostKeyChecking no\n\n" > ~/.ssh/config'
+  - ssh -vvv -i ~/.ssh/id_rsa -o "HostKeyAlgorithms +sk-ecdsa-sha2-nistp256@openssh.com" root@ryanchausse.com "ls -la"
 
 run_migrations:
   stage: initialize
