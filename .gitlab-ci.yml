@@ -8,14 +8,14 @@ variables:
 default:
   image: ubuntu:20.04
   services:
-    - mysql:8.0
+    - postgres:12.2-alpine
   cache:
     paths:
       - ~/.cache/pip/
   before_script:
     - apt -y update
     - apt -y install apt-utils
-    - apt -y install net-tools python3.8 python3-pip mysql-client libmysqlclient-dev
+    - apt -y install net-tools python3.8 python3-pip postgresql
     - apt -y upgrade
     - pip3 install -r requirements.txt
     - 'which ssh-agent || ( apt-get update -y && apt-get install openssh-client git -y )'
@@ -28,45 +28,45 @@ default:
     - git config --global user.email "chausse@gmail.com"
     - git config --global user.name "Ryan Chausse"
 
-Test SSH:
+connect_to_postgres:
+  image: postgres
+  script:
+  # official way to provide password to psql: http://www.postgresql.org/docs/9.3/static/libpq-envars.html
+  - export PGPASSWORD=$POSTGRES_PASSWORD
+  - psql -h "postgres" -U "$POSTGRES_USER" -d "$POSTGRES_DATABASE" -c "SELECT 'OK' AS status;"
+
+stages:
+  - initialize
+  - build
+  - test
+  - deploy
+
+test_ssh:
+  stage: initialize
   script:
   - echo 'try to connect to beta.yourvisionnow.com'
   - ssh root@ryanchausse.com
 
-migrations:
-  stage: build
+run_migrations:
+  stage: initialize
   script:
     - python3 manage.py makemigrations
     - python3 manage.py migrate
     - python3 manage.py check
 
-
-django-tests:
-  stage: test
-  script:
-    - echo "GRANT ALL on *.* to '${MYSQL_USER}';"| mysql -u root --password="${MYSQL_ROOT_PASSWORD}" -h mysql
-    - python3 manage.py test
-
-
-stages:
-  - build
-  - test
-
-build-code-job:
+build_app:
   stage: build
   script:
-    - echo "Check the ruby version, then build some Ruby project files:"
-    - ruby -v
-    - rake
+    - echo "Build the Django application"
+    - cwd
 
-test-code-job1:
+django_test:
   stage: test
   script:
-    - echo "If the files are built successfully, test some files with one command:"
-    - rake test1
+    - echo "Running tests..."
+    - python3 manage.py test
 
-test-code-job2:
-  stage: test
+prod_deploy:
+  stage: deploy
   script:
-    - echo "If the files are built successfully, test other files with a different command:"
-    - rake test2
+    - echo "Deploy to prod server"
