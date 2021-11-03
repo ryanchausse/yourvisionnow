@@ -48,7 +48,9 @@ test_ssh:
   stage: initialize
   script:
   - echo 'try to connect to beta.yourvisionnow.com'
-  - ssh -i ~/.ssh/id_rsa root@ryanchausse.com "cwd"
+  - ls -la
+  - ls -la ~/.ssh
+  - ssh -i ~/.ssh/id_rsa root@ryanchausse.com "ls -la"
 
 run_migrations:
   stage: initialize
@@ -61,7 +63,7 @@ build_app:
   stage: build
   script:
     - echo "Build the Django application"
-    - cwd
+    - ls -la
 
 django_test:
   stage: test
