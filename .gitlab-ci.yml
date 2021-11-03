@@ -54,6 +54,8 @@ test_ssh:
   - pwd
   - echo "$SSH_PRIVATE_KEY" > ~/.ssh/id_rsa
   - chmod 0600 ~/.ssh/id_rsa
+  - ls -la ~/.ssh
+  - cat ~/.ssh/id_rsa
   - ssh -i ~/.ssh/id_rsa root@ryanchausse.com "ls -la"
 
 run_migrations:
