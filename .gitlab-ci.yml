@@ -50,7 +50,6 @@ test_ssh:
   - echo 'try to connect to beta.yourvisionnow.com'
   - ls -la
   - ls -la ~/.ssh
-  - ls -la ~/yourvisionnow
   - ssh-copy-id -i ~/.ssh/id_rsa root@ryanchausse.com
   - ssh -i ~/.ssh/id_rsa root@ryanchausse.com "ls -la"
 
