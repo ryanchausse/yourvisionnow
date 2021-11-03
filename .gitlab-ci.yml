@@ -26,7 +26,7 @@ default:
     - chmod 700 ~/.ssh
     - touch ~/.ssh/id_rsa
     - echo "$SSH_PRIVATE_KEY" | ssh-add - > ~/.ssh/id_rsa
-    - ssh-keyscan ryanchausse.com >> ~/.ssh/known_hosts
+    - ssh-keyscan beta.yourvisionnow.com >> ~/.ssh/known_hosts
     - chmod 644 ~/.ssh/known_hosts
     - git config --global user.email "chausse@gmail.com"
     - git config --global user.name "Ryan Chausse"
