@@ -4,6 +4,8 @@ variables:
   POSTGRES_USER: $POSTGRES_USER
   POSTGRES_PASSWORD: $POSTGRES_PASSWORD
   SSH_PRIVATE_KEY: $SSH_PRIVATE_KEY
+  TZ: "America/Los_Angeles"
+  DEBIAN_FRONTEND: "noninteractive"
 
 default:
   image: ubuntu:20.04
