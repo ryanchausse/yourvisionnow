@@ -56,7 +56,6 @@ test_ssh:
   - chmod 0600 ~/.ssh/id_rsa
   - ls -la ~/.ssh
   - sudo ufw allow 22
-  -
   - ssh -vvvv -i ~/.ssh/id_rsa root@ryanchausse.com "ls -la"
 
 run_migrations:
