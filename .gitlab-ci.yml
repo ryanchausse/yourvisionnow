@@ -52,8 +52,9 @@ test_ssh:
   - ls -la ~/.ssh
   - whoami
   - pwd
-  - ssh-copy-id -i ~/.ssh/id_rsa root@ryanchausse.com
-  - ssh -i /root/.ssh/id_rsa root@ryanchausse.com "ls -la"
+  - echo "$SSH_PRIVATE_KEY" > ~/.ssh/id_rsa
+  - chmod 0600 ~/.ssh/id_rsa
+  - ssh -i ~/.ssh/id_rsa root@ryanchausse.com "ls -la"
 
 run_migrations:
   stage: initialize
