@@ -48,7 +48,7 @@ test_ssh:
   stage: initialize
   script:
   - echo 'try to connect to beta.yourvisionnow.com'
-  - ssh root@ryanchausse.com
+  - ssh root@ryanchausse.com "cwd"
 
 run_migrations:
   stage: initialize
