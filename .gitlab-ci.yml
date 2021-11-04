@@ -3,9 +3,7 @@ variables:
   POSTGRES_DATABASE: $POSTGRES_DATABASE
   POSTGRES_USER: $POSTGRES_USER
   POSTGRES_PASSWORD: $POSTGRES_PASSWORD
-  SSH_PRIVATE_KEY: $SSH_PRIVATE_KEY
-  SSH_DEPLOY_PRIVKEY: $SSH_DEPLOY_PRIVKEY
-  SSH_DEPLOY_PUBKEY: $SSH_DEPLOY_PUBKEY
+  SSH_PRIVKEY_ROOT_BETA_YOURVISIONNOW_COM: $SSH_PRIVKEY_ROOT_BETA_YOURVISIONNOW_COM
   TZ: "America/Los_Angeles"
 
 default:
@@ -44,7 +42,7 @@ setup_docker_container_and_deploy:
     - chmod 700 ~/.ssh
     - touch ~/.ssh/id_rsa
     - echo 'Set beta.yourvisionnow.com privkey'
-    - echo "$SSH_PRIVATE_KEY" | ssh-add - > ~/.ssh/id_rsa
+    - echo "$SSH_PRIVKEY_ROOT_BETA_YOURVISIONNOW_COM" | ssh-add - > ~/.ssh/id_rsa
     - chmod 0600 ~/.ssh/id_rsa
     - ssh-keyscan beta.yourvisionnow.com >> ~/.ssh/known_hosts
     - chmod 644 ~/.ssh/known_hosts
@@ -53,8 +51,6 @@ setup_docker_container_and_deploy:
     - echo 'try to connect to beta.yourvisionnow.com'
     - ssh -i ~/.ssh/id_rsa root@beta.yourvisionnow.com
       "hostname;
-      echo 'Set public deploy key on beta.yourvisionnow.com to clone repo from code.ryanchausse.com';
-      grep $SSH_DEPLOY_PRIVKEY ~/.ssh/yourvisionnow/deploykeys/id_rsa || echo '$SSH_DEPLOY_PRIVKEY' >> ~/.ssh/yourvisionnow/deploykeys/id_rsa;
       ssh-keyscan code.ryanchausse.com >> ~/.ssh/known_hosts;
       chmod 644 ~/.ssh/known_hosts;
       git config --global user.email "chausse@gmail.com"
