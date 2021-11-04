@@ -14,6 +14,8 @@ default:
     paths:
       - ~/.cache/pip/
   before_script:
+    - export TZ=America/Los_Angeles
+    - export DEBIAN_FRONTEND=noninteractive
     - apt -y update
     - apt -y install apt-utils
     - apt -y install net-tools python3.8 python3-pip postgresql openssh-server openssh-client git
@@ -56,15 +58,17 @@ test_ssh:
   - ls -la ~/.ssh
   - cat /etc/ssh/ssh_config
   - cat /etc/ssh/sshd_config
+  - export TZ=America/Los_Angeles;
+  - export DEBIAN_FRONTEND=noninteractive;
   - ssh -vvv -i ~/.ssh/id_rsa root@beta.yourvisionnow.com "ls -la"
 
 run_migrations:
   stage: initialize
   script:
     - ssh -vvv -i ~/.ssh/id_rsa root@beta.yourvisionnow.com
-      - "hostname;
-      - export TZ=America/Los_Angeles;
+      - "export TZ=America/Los_Angeles;
       - export DEBIAN_FRONTEND=noninteractive;
+      - hostname;
       - cd /var/www;
       - apt -y update;
       - apt -y install apt-utils;
