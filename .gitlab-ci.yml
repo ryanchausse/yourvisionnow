@@ -58,8 +58,8 @@ setup_docker_container_and_deploy:
       chmod 644 ~/.ssh/known_hosts;
       echo 'Pulling yourvisionnow repo';
       cd /var/www;
-      git clone https://$USERNAME:$DEPLOY_TOKEN@code.ryanchausse.com:ryanchausse/yourvisionnow.git
-      chown -R www-data:www-data /var/www"
+      git clone https://$USERNAME:$DEPLOY_TOKEN@code.ryanchausse.com:ryanchausse/yourvisionnow.git;
+      chown -R www-data:www-data /var/www;"
 #    - python3 manage.py makemigrations
 #    - python3 manage.py migrate
 #    - python3 manage.py check
