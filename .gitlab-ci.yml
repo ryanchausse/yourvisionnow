@@ -62,9 +62,8 @@ setup_docker_container_and_deploy:
       virtualenv venv_yourvisionnow;
       source venv_yourvisionnow/bin/activate;
       pip3 install -r requirements.txt;
-      deactivate;
-      "
-#    - python3 manage.py makemigrations
-#    - python3 manage.py migrate
-#    - python3 manage.py check
-#    - python3 manage.py test
+      python3 manage.py makemigrations;
+      python3 manage.py migrate;
+      python3 manage.py check;
+      python3 manage.py test;
+      deactivate;"

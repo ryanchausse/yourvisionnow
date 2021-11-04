@@ -28,7 +28,7 @@ SECRET_KEY = 'django-insecure-n*e&=06f4!s@@9$g1(9wn&a&(795!-s5n6u#r1*+^pvitnyxf+
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['beta.yourvisionnow.com']
 
 
 # Application definition
