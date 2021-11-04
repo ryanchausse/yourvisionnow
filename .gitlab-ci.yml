@@ -56,8 +56,6 @@ setup_docker_container_and_deploy:
       "hostname;
       ssh-keyscan code.ryanchausse.com >> ~/.ssh/known_hosts;
       chmod 644 ~/.ssh/known_hosts;
-      git config --global user.email "chausse@gmail.com"
-      git config --global user.name "Ryan Chausse"
       echo 'Pulling yourvisionnow repo';
       cd /var/www;
       git clone https://$USERNAME:$DEPLOY_TOKEN@code.ryanchausse.com:ryanchausse/yourvisionnow.git
