@@ -3,7 +3,10 @@ variables:
   POSTGRES_DATABASE: $POSTGRES_DATABASE
   POSTGRES_USER: $POSTGRES_USER
   POSTGRES_PASSWORD: $POSTGRES_PASSWORD
-  SSH_PRIVKEY_ROOT_BETA_YOURVISIONNOW_COM: $SSH_PRIVKEY_ROOT_BETA_YOURVISIONNOW_COM
+  SSH_PRIVKEY_FOR_ROOT_YOURVISIONNOW_COM: $SSH_PRIVKEY_FOR_ROOT_YOURVISIONNOW_COM
+  USERNAME: $USERNAME
+  DEPLOY_TOKEN: $DEPLOY_TOKEN
+
   TZ: "America/Los_Angeles"
 
 default:
@@ -42,7 +45,7 @@ setup_docker_container_and_deploy:
     - chmod 700 ~/.ssh
     - touch ~/.ssh/id_rsa
     - echo 'Set beta.yourvisionnow.com privkey'
-    - echo "$SSH_PRIVKEY_ROOT_BETA_YOURVISIONNOW_COM" | ssh-add - > ~/.ssh/id_rsa
+    - echo "$SSH_PRIVKEY_FOR_ROOT_YOURVISIONNOW_COM" | ssh-add - > ~/.ssh/id_rsa
     - chmod 0600 ~/.ssh/id_rsa
     - ssh-keyscan beta.yourvisionnow.com >> ~/.ssh/known_hosts
     - chmod 644 ~/.ssh/known_hosts
@@ -57,7 +60,7 @@ setup_docker_container_and_deploy:
       git config --global user.name "Ryan Chausse"
       echo 'Pulling yourvisionnow repo';
       cd /var/www;
-      git clone git@code.ryanchausse.com:ryanchausse/yourvisionnow.git;
+      git clone https://$USERNAME:$DEPLOY_TOKEN@code.ryanchausse.com:ryanchausse/yourvisionnow.git
       chown -R www-data:www-data /var/www"
 #    - python3 manage.py makemigrations
 #    - python3 manage.py migrate
