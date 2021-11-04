@@ -61,17 +61,17 @@ test_ssh:
 run_migrations:
   stage: initialize
   script:
-    - ssh -vvv -i ~/.ssh/id_rsa root@beta.yourvisionnow.com "hostname;
-    -- echo 'testing second command';
-    -- cd /var/www
-    -- apt -y update
-    -- apt -y install apt-utils
-    -- apt -y install net-tools python3.8 python3-pip postgresql openssh-server openssh-client git
-    -- apt -y upgrade
-    -- git config --global user.email "chausse@gmail.com"
-    -- git config --global user.name "Ryan Chausse"
-    -- git pull git@code.ryanchausse.com:ryanchausse/yourvisionnow.git
-    - "
+    - ssh -vvv -i ~/.ssh/id_rsa root@beta.yourvisionnow.com
+      - "hostname;
+      - echo 'testing second command';
+      - cd /var/www;
+      - apt -y update;
+      - apt -y install apt-utils;
+      - apt -y install net-tools python3.8 python3-pip postgresql openssh-server openssh-client git;
+      - apt -y upgrade;
+      - git config --global user.email 'chausse@gmail.com';
+      - git config --global user.name 'Ryan Chausse';
+      - git pull git@code.ryanchausse.com:ryanchausse/yourvisionnow.git;"
 #    - python3 manage.py makemigrations
 #    - python3 manage.py migrate
 #    - python3 manage.py check
