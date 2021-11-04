@@ -48,8 +48,8 @@ setup_docker_container_and_deploy:
     - git config --global user.name "Ryan Chausse"
     - echo 'try to connect to beta.yourvisionnow.com'
     #- ssh -i ~/.ssh/id_rsa root@beta.yourvisionnow.com
-      "cd /var/www;
-      git clone https://$USERNAME:$DEPLOY_TOKEN@code.ryanchausse.com/ryanchausse/yourvisionnow.git;"
+    #  "cd /var/www;
+    #  git clone https://$USERNAME:$DEPLOY_TOKEN@code.ryanchausse.com/ryanchausse/yourvisionnow.git;"
     - ssh -i ~/.ssh/id_rsa root@beta.yourvisionnow.com
       "hostname;
       ssh-keyscan code.ryanchausse.com >> ~/.ssh/known_hosts;
