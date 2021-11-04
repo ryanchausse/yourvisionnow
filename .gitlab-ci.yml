@@ -52,7 +52,10 @@ setup_docker_container:
     - ssh -i ~/.ssh/id_rsa root@beta.yourvisionnow.com
       "hostname;
       echo 'Pulling yourvisionnow repo';
-      git pull git@code.ryanchausse.com:ryanchausse/yourvisionnow.git;"
+      mkdir /var/www;
+      mkdir /var/www/yourvisionnow;
+      git clone git@code.ryanchausse.com:ryanchausse/yourvisionnow.git;
+      chown -R www-data:www-data /var/www"
 #    - python3 manage.py makemigrations
 #    - python3 manage.py migrate
 #    - python3 manage.py check
