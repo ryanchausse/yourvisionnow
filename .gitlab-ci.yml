@@ -5,7 +5,6 @@ variables:
   POSTGRES_PASSWORD: $POSTGRES_PASSWORD
   SSH_PRIVATE_KEY: $SSH_PRIVATE_KEY
   TZ: "America/Los_Angeles"
-  DEBIAN_FRONTEND: "noninteractive"
 
 default:
   image: ubuntu:20.04
@@ -31,12 +30,12 @@ default:
     - git config --global user.email "chausse@gmail.com"
     - git config --global user.name "Ryan Chausse"
 
-connect_to_postgres:
-  image: postgres
-  script:
-  # official way to provide password to psql: http://www.postgresql.org/docs/9.3/static/libpq-envars.html
-  - export PGPASSWORD=$POSTGRES_PASSWORD
-  - psql -h "postgres" -U "$POSTGRES_USER" -d "$POSTGRES_DATABASE" -c "SELECT 'OK' AS status;"
+#connect_to_postgres:
+#  image: postgres
+#  script:
+#  # official way to provide password to psql: http://www.postgresql.org/docs/9.3/static/libpq-envars.html
+#  - export PGPASSWORD=$POSTGRES_PASSWORD
+#  - psql -h "postgres" -U "$POSTGRES_USER" -d "$POSTGRES_DATABASE" -c "SELECT 'OK' AS status;"
 
 stages:
   - initialize
@@ -62,9 +61,20 @@ test_ssh:
 run_migrations:
   stage: initialize
   script:
-    - python3 manage.py makemigrations
-    - python3 manage.py migrate
-    - python3 manage.py check
+    - ssh -vvv -i ~/.ssh/id_rsa root@beta.yourvisionnow.com "hostname;
+    -- echo 'testing second command';
+    -- cd /var/www
+    -- apt -y update
+    -- apt -y install apt-utils
+    -- apt -y install net-tools python3.8 python3-pip postgresql openssh-server openssh-client git
+    -- apt -y upgrade
+    -- git config --global user.email "chausse@gmail.com"
+    -- git config --global user.name "Ryan Chausse"
+    -- git pull git@code.ryanchausse.com:ryanchausse/yourvisionnow.git
+    - "
+#    - python3 manage.py makemigrations
+#    - python3 manage.py migrate
+#    - python3 manage.py check
 
 build_app:
   stage: build
