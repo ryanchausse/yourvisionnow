@@ -14,23 +14,7 @@ default:
     paths:
       - ~/.cache/pip/
   before_script:
-    - export TZ=America/Los_Angeles
-    - export DEBIAN_FRONTEND=noninteractive
-    - apt -y update
-    - apt -y install apt-utils
-    - apt -y install net-tools python3.8 python3-pip postgresql openssh-server openssh-client git
-    - apt -y upgrade
-    - pip3 install -r requirements.txt
-    - 'which ssh-agent || ( apt-get update -y && apt-get install openssh-client git -y )'
-    - eval $(ssh-agent -s)
-    - mkdir -p ~/.ssh
-    - chmod 700 ~/.ssh
-    - touch ~/.ssh/id_rsa
-    - echo "$SSH_PRIVATE_KEY" | ssh-add - > ~/.ssh/id_rsa
-    - ssh-keyscan beta.yourvisionnow.com >> ~/.ssh/known_hosts
-    - chmod 644 ~/.ssh/known_hosts
-    - git config --global user.email "chausse@gmail.com"
-    - git config --global user.name "Ryan Chausse"
+    - echo 'Doing things...'
 
 #connect_to_postgres:
 #  image: postgres
@@ -45,31 +29,40 @@ stages:
   - test
   - deploy
 
+setup_docker_container:
+  stage: initialize
+  script:
+    - export TZ=America/Los_Angeles
+    - export DEBIAN_FRONTEND=noninteractive
+    - apt -y update
+    - apt -y install apt-utils
+    - apt -y install net-tools python3.8 python3-pip postgresql openssh-server openssh-client git
+    - apt -y upgrade
+    - pip3 install -r requirements.txt
+    - 'which ssh-agent || ( apt-get update -y && apt-get install openssh-client git -y )'
+    - eval $(ssh-agent -s)
+    - mkdir -p ~/.ssh
+    - chmod 700 ~/.ssh
+    - touch ~/.ssh/id_rsa
+    - echo 'Set beta.yourvisionnow.com privkey'
+    - echo "$SSH_PRIVATE_KEY" | ssh-add - > ~/.ssh/id_rsa
+    - chmod 0600 ~/.ssh/id_rsa
+    - ssh-keyscan beta.yourvisionnow.com >> ~/.ssh/known_hosts
+    - chmod 644 ~/.ssh/known_hosts
+    - git config --global user.email "chausse@gmail.com"
+    - git config --global user.name "Ryan Chausse"
+
 test_ssh:
   stage: initialize
   script:
   - echo 'try to connect to beta.yourvisionnow.com'
-  - ls -la ~/.ssh
-  - whoami
-  - pwd
-  - echo "$SSH_PRIVATE_KEY" > ~/.ssh/id_rsa
-  - chmod 0600 ~/.ssh/id_rsa
-  - ls -la ~/.ssh
-  - ssh -v -i ~/.ssh/id_rsa root@beta.yourvisionnow.com "ls -la"
+  - ssh -v -i ~/.ssh/id_rsa root@beta.yourvisionnow.com "hostname"
 
 run_migrations:
   stage: initialize
   script:
     - ssh -i ~/.ssh/id_rsa root@beta.yourvisionnow.com
-      - "hostname;
-      - cd /var/www;
-      - apt -y update;
-      - apt -y install apt-utils;
-      - apt -y install net-tools python3.8 python3-pip postgresql openssh-server openssh-client git;
-      - apt -y upgrade;
-      - git config --global user.email 'chausse@gmail.com';
-      - git config --global user.name 'Ryan Chausse';
-      - echo 'Pulling yourvisionnow repo';
+      - "echo 'Pulling yourvisionnow repo';
       - git pull git@code.ryanchausse.com:ryanchausse/yourvisionnow.git;"
 #    - python3 manage.py makemigrations
 #    - python3 manage.py migrate
@@ -79,13 +72,12 @@ build_app:
   stage: build
   script:
     - echo "Build the Django application"
-    - ls -la
 
 django_test:
   stage: test
   script:
     - echo "Running tests..."
-    - python3 manage.py test
+#    - python3 manage.py test
 
 prod_deploy:
   stage: deploy
