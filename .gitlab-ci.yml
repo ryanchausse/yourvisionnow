@@ -51,6 +51,13 @@ setup_docker_container:
     - echo 'try to connect to beta.yourvisionnow.com'
     - ssh -i ~/.ssh/id_rsa root@beta.yourvisionnow.com
       "hostname;
+      echo 'Set deploy key on beta.yourvisionnow.com to clone repo from code.ryanchausse.com';
+      echo 'Add code.ryanchausse.com deploy pubkey to authorized_keys';
+      grep -qxF '$SSH_DEPLOY_PUBKEY' ~/.ssh/authorized_keys || echo '$SSH_DEPLOY_PUBKEY' >> ~/.ssh/authorized_keys;
+      ssh-keyscan code.ryanchausse.com >> ~/.ssh/known_hosts;
+      chmod 644 ~/.ssh/known_hosts;
+      git config --global user.email "chausse@gmail.com"
+      git config --global user.name "Ryan Chausse"
       echo 'Pulling yourvisionnow repo';
       mkdir /var/www;
       mkdir /var/www/yourvisionnow;
