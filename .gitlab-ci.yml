@@ -63,6 +63,7 @@ run_migrations:
   script:
     - ssh -vvv -i ~/.ssh/id_rsa root@beta.yourvisionnow.com
       - "hostname;
+      - timedatectl set-timezone your_time_zone; timedatectl;
       - echo 'testing second command';
       - cd /var/www;
       - apt -y update;
