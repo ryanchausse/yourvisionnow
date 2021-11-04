@@ -4,6 +4,8 @@ variables:
   POSTGRES_USER: $POSTGRES_USER
   POSTGRES_PASSWORD: $POSTGRES_PASSWORD
   SSH_PRIVATE_KEY: $SSH_PRIVATE_KEY
+  SSH_DEPLOY_PRIVKEY: $SSH_DEPLOY_PRIVKEY
+  SSH_DEPLOY_PUBKEY: $SSH_DEPLOY_PUBKEY
   TZ: "America/Los_Angeles"
 
 default:
@@ -51,16 +53,15 @@ setup_docker_container:
     - echo 'try to connect to beta.yourvisionnow.com'
     - ssh -i ~/.ssh/id_rsa root@beta.yourvisionnow.com
       "hostname;
-      echo 'Set deploy key on beta.yourvisionnow.com to clone repo from code.ryanchausse.com';
-      echo 'Add code.ryanchausse.com deploy pubkey to authorized_keys';
-      grep -qxF '$SSH_DEPLOY_PUBKEY' ~/.ssh/authorized_keys || echo '$SSH_DEPLOY_PUBKEY' >> ~/.ssh/authorized_keys;
+      echo 'Set deploy keys on beta.yourvisionnow.com to clone repo from code.ryanchausse.com';
+      grep -qxF '$SSH_DEPLOY_PUBKEY' ~/.ssh/yourvisionnow/deploykeys/id_rsa || echo '$SSH_DEPLOY_PUBKEY' >> ~/.ssh/authorized_keys;
+      grep -qxF '$SSH_DEPLOY_PRIVKEY' ~/.ssh/yourvisionnow/deploykeys/id_rsa || echo '$SSH_DEPLOY_PRIVKEY' >> ~/.ssh/yourvisionnow/deploykeys/id_rsa;
       ssh-keyscan code.ryanchausse.com >> ~/.ssh/known_hosts;
       chmod 644 ~/.ssh/known_hosts;
       git config --global user.email "chausse@gmail.com"
       git config --global user.name "Ryan Chausse"
       echo 'Pulling yourvisionnow repo';
-      mkdir /var/www;
-      mkdir /var/www/yourvisionnow;
+      cd /var/www/yourvisionnow;
       git clone git@code.ryanchausse.com:ryanchausse/yourvisionnow.git;
       chown -R www-data:www-data /var/www"
 #    - python3 manage.py makemigrations
