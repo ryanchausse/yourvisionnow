@@ -49,26 +49,19 @@ test_ssh:
   stage: initialize
   script:
   - echo 'try to connect to beta.yourvisionnow.com'
-  - ls -la
   - ls -la ~/.ssh
   - whoami
   - pwd
   - echo "$SSH_PRIVATE_KEY" > ~/.ssh/id_rsa
   - chmod 0600 ~/.ssh/id_rsa
   - ls -la ~/.ssh
-  - cat /etc/ssh/ssh_config
-  - cat /etc/ssh/sshd_config
-  - export TZ=America/Los_Angeles;
-  - export DEBIAN_FRONTEND=noninteractive;
-  - ssh -vvv -i ~/.ssh/id_rsa root@beta.yourvisionnow.com "ls -la"
+  - ssh -v -i ~/.ssh/id_rsa root@beta.yourvisionnow.com "ls -la"
 
 run_migrations:
   stage: initialize
   script:
-    - ssh -vvv -i ~/.ssh/id_rsa root@beta.yourvisionnow.com
-      - "export TZ=America/Los_Angeles;
-      - export DEBIAN_FRONTEND=noninteractive;
-      - hostname;
+    - ssh -i ~/.ssh/id_rsa root@beta.yourvisionnow.com
+      - "hostname;
       - cd /var/www;
       - apt -y update;
       - apt -y install apt-utils;
@@ -76,6 +69,7 @@ run_migrations:
       - apt -y upgrade;
       - git config --global user.email 'chausse@gmail.com';
       - git config --global user.name 'Ryan Chausse';
+      - echo 'Pulling yourvisionnow repo';
       - git pull git@code.ryanchausse.com:ryanchausse/yourvisionnow.git;"
 #    - python3 manage.py makemigrations
 #    - python3 manage.py migrate
