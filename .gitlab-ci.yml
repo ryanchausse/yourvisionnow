@@ -33,7 +33,6 @@ setup_docker_container_and_deploy:
     - apt -y install apt-utils
     - apt -y install net-tools python3.8 python3-pip postgresql openssh-server openssh-client git
     - apt -y upgrade
-    - pip3 install -r requirements.txt
     - 'which ssh-agent || ( apt-get update -y && apt-get install openssh-client git -y )'
     - eval $(ssh-agent -s)
     - mkdir -p ~/.ssh
@@ -57,7 +56,14 @@ setup_docker_container_and_deploy:
       echo 'Pulling yourvisionnow repo';
       cd /var/www/yourvisionnow;
       git pull;
-      chown -R www-data:www-data /var/www;"
+      chown -R www-data:www-data /var/www;
+      apt install -y python3-pip;
+      pip3 install virtualenv;
+      virtualenv venv_yourvisionnow;
+      source venv_yourvisionnow/bin/activate;
+      pip3 install -r requirements.txt;
+      deactivate;
+      "
 #    - python3 manage.py makemigrations
 #    - python3 manage.py migrate
 #    - python3 manage.py check
