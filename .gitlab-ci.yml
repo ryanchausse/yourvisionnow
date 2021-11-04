@@ -25,9 +25,6 @@ default:
 
 stages:
   - initialize
-  - build
-  - test
-  - deploy
 
 setup_docker_container:
   stage: initialize
@@ -51,35 +48,12 @@ setup_docker_container:
     - chmod 644 ~/.ssh/known_hosts
     - git config --global user.email "chausse@gmail.com"
     - git config --global user.name "Ryan Chausse"
-
-test_ssh:
-  stage: initialize
-  script:
-  - echo 'try to connect to beta.yourvisionnow.com'
-  - ssh -v -i ~/.ssh/id_rsa root@beta.yourvisionnow.com "hostname"
-
-run_migrations:
-  stage: initialize
-  script:
-    - ssh -i ~/.ssh/id_rsa root@beta.yourvisionnow.com
-      - "echo 'Pulling yourvisionnow repo';
+    - echo 'try to connect to beta.yourvisionnow.com'
+    - ssh -v -i ~/.ssh/id_rsa root@beta.yourvisionnow.com
+      - "hostname;
+      - echo 'Pulling yourvisionnow repo';
       - git pull git@code.ryanchausse.com:ryanchausse/yourvisionnow.git;"
 #    - python3 manage.py makemigrations
 #    - python3 manage.py migrate
 #    - python3 manage.py check
-
-build_app:
-  stage: build
-  script:
-    - echo "Build the Django application"
-
-django_test:
-  stage: test
-  script:
-    - echo "Running tests..."
 #    - python3 manage.py test
-
-prod_deploy:
-  stage: deploy
-  script:
-    - echo "Deploy to prod server"
