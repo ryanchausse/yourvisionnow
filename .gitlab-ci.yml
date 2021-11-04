@@ -63,7 +63,8 @@ run_migrations:
   script:
     - ssh -vvv -i ~/.ssh/id_rsa root@beta.yourvisionnow.com
       - "hostname;
-      - export TZ=$TZ;
+      - export TZ=America/Los_Angeles;
+      - export DEBIAN_FRONTEND=noninteractive;
       - cd /var/www;
       - apt -y update;
       - apt -y install apt-utils;
