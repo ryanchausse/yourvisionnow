@@ -11,11 +11,6 @@ variables:
 
 default:
   image: ubuntu:20.04
-  services:
-    - postgres:12.2-alpine
-  cache:
-    paths:
-      - ~/.cache/pip/
   before_script:
     - echo 'Doing things...'
 
