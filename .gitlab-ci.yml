@@ -56,7 +56,6 @@ setup_docker_container_and_deploy:
       echo 'Pulling yourvisionnow repo';
       cd /var/www/yourvisionnow;
       git pull;
-      #chown -R www-data:www-data /var/www;
       apt install -y python3-pip;
       pip3 install virtualenv;
       virtualenv venv_yourvisionnow;
@@ -68,3 +67,6 @@ setup_docker_container_and_deploy:
       python3 manage.py test;
       python3 manage.py collectstatic --no-input;
       deactivate;"
+    # Might want to chown -R www-data:www-data /var/www; in the future. Beware of root owned admin directory
+    - echo "Great success."
+
