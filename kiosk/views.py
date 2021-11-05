@@ -21,3 +21,10 @@ class WelcomePage(TemplateView):
     First / Login page at root
     """
     template_name = 'index.html'
+
+
+class CustomPlaceholder404(TemplateView):
+    """
+    Simplified Kiosk mode
+    """
+    template_name = '404.html'
