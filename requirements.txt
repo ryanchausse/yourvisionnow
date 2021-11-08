@@ -2,3 +2,4 @@ Django==3.2.8
 django-allauth
 psycopg2-binary
 python-dotenv
+python-dotenv
