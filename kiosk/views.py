@@ -1,6 +1,7 @@
 from django.shortcuts import render
 from django.http import HttpResponse
 from django.views.generic import TemplateView
+from django.shortcuts import redirect
 
 
 def index(request):
@@ -9,11 +10,22 @@ def index(request):
                         <br /> or Log Out <a href="./accounts/logout">Here</a>.')
 
 
-class Kiosk(TemplateView):
+# class Kiosk(TemplateView):
+#     """
+#     Simplified Kiosk mode
+#     """
+#     template_name = 'kiosk.html'
+
+class KioskPage(TemplateView):
     """
-    Simplified Kiosk mode
+    First page at root - kiosk view
     """
-    template_name = 'kiosk.html'
+    template_name = 'index_new.html'
+
+    def post(self, request, *args, **kwargs):
+        if 'x var' not in request.session:
+            request.session['x var'] = request.POST.get("x var")
+        return redirect('/some/url/')
 
 
 class WelcomePage(TemplateView):
