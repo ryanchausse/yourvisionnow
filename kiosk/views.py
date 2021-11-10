@@ -26,8 +26,9 @@ class KioskPage(TemplateView):
         if 'x var' not in request.session:
             request.session['x var'] = request.POST.get("x var")
             print('Session var set!')
-        del request.session['x var']
-        print('Session var unset!')
+        if 'del_session' in request.POST:
+            del request.session['x var']
+            print('Session var unset!')
         return redirect('/')
 
 

@@ -60,8 +60,13 @@
                                     <p>Lens selection goes here</p>
                                     <form action="/" method="POST">
                                         {% csrf_token %}
-                                        <input type="hidden" name="x var" value="Dprererecdsadcse"><br><br>
+                                        <input type="hidden" name="x var" value="1"><br><br>
                                         <input type="submit" value="Set User Session Var">
+                                    </form>
+                                    <form action="/" method="POST">
+                                        {% csrf_token %}
+                                        <input type="hidden" name="del_session" value="1"><br><br>
+                                        <input type="submit" value="Delete User Session Var">
                                     </form>
                                 </div>
                             </div>
