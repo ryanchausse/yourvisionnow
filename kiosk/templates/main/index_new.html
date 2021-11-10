@@ -1,3 +1,4 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 
@@ -8,6 +9,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="description" content="">
     <meta name="author" content="">
+    <link rel="shortcut icon" type="image/png" href="{% static 'img/favicon.ico' %}"/>
 
     <title>Your Vision Now - Kiosk</title>
 
@@ -91,7 +93,7 @@
                                         <form action="/" method="POST" style="float:right;">
                                             {% csrf_token %}
                                             <input type="hidden" name="del_session" value="1">
-                                            <button type="submit" class="btn btn-secondary">Start Over</button>
+                                            <button type="submit" class="btn btn-secondary btn-sm">Start Over</button>
                                         </form>
                                     </div>
                                     {% if 'bifocals' in request.session %}
