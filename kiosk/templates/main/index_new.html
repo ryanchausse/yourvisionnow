@@ -48,7 +48,6 @@
 
                         <div class="col-xl-8 col-lg-7">
 
-                            <!-- Area Chart -->
                             <div class="card shadow mb-4">
                                 <div class="card-header py-3">
                                     <h6 class="m-0 font-weight-bold text-primary" style="float:left; padding-right: 9em;">Customize your glasses</h6>
@@ -59,21 +58,30 @@
                                 </div>
                                 <div class="card-body">
                                     <p>Lens selection goes here</p>
+                                    <form action="/" method="POST">
+                                        {% csrf_token %}
+                                        <input type="hidden" name="x var" value="Dprererecdsadcse"><br><br>
+                                        <input type="submit" value="Set User Session Var">
+                                    </form>
                                 </div>
                             </div>
 
                         </div>
 
-                        <!-- Donut Chart -->
                         <div class="col-xl-4 col-lg-5">
                             <div class="card shadow mb-4">
                                 <!-- Card Header - Dropdown -->
                                 <div class="card-header py-3">
-                                    <h6 class="m-0 font-weight-bold text-primary">Running Total</h6>
+                                    <h6 class="m-0 font-weight-bold text-primary">Your selections</h6>
                                 </div>
                                 <!-- Card Body -->
                                 <div class="card-body">
                                     <p>Display elements selected and price here</p>
+                                    {% if 'x var' in request.session %}
+                                        <p>x var set</p>
+                                    {% else %}
+                                        <p>x var not set</p>
+                                    {% endif %}
                                 </div>
                             </div>
                         </div>
