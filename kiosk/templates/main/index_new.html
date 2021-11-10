@@ -59,19 +59,17 @@
                                 <div class="card-body">
                                     <row>
                                         <div>
-                                            <img src="/static/img/bifocals.jpg" style="float: left" />
+                                            <img src="/static/img/bifocals.jpg" style="float: left;" />
                                             <div style="float:right;">
-                                                <form action="/" method="POST" style="float:right">
+                                                <form action="/" method="POST" style="float:right;">
                                                     {% csrf_token %}
-                                                    <input type="hidden" name="del_session" value="1"><br><br>
+                                                    <input type="hidden" name="del_session" value="1">
                                                     <button type="submit" class="btn btn-danger">X</button>
-                                                    <!-- <input type="image" src="/cancel.jpg" border="0" alt="Remove Bifocals" /> -->
                                                 </form>
                                                 <form action="/" method="POST" style="float:right;padding-right:1em;">
                                                     {% csrf_token %}
-                                                    <input type="hidden" name="bifocals" value="true"><br><br>
+                                                    <input type="hidden" name="bifocals" value="true">
                                                     <button type="submit" class="btn btn-primary">Bifocals</button>
-                                                    <!-- <input type="image" src="/static/bifocals.jpg" border="0" alt="Bifocals" /> -->
                                                 </form>
                                             </div>
                                         </div>
@@ -89,6 +87,13 @@
                                 </div>
                                 <!-- Card Body -->
                                 <div class="card-body">
+                                    <div style="float:right;">
+                                        <form action="/" method="POST" style="float:right;">
+                                            {% csrf_token %}
+                                            <input type="hidden" name="del_session" value="1">
+                                            <button type="submit" class="btn btn-secondary">Start Over</button>
+                                        </form>
+                                    </div>
                                     {% if 'bifocals' in request.session %}
                                         <p>Bifocals - <span style="color:green">$55.00</span></p>
                                     {% endif %}
