@@ -18,9 +18,9 @@ from django.urls import path
 from . import views
 
 urlpatterns = [
-    path('', views.WelcomePage.as_view(), name='index'),
+    path('', views.KioskPage.as_view(), name='kiosk'),
     #path('kiosk/', views.Kiosk.as_view(), name='kiosk'),
-    path('kiosk/', views.KioskPage.as_view(), name='kiosk'),
+    path('kiosk/', views.KioskPage.as_view(), name='kiosk_index'),
     path('index.html', views.KioskPage.as_view(), name='index'),
     path('404.html', views.CustomPlaceholder404.as_view(), name='404'),
 ]

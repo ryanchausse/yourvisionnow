@@ -25,7 +25,7 @@ class KioskPage(TemplateView):
     def post(self, request, *args, **kwargs):
         if 'x var' not in request.session:
             request.session['x var'] = request.POST.get("x var")
-        return redirect('/some/url/')
+        return redirect('/')
 
 
 class WelcomePage(TemplateView):
