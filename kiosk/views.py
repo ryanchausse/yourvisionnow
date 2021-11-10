@@ -23,11 +23,11 @@ class KioskPage(TemplateView):
     template_name = 'index_new.html'
 
     def post(self, request, *args, **kwargs):
-        if 'x var' not in request.session:
-            request.session['x var'] = request.POST.get("x var")
+        if 'bifocals' not in request.session:
+            request.session['bifocals'] = request.POST.get("bifocals")
             print('Session var set!')
         if 'del_session' in request.POST:
-            del request.session['x var']
+            del request.session['bifocals']
             print('Session var unset!')
         return redirect('/')
 

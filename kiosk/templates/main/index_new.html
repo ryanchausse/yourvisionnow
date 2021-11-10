@@ -52,22 +52,30 @@
                                 <div class="card-header py-3">
                                     <h6 class="m-0 font-weight-bold text-primary" style="float:left; padding-right: 9em;">Customize your glasses</h6>
                                     <div class="progress">
-                                        <div class="progress-bar" role="progressbar" style="width: 0%;"
+                                        <div class="progress-bar" role="progressbar" style="width:{% if 'bifocals' in request.session %} 30{% else %} 0{% endif %}%;"
                                             aria-valuenow="30" aria-valuemin="0" aria-valuemax="100"></div>
                                     </div>
                                 </div>
                                 <div class="card-body">
-                                    <p>Lens selection goes here</p>
-                                    <form action="/" method="POST">
-                                        {% csrf_token %}
-                                        <input type="hidden" name="x var" value="1"><br><br>
-                                        <input type="submit" value="Set User Session Var">
-                                    </form>
-                                    <form action="/" method="POST">
-                                        {% csrf_token %}
-                                        <input type="hidden" name="del_session" value="1"><br><br>
-                                        <input type="submit" value="Delete User Session Var">
-                                    </form>
+                                    <row>
+                                        <div>
+                                            <img src="/static/img/bifocals.jpg" style="float: left" />
+                                            <div style="float:right;">
+                                                <form action="/" method="POST" style="float:right">
+                                                    {% csrf_token %}
+                                                    <input type="hidden" name="del_session" value="1"><br><br>
+                                                    <button type="submit" class="btn btn-danger">X</button>
+                                                    <!-- <input type="image" src="/cancel.jpg" border="0" alt="Remove Bifocals" /> -->
+                                                </form>
+                                                <form action="/" method="POST" style="float:right;padding-right:1em;">
+                                                    {% csrf_token %}
+                                                    <input type="hidden" name="bifocals" value="true"><br><br>
+                                                    <button type="submit" class="btn btn-primary">Bifocals</button>
+                                                    <!-- <input type="image" src="/static/bifocals.jpg" border="0" alt="Bifocals" /> -->
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </row>
                                 </div>
                             </div>
 
@@ -81,11 +89,8 @@
                                 </div>
                                 <!-- Card Body -->
                                 <div class="card-body">
-                                    <p>Display elements selected and price here</p>
-                                    {% if 'x var' in request.session %}
-                                        <p>x var set</p>
-                                    {% else %}
-                                        <p>x var not set</p>
+                                    {% if 'bifocals' in request.session %}
+                                        <p>Bifocals - <span style="color:green">$55.00</span></p>
                                     {% endif %}
                                 </div>
                             </div>
