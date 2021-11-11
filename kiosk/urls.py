@@ -21,5 +21,4 @@ urlpatterns = [
     path('', views.KioskPage.as_view(), name='kiosk'),
     path('kiosk/', views.KioskPage.as_view(), name='kiosk'),
     path('index.html', views.KioskPage.as_view(), name='index'),
-    path('404.html', views.CustomPlaceholder404.as_view(), name='404'),
 ]

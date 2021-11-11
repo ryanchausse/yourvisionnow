@@ -2,15 +2,8 @@ from django.shortcuts import render
 from django.http import HttpResponse
 from django.views.generic import TemplateView
 from django.shortcuts import redirect
-
-
-def index(request):
-    """
-    Old/beginning index view
-    """
-    return HttpResponse('Go to <a href="./kiosk">Kiosk</a> or \
-                        Log In using <a href="./accounts/google/login">Google</a> \
-                        <br /> or Log Out <a href="./accounts/logout">Here</a>.')
+from django.shortcuts import render
+from django.template import RequestContext
 
 
 class KioskPage(TemplateView):
@@ -36,8 +29,28 @@ class WelcomePage(TemplateView):
     template_name = 'index.html'
 
 
-class CustomPlaceholder404(TemplateView):
+def handler404(request, exception, template_name="404.html"):
     """
-    Simplified Kiosk mode
+    Custom 404 page
     """
-    template_name = '404.html'
+    response = render(template_name)
+    response.status_code = 404
+    return response
+
+
+def handler500(request, exception, template_name="500.html"):
+    """
+    Custom 500 page
+    """
+    response = render(template_name)
+    response.status_code = 500
+    return response
+
+
+def index(request):
+    """
+    Old/beginning index view
+    """
+    return HttpResponse('Go to <a href="./kiosk">Kiosk</a> or \
+                        Log In using <a href="./accounts/google/login">Google</a> \
+                        <br /> or Log Out <a href="./accounts/logout">Here</a>.')
