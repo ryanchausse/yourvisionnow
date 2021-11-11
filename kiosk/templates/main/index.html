@@ -60,16 +60,15 @@
                                 </div>
                                 <div class="card-body">
                                     <row>
-                                        <div>
-                                            <img src="{% static 'img/bifocal_lens.jpg' %}" style="float: left; max-height: 167px; max-width:300px;" />
-                                            <div style="float:right; padding-top: 1em; padding-left:1em;">
-                                                <form action="/" method="POST" style="float:right;padding-right:1em;">
+                                        <table>
+                                            <div style="padding-top: 1em; padding-right:1em;">
+                                                <form action="/" method="POST" style="padding-right:1em;">
                                                     {% csrf_token %}
                                                     <input type="hidden" name="bifocals" value="true">
-                                                    <button type="submit" class="btn btn-primary">Bifocals</button>
+                                                    <input type="image" src="{% static 'img/bifocal_lens.jpg' %}" alt="Bifocals" style="max-height: 167px; max-width:300px;" />
                                                 </form>
                                             </div>
-                                        </div>
+                                        </table>
                                     </row>
                                 </div>
                             </div>
@@ -80,45 +79,50 @@
                             <div class="card shadow mb-4">
                                 <!-- Card Header - Dropdown -->
                                 <div class="card-header py-3">
-                                    <h6 class="m-0 font-weight-bold text-primary">Your selections</h6>
-                                </div>
-                                <!-- Card Body -->
-                                <div class="card-body">
-                                    <div id="card_body_content_wrapper">
-                                        <table width="100%" height="100%">
-                                            <tr>
-                                                <td style="padding-bottom:1em">
-                                                </td>
-                                                <td style="text-align:right; padding-bottom:1em">
+                                    <table width="100%">
+                                        <tr>
+                                            <td>
+                                                <h6 class="m-0 font-weight-bold text-primary">Your selections</h6>
+                                            </td>
+                                            {% if 'bifocals' in request.session %}
+                                                <td style="text-align:right;">
                                                     <form action="/" method="POST">
                                                         {% csrf_token %}
                                                         <input type="hidden" name="del_session" value="1">
                                                         <button type="submit" class="btn btn-secondary btn-sm">Start Over</button>
                                                     </form>
                                                 </td>
-                                            </tr>
-                                        {% if 'bifocals' in request.session %}
+                                            {% endif %}
+                                        </tr>
+                                    </table>
+                                </div>
+                                <!-- Card Body -->
+                                <div class="card-body">
+                                    <div id="card_body_content_wrapper">
+                                        <table width="100%" height="100%">
                                             <!-- List items -->
                                             <tr>
-                                                <td style="padding-bottom:1em">
-                                                    <table>
-                                                        <tr>
-                                                            <td>Bifocals</td>
-                                                            <td style="text-align:right;padding-left:1em">
-                                                                <span style="color:green">$55.00</span>
-                                                            </td>
-                                                        </tr>
-                                                    </table>
-                                                </td>
-                                                <td style="padding-bottom:1em">
-                                                    <form action="/" method="POST" style="text-align:right;">
-                                                        {% csrf_token %}
-                                                        <input type="hidden" name="del_session" value="1">
-                                                        <button type="submit" class="btn btn-danger btn-sm">X</button>
-                                                    </form>
-                                                </td>
+                                                <th style="padding-bottom:0.5em"><!--Item--></th>
+                                                <th style="padding-bottom:0.5em"><!--Price--></th>
+                                                <th style="padding-bottom:0.5em"><!--Remove--></th>
                                             </tr>
-                                        {% endif %}
+                                            {% if 'bifocals' in request.session %}
+                                                <tr>
+                                                    <td style="padding-bottom:1em">
+                                                        Bifocals
+                                                    </td>
+                                                    <td style="padding-bottom:1em">
+                                                        <span style="color:green">$55.00</span>
+                                                    </td>
+                                                    <td style="padding-bottom:1em">
+                                                        <form action="/" method="POST">
+                                                            {% csrf_token %}
+                                                            <input type="hidden" name="del_session" value="1">
+                                                            <button type="submit" class="btn btn-danger btn-sm">X</button>
+                                                        </form>
+                                                    </td>
+                                                </tr>
+                                            {% endif %}
                                         </table>
                                     </div>
                                 </div>
