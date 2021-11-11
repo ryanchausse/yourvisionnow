@@ -43,9 +43,9 @@ class LensAddOns(models.Model):
 class LensPackage(models.Model):
     name = models.CharField(max_length=60)
     description = models.CharField(max_length=255)
-    lens_type = models.IntegerField(null=False)
-    lens_material = models.IntegerField(null=False)
-    lens_add_on = models.IntegerField(null=False)
+    lens_type = models.ForeignKey(LensType, on_delete=models.CASCADE)
+    lens_material = models.ForeignKey(LensMaterial, on_delete=models.CASCADE)
+    lens_add_on = models.ForeignKey(LensAddOns, on_delete=models.CASCADE)
     promo_price = models.DecimalField(max_digits=8, decimal_places=2)
     retail_price = models.DecimalField(max_digits=8, decimal_places=2)
 
@@ -71,8 +71,8 @@ class Customer(models.Model):
 
 class CustomerLensPackage(models.Model):
     order_name = models.CharField(max_length=255, null=True)
-    customer = models.IntegerField(null=False)
-    lens_package = models.IntegerField(null=False)
+    customer = models.ForeignKey(Customer, on_delete=models.CASCADE)
+    lens_package = models.ForeignKey(LensPackage, on_delete=models.CASCADE)
 
     def __str__(self):
         return self.order_name
