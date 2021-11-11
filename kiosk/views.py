@@ -5,22 +5,19 @@ from django.shortcuts import redirect
 
 
 def index(request):
+    """
+    Old/beginning index view
+    """
     return HttpResponse('Go to <a href="./kiosk">Kiosk</a> or \
                         Log In using <a href="./accounts/google/login">Google</a> \
                         <br /> or Log Out <a href="./accounts/logout">Here</a>.')
 
 
-# class Kiosk(TemplateView):
-#     """
-#     Simplified Kiosk mode
-#     """
-#     template_name = 'kiosk.html'
-
 class KioskPage(TemplateView):
     """
     First page at root - kiosk view
     """
-    template_name = 'index_new.html'
+    template_name = 'index.html'
 
     def post(self, request, *args, **kwargs):
         if 'bifocals' not in request.session:
