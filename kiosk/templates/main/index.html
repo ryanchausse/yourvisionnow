@@ -61,8 +61,8 @@
                                 <div class="card-body">
                                     <row>
                                         <div>
-                                            <img src="/static/img/bifocals.jpg" style="float: left;" />
-                                            <div style="float:right;padding-top: 1em; padding-left:1em;">
+                                            <img src="{% static 'img/bifocal_lens.jpg' %}" style="float: left; max-height: 167px; max-width:300px;" />
+                                            <div style="float:right; padding-top: 1em; padding-left:1em;">
                                                 <form action="/" method="POST" style="float:right;">
                                                     {% csrf_token %}
                                                     <input type="hidden" name="del_session" value="1">
