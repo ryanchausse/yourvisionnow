@@ -121,15 +121,13 @@
                                                 {% if user.is_authenticated %}
                                                     <form action="/accounts/logout/" method="POST">
                                                         {% csrf_token %}
-                                                        <input type="hidden" name="log_out" value="true">
                                                         <button type="submit" class="btn btn-google btn-sm">
                                                             Log out, {{ user.first_name }}
                                                         </button>
                                                     </form>
                                                 {% else %}
-                                                    <form style="float:right; padding-left: 1em;" action="/accounts/google/login" method="GET">
+                                                    <form style="float:right; padding-left: 1em; padding-bottom: 1em;" action="/accounts/google/login/" method="POST">
                                                         {% csrf_token %}
-                                                        <input type="hidden" name="log_in" value="true">
                                                         <button type="submit" class="btn btn-google btn-sm">
                                                             <i class="fab fa-google fa-fw"></i>Log in with Google
                                                         </button>
