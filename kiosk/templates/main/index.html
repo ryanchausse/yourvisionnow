@@ -40,9 +40,11 @@
 
                     <!-- Page Heading -->
                     <h1 class="h3 mb-2 text-gray-800" style="padding: 10px;">
-                        <img src="{% static 'img/VisionNow_kiosk_size.png' %}"
-                             alt="Your Vision Now - Kiosk"
-                        />
+                        <a href="/">
+                            <img src="{% static 'img/VisionNow_kiosk_size.png' %}"
+                                 alt="Your Vision Now - Kiosk"
+                             />
+                        </a>
                     </h1>
 
                     <!-- Content Row -->
@@ -117,10 +119,12 @@
                                             </td>
                                             {% if user.is_authenticated %}
                                                 <td style="text-align:right;">
-                                                    <form action="/accounts/logout" method="GET">
+                                                    <form action="/accounts/logout" method="POST">
                                                         {% csrf_token %}
                                                         <input type="hidden" name="log_out" value="true">
-                                                        <button type="submit" class="btn btn-google btn-sm">Log out</button>
+                                                        <button type="submit" class="btn btn-google btn-sm">
+                                                            Log out, {{ user.first_name }}
+                                                        </button>
                                                     </form>
                                                 </td>
                                             {% else %}
@@ -128,7 +132,9 @@
                                                     <form action="/accounts/google/login" method="GET">
                                                         {% csrf_token %}
                                                         <input type="hidden" name="log_in" value="true">
-                                                        <button type="submit" class="btn btn-google btn-sm"><i class="fab fa-google fa-fw"></i>Log in with Google</button>
+                                                        <button type="submit" class="btn btn-google btn-sm">
+                                                            <i class="fab fa-google fa-fw"></i>Log in with Google
+                                                        </button>
                                                     </form>
                                                 </td>
                                             {% endif %}
@@ -136,7 +142,9 @@
                                                 <form action="/" method="POST">
                                                     {% csrf_token %}
                                                     <input type="hidden" name="start_over" value="true">
-                                                    <button type="submit" class="btn btn-secondary btn-sm">Start Over</button>
+                                                    <button type="submit" class="btn btn-secondary btn-sm">
+                                                        Start Over
+                                                    </button>
                                                 </form>
                                             </td>
                                         </tr>
