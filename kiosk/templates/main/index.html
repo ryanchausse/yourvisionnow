@@ -73,6 +73,7 @@
                                                     <h2>Lens Types</h2>
                                                     {% for lens_type in lens_types %}
                                                         <div style="float: left; padding-top: 1em; padding-right:1em;">
+                                                            <h4>{{ lens_type.name }}</h4>
                                                             <form action="/" method="POST" style="padding-right:1em;">
                                                                 {% csrf_token %}
                                                                 <input type="hidden" name="{{ lens_type.name }}" value="true">
@@ -80,6 +81,7 @@
                                                                     <input type="image" src="{% static 'img/'|add:lens_type.static_img_url %}" alt="{{ lens_type.name }}" style="max-height: 167px; max-width:300px;" />
                                                                 {% endif %}
                                                             </form>
+                                                            <p>{{ lens_type.description }}</p>
                                                         </div>
                                                     {% endfor %}
                                                 </tr>
@@ -88,6 +90,7 @@
                                                 <tr>
                                                     <h2>Lens Materials</h2>
                                                     {% for lens_material in lens_materials %}
+                                                        <h4>{{ lens_material.name }}</h4>
                                                         <div style="float: left; padding-top: 1em; padding-right:1em;">
                                                             <form action="/" method="POST" style="padding-right:1em;">
                                                                 {% csrf_token %}
@@ -104,6 +107,7 @@
                                                 <tr>
                                                     <h2>Lens Add-Ons</h2>
                                                     {% for lens_add_on in lens_add_ons %}
+                                                        <h4>{{ lens_add_on.name }}</h4>
                                                         <div style="float: left; padding-top: 1em; padding-right:1em;">
                                                             <form action="/" method="POST" style="padding-right:1em;">
                                                                 {% csrf_token %}
@@ -120,6 +124,7 @@
                                                 <tr>
                                                     <h2>Lens Packages</h2>
                                                     {% for lens_package in lens_package %}
+                                                        <h4>{{ lens_package.name }}</h4>
                                                         <div style="float: left; padding-top: 1em; padding-right:1em;">
                                                             <form action="/" method="POST" style="padding-right:1em;">
                                                                 {% csrf_token %}
