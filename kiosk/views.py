@@ -13,12 +13,29 @@ class KioskPage(TemplateView):
     template_name = 'index.html'
 
     def post(self, request, *args, **kwargs):
-        if 'bifocals' not in request.session:
-            request.session['bifocals'] = request.POST.get("bifocals")
-            print('Session var set!')
-        if 'del_session' in request.POST:
-            del request.session['bifocals']
-            print('Session var unset!')
+        if 'start_over' in request.POST and request.POST['start_over'] == 'true':
+            # Delete session
+            request.session.flush()
+        # Single Vision Lens - later change to be database-driven
+        if 'no_single_vision' in request.POST:
+            del request.session['lens_single_vision']
+        if request.POST.get('lens_single_vision') and 'lens_single_vision' not in request.session:
+            request.session['lens_single_vision'] = request.POST.get('lens_single_vision')
+        # Bifocal - later change to be database-driven
+        if 'no_bifocal' in request.POST:
+            del request.session['lens_bifocal']
+        if request.POST.get('lens_bifocal') and 'lens_bifocal' not in request.session:
+            request.session['lens_bifocal'] = request.POST.get('lens_bifocal')
+        # Trifocal - later change to be database-driven
+        if 'no_trifocal' in request.POST:
+            del request.session['lens_trifocal']
+        if request.POST.get('lens_trifocal') and 'lens_bifocal' not in request.session:
+            request.session['lens_trifocal'] = request.POST.get('lens_trifocal')
+        # Progressive - later change to be database-driven
+        if 'no_progressive' in request.POST:
+            del request.session['lens_progressive']
+        if request.POST.get('lens_progressive') and 'lens_progressive' not in request.session:
+            request.session['lens_progressive'] = request.POST.get('lens_progressive')
         return redirect('/')
 
 
