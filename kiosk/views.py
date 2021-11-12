@@ -4,6 +4,12 @@ from django.views.generic import TemplateView
 from django.shortcuts import redirect
 from django.shortcuts import render
 from django.template import RequestContext
+from .models import LensType
+from .models import LensMaterial
+from .models import LensAddOns
+from .models import LensPackage
+from .models import Customer
+from .models import CustomerLensPackage
 
 
 class KioskPage(TemplateView):
@@ -12,31 +18,25 @@ class KioskPage(TemplateView):
     """
     template_name = 'index.html'
 
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['lens_types'] = LensType.objects.all()
+        context['lens_materials'] = LensMaterial.objects.all()
+        context['lens_addons'] = LensAddOns.objects.all()
+        context['lens_packages'] = LensPackage.objects.all()
+        return context
+
     def post(self, request, *args, **kwargs):
+        context = self.get_context_data(**kwargs)
         if 'start_over' in request.POST and request.POST['start_over'] == 'true':
             # Delete session
             request.session.flush()
-        # Single Vision Lens - later change to be database-driven
-        if 'no_single_vision' in request.POST:
-            del request.session['lens_single_vision']
-        if request.POST.get('lens_single_vision') and 'lens_single_vision' not in request.session:
-            request.session['lens_single_vision'] = True
-        # Bifocal - later change to be database-driven
-        if 'no_bifocal' in request.POST:
-            del request.session['lens_bifocal']
-        if request.POST.get('lens_bifocal') and 'lens_bifocal' not in request.session:
-            request.session['lens_bifocal'] = True
-        # Trifocal - later change to be database-driven
-        if 'no_trifocal' in request.POST:
-            del request.session['lens_trifocal']
-        if request.POST.get('lens_trifocal') and 'lens_trifocal' not in request.session:
-            request.session['lens_trifocal'] = True
-        # Progressive - later change to be database-driven
-        if 'no_progressive' in request.POST:
-            del request.session['lens_progressive']
-        if request.POST.get('lens_progressive') and 'lens_progressive' not in request.session:
-            request.session['lens_progressive'] = True
-        return redirect('/')
+        for lens_type in context['lens_types']:
+            if 'no_' + lens_type.name in request.POST:
+                del request.session[lens_type.name]
+            if request.POST.get(lens_type.name) and lens_type.name not in request.session:
+                request.session[lens_type.name] = True
+        return render(request, 'index.html', context)
 
 
 class WelcomePage(TemplateView):

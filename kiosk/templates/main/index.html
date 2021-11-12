@@ -68,44 +68,22 @@
                                 <div class="card-body">
                                     <row>
                                         <table>
-                                            <tr>
-                                                <div>
-                                                    <div style="float: left; padding-top: 1em; padding-right:1em;">
-                                                        <form action="/" method="POST" style="padding-right:1em;">
-                                                            {% csrf_token %}
-                                                            <input type="hidden" name="lens_single_vision" value="true">
-                                                            <input type="image" src="{% static 'img/single_vision_lens.jpg' %}" alt="Single Vision Lenses" style="max-height: 167px; max-width:300px;" />
-                                                        </form>
-                                                    </div>
-                                                </div>
-                                                <div>
-                                                    <div style="float: left; padding-top: 1em; padding-right:1em;">
-                                                        <form action="/" method="POST" style="padding-right:1em;">
-                                                            {% csrf_token %}
-                                                            <input type="hidden" name="lens_bifocal" value="true">
-                                                            <input type="image" src="{% static 'img/bifocal_lens.jpg' %}" alt="Bifocal Lenses" style="max-height: 167px; max-width:300px;" />
-                                                        </form>
-                                                    </div>
-                                                </div>
-                                                <div>
-                                                    <div style="float: left; padding-top: 1em; padding-right:1em;">
-                                                        <form action="/" method="POST" style="padding-right:1em;">
-                                                            {% csrf_token %}
-                                                            <input type="hidden" name="lens_progressive" value="true">
-                                                            <input type="image" src="{% static 'img/progressive_lens.jpg' %}" alt="Progressive Lenses" style="max-height: 167px; max-width:300px;" />
-                                                        </form>
-                                                    </div>
-                                                </div>
-                                                <div>
-                                                    <div style="float: left; padding-top: 1em; padding-right:1em;">
-                                                        <form action="/" method="POST" style="padding-right:1em;">
-                                                            {% csrf_token %}
-                                                            <input type="hidden" name="lens_trifocal" value="true">
-                                                            <input type="image" src="{% static 'img/trifocal_lens.jpg' %}" alt="Trifocal Lenses" style="max-height: 167px; max-width:300px;" />
-                                                        </form>
-                                                    </div>
-                                                </div>
-                                            </tr>
+                                            {% if lens_types %}
+                                                <tr>
+                                                    <h2>Lens Types</h2>
+                                                    {% for lens_type in lens_types %}
+                                                        <div style="float: left; padding-top: 1em; padding-right:1em;">
+                                                            <form action="/" method="POST" style="padding-right:1em;">
+                                                                {% csrf_token %}
+                                                                <input type="hidden" name="{{ lens_type.name }}" value="true">
+                                                                {% if lens_type.static_img_url %}
+                                                                    <input type="image" src="{% static 'img/'|add:lens_type.static_img_url %}" alt="{{ lens_type.name }}" style="max-height: 167px; max-width:300px;" />
+                                                                {% endif %}
+                                                            </form>
+                                                        </div>
+                                                    {% endfor %}
+                                                </tr>
+                                            {% endif %}
                                         </table>
                                     </row>
                                 </div>
@@ -159,73 +137,26 @@
                                                 <th style="padding-bottom:0.5em"><!--Price--></th>
                                                 <th style="padding-bottom:0.5em"><!--Remove--></th>
                                             </tr>
-                                            {% if 'lens_single_vision' in request.session %}
-                                                <tr>
-                                                    <td style="padding-bottom:1em">
-                                                        Single Vision Lens
-                                                    </td>
-                                                    <td style="padding-bottom:1em">
-                                                        <span style="color:green">$89.00</span>
-                                                    </td>
-                                                    <td style="padding-bottom:1em">
-                                                        <form action="/" method="POST">
-                                                            {% csrf_token %}
-                                                            <input type="hidden" name="no_single_vision" value="true">
-                                                            <button type="submit" class="btn btn-danger btn-sm">X</button>
-                                                        </form>
-                                                    </td>
-                                                </tr>
-                                            {% endif %}
-                                            {% if 'lens_bifocal' in request.session %}
-                                                <tr>
-                                                    <td style="padding-bottom:1em">
-                                                        Bifocal Lens
-                                                    </td>
-                                                    <td style="padding-bottom:1em">
-                                                        <span style="color:green">$55.00</span>
-                                                    </td>
-                                                    <td style="padding-bottom:1em">
-                                                        <form action="/" method="POST">
-                                                            {% csrf_token %}
-                                                            <input type="hidden" name="no_bifocal" value="true">
-                                                            <button type="submit" class="btn btn-danger btn-sm">X</button>
-                                                        </form>
-                                                    </td>
-                                                </tr>
-                                            {% endif %}
-                                            {% if 'lens_trifocal' in request.session %}
-                                                <tr>
-                                                    <td style="padding-bottom:1em">
-                                                        Trifocal Lens
-                                                    </td>
-                                                    <td style="padding-bottom:1em">
-                                                        <span style="color:green">$110.00</span>
-                                                    </td>
-                                                    <td style="padding-bottom:1em">
-                                                        <form action="/" method="POST">
-                                                            {% csrf_token %}
-                                                            <input type="hidden" name="no_trifocal" value="true">
-                                                            <button type="submit" class="btn btn-danger btn-sm">X</button>
-                                                        </form>
-                                                    </td>
-                                                </tr>
-                                            {% endif %}
-                                            {% if 'lens_progressive' in request.session %}
-                                                <tr>
-                                                    <td style="padding-bottom:1em">
-                                                        Progressive Lens
-                                                    </td>
-                                                    <td style="padding-bottom:1em">
-                                                        <span style="color:green">$189.00</span>
-                                                    </td>
-                                                    <td style="padding-bottom:1em">
-                                                        <form action="/" method="POST">
-                                                            {% csrf_token %}
-                                                            <input type="hidden" name="no_progressive" value="true">
-                                                            <button type="submit" class="btn btn-danger btn-sm">X</button>
-                                                        </form>
-                                                    </td>
-                                                </tr>
+                                            {% if lens_types %}
+                                                {% for lens_type in lens_types %}
+                                                    {% if lens_type.name in request.session %}
+                                                        <tr>
+                                                            <td style="padding-bottom:1em">
+                                                                {{ lens_type.name }}
+                                                            </td>
+                                                            <td style="padding-bottom:1em">
+                                                                <span style="color:green">{{ lens_type.default_price }}</span>
+                                                            </td>
+                                                            <td style="padding-bottom:1em">
+                                                                <form action="/" method="POST">
+                                                                    {% csrf_token %}
+                                                                    <input type="hidden" name="no_{{ lens_type.name }}" value="true">
+                                                                    <button type="submit" class="btn btn-danger btn-sm">X</button>
+                                                                </form>
+                                                            </td>
+                                                        </tr>
+                                                    {% endif %}
+                                                {% endfor %}
                                             {% endif %}
                                         </table>
                                     </div>
