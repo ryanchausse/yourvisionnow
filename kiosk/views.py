@@ -36,6 +36,21 @@ class KioskPage(TemplateView):
                 del request.session[lens_type.name]
             if request.POST.get(lens_type.name) and lens_type.name not in request.session:
                 request.session[lens_type.name] = True
+        for lens_material in context['lens_materials']:
+            if f'no_{lens_material.name}' in request.POST:
+                del request.session[lens_material.name]
+            if request.POST.get(lens_material.name) and lens_material.name not in request.session:
+                request.session[lens_material.name] = True
+        for lens_add_on in context['lens_add_ons']:
+            if f'no_{lens_add_on.name}' in request.POST:
+                del request.session[lens_add_on.name]
+            if request.POST.get(lens_add_on.name) and lens_add_on.name not in request.session:
+                request.session[lens_add_on.name] = True
+            for lens_package in context['lens_packages']:
+                if f'no_{lens_package.name}' in request.POST:
+                    del request.session[lens_package.name]
+                if request.POST.get(lens_package.name) and lens_package.name not in request.session:
+                    request.session[lens_package.name] = True
         return render(request, 'index.html', context)
 
 
