@@ -5,7 +5,7 @@ class LensType(models.Model):
     name = models.CharField(max_length=60)
     description = models.CharField(max_length=255)
     default_price = models.DecimalField(max_digits=8, decimal_places=2)
-    static_img_url = models.CharField(max_length=255, null=True)
+    static_img_url = models.CharField(max_length=255, default='multiple_lenses.jpg')
 
     def __str__(self):
         return self.name
@@ -19,6 +19,7 @@ class LensMaterial(models.Model):
     name = models.CharField(max_length=60)
     description = models.CharField(max_length=255)
     default_price = models.DecimalField(max_digits=8, decimal_places=2)
+    static_img_url = models.CharField(max_length=255, default='multiple_lenses.jpg')
 
     def __str__(self):
         return self.name
@@ -32,6 +33,7 @@ class LensAddOns(models.Model):
     name = models.CharField(max_length=60)
     description = models.CharField(max_length=255)
     default_price = models.DecimalField(max_digits=8, decimal_places=2)
+    static_img_url = models.CharField(max_length=255, default='multiple_lenses.jpg')
 
     def __str__(self):
         return self.name
@@ -49,6 +51,7 @@ class LensPackage(models.Model):
     lens_add_on = models.ForeignKey(LensAddOns, on_delete=models.CASCADE)
     promo_price = models.DecimalField(max_digits=8, decimal_places=2)
     retail_price = models.DecimalField(max_digits=8, decimal_places=2)
+    static_img_url = models.CharField(max_length=255, default='multiple_lenses.jpg')
 
     def __str__(self):
         return self.name
