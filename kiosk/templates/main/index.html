@@ -84,6 +84,54 @@
                                                     {% endfor %}
                                                 </tr>
                                             {% endif %}
+                                            {% if lens_materials %}
+                                                <tr>
+                                                    <h2>Lens Materials</h2>
+                                                    {% for lens_material in lens_materials %}
+                                                        <div style="float: left; padding-top: 1em; padding-right:1em;">
+                                                            <form action="/" method="POST" style="padding-right:1em;">
+                                                                {% csrf_token %}
+                                                                <input type="hidden" name="{{ lens_material.name }}" value="true">
+                                                                {% if lens_material.static_img_url %}
+                                                                    <input type="image" src="{% static 'img/'|add:lens_material.static_img_url %}" alt="{{ lens_material.name }}" style="max-height: 167px; max-width:300px;" />
+                                                                {% endif %}
+                                                            </form>
+                                                        </div>
+                                                    {% endfor %}
+                                                </tr>
+                                            {% endif %}
+                                            {% if lens_add_ons %}
+                                                <tr>
+                                                    <h2>Lens Add-Ons</h2>
+                                                    {% for lens_add_on in lens_add_ons %}
+                                                        <div style="float: left; padding-top: 1em; padding-right:1em;">
+                                                            <form action="/" method="POST" style="padding-right:1em;">
+                                                                {% csrf_token %}
+                                                                <input type="hidden" name="{{ lens_add_on.name }}" value="true">
+                                                                {% if lens_material.static_img_url %}
+                                                                    <input type="image" src="{% static 'img/'|add:lens_add_on.static_img_url %}" alt="{{ lens_add_on.name }}" style="max-height: 167px; max-width:300px;" />
+                                                                {% endif %}
+                                                            </form>
+                                                        </div>
+                                                    {% endfor %}
+                                                </tr>
+                                            {% endif %}
+                                            {% if lens_packages %}
+                                                <tr>
+                                                    <h2>Lens Packages</h2>
+                                                    {% for lens_package in lens_package %}
+                                                        <div style="float: left; padding-top: 1em; padding-right:1em;">
+                                                            <form action="/" method="POST" style="padding-right:1em;">
+                                                                {% csrf_token %}
+                                                                <input type="hidden" name="{{ lens_package.name }}" value="true">
+                                                                {% if lens_package.static_img_url %}
+                                                                    <input type="image" src="{% static 'img/'|add:lens_package.static_img_url %}" alt="{{ lens_package.name }}" style="max-height: 167px; max-width:300px;" />
+                                                                {% endif %}
+                                                            </form>
+                                                        </div>
+                                                    {% endfor %}
+                                                </tr>
+                                            {% endif %}
                                         </table>
                                     </row>
                                 </div>

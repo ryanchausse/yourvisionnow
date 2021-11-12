@@ -22,7 +22,7 @@ class KioskPage(TemplateView):
         context = super().get_context_data(**kwargs)
         context['lens_types'] = LensType.objects.all()
         context['lens_materials'] = LensMaterial.objects.all()
-        context['lens_addons'] = LensAddOns.objects.all()
+        context['lens_add_ons'] = LensAddOns.objects.all()
         context['lens_packages'] = LensPackage.objects.all()
         return context
 
@@ -32,7 +32,7 @@ class KioskPage(TemplateView):
             # Delete session
             request.session.flush()
         for lens_type in context['lens_types']:
-            if 'no_' + lens_type.name in request.POST:
+            if f'no_{lens_type.name}' in request.POST:
                 del request.session[lens_type.name]
             if request.POST.get(lens_type.name) and lens_type.name not in request.session:
                 request.session[lens_type.name] = True
