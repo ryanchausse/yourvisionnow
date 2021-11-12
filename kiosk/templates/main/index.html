@@ -115,6 +115,23 @@
                                             <td>
                                                 <h6 class="m-0 font-weight-bold text-primary">Your selections</h6>
                                             </td>
+                                            {% if user.is_authenticated %}
+                                                <td style="text-align:right;">
+                                                    <form action="/accounts/logout" method="GET">
+                                                        {% csrf_token %}
+                                                        <input type="hidden" name="log_out" value="true">
+                                                        <button type="submit" class="btn btn-google btn-sm">Log out</button>
+                                                    </form>
+                                                </td>
+                                            {% else %}
+                                                <td style="text-align:right;">
+                                                    <form action="/accounts/google/login" method="GET">
+                                                        {% csrf_token %}
+                                                        <input type="hidden" name="log_in" value="true">
+                                                        <button type="submit" class="btn btn-google btn-sm"><i class="fab fa-google fa-fw"></i>Log in with Google</button>
+                                                    </form>
+                                                </td>
+                                            {% endif %}
                                             <td style="text-align:right;">
                                                 <form action="/" method="POST">
                                                     {% csrf_token %}
