@@ -45,38 +45,27 @@ class KioskPage(TemplateView):
             if f'no_{lens_type.name}' in request.POST:
                 if request.session[lens_type.name]:
                     del request.session[lens_type.name]
-                if request.session['lens_type_selected']:
-                    del request.session['lens_type_selected']
             if request.POST.get(lens_type.name) and request.POST.get(lens_type.name) not in request.session:
                 request.session[lens_type.name] = True
-                request.session['lens_type_selected'] = True
         for lens_material in context['lens_materials']:
             if f'no_{lens_material.name}' in request.POST:
                 if request.session[lens_material.name]:
                     del request.session[lens_material.name]
-                if request.session['lens_material_selected']:
-                    del request.session['lens_material_selected']
             if request.POST.get(lens_material.name) and request.POST.get(lens_material.name) not in request.session:
                 request.session[lens_material.name] = True
-                request.session['lens_material_selected'] = True
         for lens_add_on in context['lens_add_ons']:
             if f'no_{lens_add_on.name}' in request.POST:
                 if request.session[lens_add_on.name]:
                     del request.session[lens_add_on.name]
-                if request.session['lens_add_on_selected']:
-                    del request.session['lens_add_on_selected']
             if request.POST.get(lens_add_on.name) and request.POST.get(lens_add_on.name) not in request.session:
                 request.session[lens_add_on.name] = True
-                request.session['lens_add_on_selected'] = True
         for lens_package in context['lens_packages']:
             if f'no_{lens_package.name}' in request.POST:
                 if request.session[lens_package.name]:
                     del request.session[lens_package.name]
-                if request.session['lens_package_selected']:
-                    del request.session['lens_package_selected']
             if request.POST.get(lens_package.name) and request.POST.get(lens_package.name) not in request.session:
                 request.session[lens_package.name] = True
-                request.session['lens_package_selected'] = True
+        print(request.session.keys())
         return render(request, 'index.html', context)
 
 

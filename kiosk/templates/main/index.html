@@ -209,7 +209,7 @@
                                 <div class="card-body">
                                     <div id="card_body_content_wrapper">
                                         <table width="100%" height="100%">
-                                            {% if request.session.lens_type_selected %}
+                                            {% if request.session.keys %}
                                                 <tr>
                                                     <th>Lens Types</th>
                                                 </tr>
@@ -233,7 +233,7 @@
                                                     {% endif %}
                                                 {% endfor %}
                                             {% endif %}
-                                            {% if request.session.lens_material_selected %}
+                                            {% if request.session.keys %}
                                                 <tr>
                                                     <th>Lens Materials</th>
                                                 </tr>
@@ -257,7 +257,7 @@
                                                     {% endif %}
                                                 {% endfor %}
                                             {% endif %}
-                                            {% if request.session.lens_add_on_selected %}
+                                            {% if request.session.keys %}
                                                 <tr>
                                                     <th>Lens Add-Ons</th>
                                                 </tr>
@@ -281,7 +281,7 @@
                                                     {% endif %}
                                                 {% endfor %}
                                             {% endif %}
-                                            {% if request.session.lens_package_selected %}
+                                            {% if request.session.keys %}
                                                 <tr>
                                                     <th>Lens Packages</th>
                                                 </tr>
