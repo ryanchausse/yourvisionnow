@@ -208,7 +208,7 @@
                                                 <th style="padding-bottom:0.5em"><!--Price--></th>
                                                 <th style="padding-bottom:0.5em"><!--Remove--></th>
                                             </tr>
-                                            {% if lens_types %}
+                                            {% if request.session.lens_type_selected %}
                                                 <tr>
                                                     <th>Lens Types</th>
                                                 </tr>
@@ -232,7 +232,7 @@
                                                     {% endif %}
                                                 {% endfor %}
                                             {% endif %}
-                                            {% if lens_materials %}
+                                            {% if request.session.lens_material_selected %}
                                                 <tr>
                                                     <th>Lens Materials</th>
                                                 </tr>
@@ -256,7 +256,7 @@
                                                     {% endif %}
                                                 {% endfor %}
                                             {% endif %}
-                                            {% if lens_add_ons %}
+                                            {% if request.session.lens_add_on_selected %}
                                                 <tr>
                                                     <th>Lens Add-Ons</th>
                                                 </tr>
@@ -280,7 +280,7 @@
                                                     {% endif %}
                                                 {% endfor %}
                                             {% endif %}
-                                            {% if lens_packages %}
+                                            {% if request.session.lens_package_selected %}
                                                 <tr>
                                                     <th>Lens Packages</th>
                                                 </tr>
