@@ -1,4 +1,5 @@
 from django.shortcuts import render
+from django.core.mail import send_mail
 from django.http import HttpResponse
 from django.views.generic import TemplateView
 from django.shortcuts import redirect
@@ -30,6 +31,15 @@ class KioskPage(TemplateView):
         context = self.get_context_data(**kwargs)
         if 'start_over' in request.POST and request.POST['start_over'] == 'true':
             # Delete session
+            request.session.flush()
+        if 'send_to_front' in request.POST and request.POST['send_to_front'] == 'true':
+            send_mail(
+                'Customer order',
+                'Here is the message.',
+                'test@beta.yourvisionnow.com',
+                ['chausse@gmail.com'],
+                fail_silently=True,
+            )
             request.session.flush()
         for lens_type in context['lens_types']:
             if f'no_{lens_type.name}' in request.POST:
