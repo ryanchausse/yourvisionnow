@@ -49,7 +49,165 @@
 
                     <!-- Content Row -->
                     <div class="row">
+                        <div class="col-xl-4 col-lg-5">
+                            <div class="card shadow mb-4">
+                                <!-- Card Header - Dropdown -->
+                                <div class="card-header">
+                                    <table width="100%">
+                                        <tr>
+                                            <td style="text-align:right;">
+                                                {% if user.is_authenticated %}
+                                                    <form style="float:right; padding-left: 1em;" action="/accounts/logout/" method="POST">
+                                                        {% csrf_token %}
+                                                        <button type="submit" class="btn btn-google btn-sm">
+                                                            Log out, {{ user.first_name }}
+                                                        </button>
+                                                    </form>
+                                                {% else %}
+                                                    <form style="float:right; padding-left: 1em;" action="/accounts/google/login/" method="POST">
+                                                        {% csrf_token %}
+                                                        <button type="submit" class="btn btn-google btn-sm">
+                                                            <i class="fab fa-google fa-fw"></i> Log In
+                                                        </button>
+                                                    </form>
+                                                {% endif %}
+                                                <form style="float:right; padding-left: 1em;" action="/" method="POST">
+                                                    {% csrf_token %}
+                                                    <input type="hidden" name="start_over" value="true">
+                                                    <button type="submit" class="btn btn-secondary btn-sm">
+                                                        Start Over
+                                                    </button>
+                                                </form>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </div>
+                                <!-- Card Body -->
+                                <div class="card-body">
+                                    <div id="card_body_content_wrapper_name">
+                                        <table width="100%" height="100%">
+                                            <form class="user">
+                                                <div class="form-group">
+                                                    <input type="email" class="form-control form-control-user"
+                                                        id="first_name" aria-describedby="firstNameHelp"
+                                                        placeholder="Enter your first name">
+                                                </div>
+                                            </form>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="card shadow mb-4">
+                                <div class="card-header py-3">
+                                    <h6 class="m-0 font-weight-bold text-primary">Your selections</h6>
+                                </div>
 
+                                <!-- Card Body -->
+                                <div class="card-body">
+                                    <div id="card_body_content_wrapper">
+                                        <table width="100%" height="100%">
+                                            <tr>
+                                                <th>Lens Types</th>
+                                            </tr>
+                                            {% for lens_type in lens_types %}
+                                                {% if lens_type.name in request.session %}
+                                                    <tr>
+                                                        <td style="padding-bottom:1em">
+                                                            {{ lens_type.name }}
+                                                        </td>
+                                                        <td style="padding-bottom:1em">
+                                                            <span style="color:green">{{ lens_type.default_price }}</span>
+                                                        </td>
+                                                        <td style="padding-bottom:1em">
+                                                            <form action="/" method="POST">
+                                                                {% csrf_token %}
+                                                                <input type="hidden" name="no_{{ lens_type.name }}" value="true">
+                                                                <button type="submit" class="btn btn-danger btn-sm">X</button>
+                                                            </form>
+                                                        </td>
+                                                    </tr>
+                                                {% endif %}
+                                            {% endfor %}
+                                            <tr>
+                                                <th>Lens Materials</th>
+                                            </tr>
+                                            {% for lens_material in lens_materials %}
+                                                {% if lens_material.name in request.session %}
+                                                    <tr>
+                                                        <td style="padding-bottom:1em">
+                                                            {{ lens_material.name }}
+                                                        </td>
+                                                        <td style="padding-bottom:1em">
+                                                            <span style="color:green">{{ lens_material.default_price }}</span>
+                                                        </td>
+                                                        <td style="padding-bottom:1em">
+                                                            <form action="/" method="POST">
+                                                                {% csrf_token %}
+                                                                <input type="hidden" name="no_{{ lens_material.name }}" value="true">
+                                                                <button type="submit" class="btn btn-danger btn-sm">X</button>
+                                                            </form>
+                                                        </td>
+                                                    </tr>
+                                                {% endif %}
+                                            {% endfor %}
+                                            <tr>
+                                                <th>Lens Add-Ons</th>
+                                            </tr>
+                                            {% for lens_add_on in lens_add_ons %}
+                                                {% if lens_add_on.name in request.session %}
+                                                    <tr>
+                                                        <td style="padding-bottom:1em">
+                                                            {{ lens_add_on.name }}
+                                                        </td>
+                                                        <td style="padding-bottom:1em">
+                                                            <span style="color:green">{{ lens_add_on.default_price }}</span>
+                                                        </td>
+                                                        <td style="padding-bottom:1em">
+                                                            <form action="/" method="POST">
+                                                                {% csrf_token %}
+                                                                <input type="hidden" name="no_{{ lens_add_on.name }}" value="true">
+                                                                <button type="submit" class="btn btn-danger btn-sm">X</button>
+                                                            </form>
+                                                        </td>
+                                                    </tr>
+                                                {% endif %}
+                                            {% endfor %}
+                                            <tr>
+                                                <th>Lens Packages</th>
+                                            </tr>
+                                            {% for lens_package in lens_packages %}
+                                                {% if lens_package.name in request.session %}
+                                                    <tr>
+                                                        <td style="padding-bottom:1em">
+                                                            {{ lens_package.name }}
+                                                        </td>
+                                                        <td style="padding-bottom:1em">
+                                                            <span style="color:green">{{ lens_package.default_price }}</span>
+                                                        </td>
+                                                        <td style="padding-bottom:1em">
+                                                            <form action="/" method="POST">
+                                                                {% csrf_token %}
+                                                                <input type="hidden" name="no_{{ lens_package.name }}" value="true">
+                                                                <button type="submit" class="btn btn-danger btn-sm">X</button>
+                                                            </form>
+                                                        </td>
+                                                    </tr>
+                                                {% endif %}
+                                            {% endfor %}
+                                        </table>
+                                        {% if request.session.keys %}
+                                            <form style="float:right; padding-left: 1em;" action="/" method="POST">
+                                                {% csrf_token %}
+                                                <input type="hidden" name="send_to_front" value="true">
+                                                <button type="submit" class="btn btn-success btn-sm">
+                                                    I'm Done!
+                                                </button>
+                                            </form>
+                                        {% endif %}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                         <div class="col-xl-8 col-lg-7">
                             <div class="card shadow mb-4">
                                 <div class="card-header py-3">
@@ -159,156 +317,6 @@
                                             {% endif %}
                                         </table>
                                     </row>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-xl-4 col-lg-5">
-                            <div class="card shadow mb-4">
-                                <!-- Card Header - Dropdown -->
-                                <div class="card-header">
-                                    <table width="100%">
-                                        <tr>
-                                            <td style="text-align:right;">
-                                                {% if user.is_authenticated %}
-                                                    <form style="float:right; padding-left: 1em;" action="/accounts/logout/" method="POST">
-                                                        {% csrf_token %}
-                                                        <button type="submit" class="btn btn-google btn-sm">
-                                                            Log out, {{ user.first_name }}
-                                                        </button>
-                                                    </form>
-                                                {% else %}
-                                                    <form style="float:right; padding-left: 1em;" action="/accounts/google/login/" method="POST">
-                                                        {% csrf_token %}
-                                                        <button type="submit" class="btn btn-google btn-sm">
-                                                            <i class="fab fa-google fa-fw"></i> Log In
-                                                        </button>
-                                                    </form>
-                                                {% endif %}
-                                                <form style="float:right; padding-left: 1em;" action="/" method="POST">
-                                                    {% csrf_token %}
-                                                    <input type="hidden" name="start_over" value="true">
-                                                    <button type="submit" class="btn btn-secondary btn-sm">
-                                                        Start Over
-                                                    </button>
-                                                </form>
-                                            </td>
-                                        </tr>
-                                    </table>
-                                </div>
-                                <div class="card-header py-3">
-                                    <h6 class="m-0 font-weight-bold text-primary">Your selections</h6>
-                                </div>
-                                <!-- Card Body -->
-                                <div class="card-body">
-                                    <div id="card_body_content_wrapper">
-                                        <table width="100%" height="100%">
-                                            {% if request.session.keys %}
-                                                <tr>
-                                                    <th>Lens Types</th>
-                                                </tr>
-                                                {% for lens_type in lens_types %}
-                                                    {% if lens_type.name in request.session %}
-                                                        <tr>
-                                                            <td style="padding-bottom:1em">
-                                                                {{ lens_type.name }}
-                                                            </td>
-                                                            <td style="padding-bottom:1em">
-                                                                <span style="color:green">{{ lens_type.default_price }}</span>
-                                                            </td>
-                                                            <td style="padding-bottom:1em">
-                                                                <form action="/" method="POST">
-                                                                    {% csrf_token %}
-                                                                    <input type="hidden" name="no_{{ lens_type.name }}" value="true">
-                                                                    <button type="submit" class="btn btn-danger btn-sm">X</button>
-                                                                </form>
-                                                            </td>
-                                                        </tr>
-                                                    {% endif %}
-                                                {% endfor %}
-                                            {% endif %}
-                                            {% if request.session.keys %}
-                                                <tr>
-                                                    <th>Lens Materials</th>
-                                                </tr>
-                                                {% for lens_material in lens_materials %}
-                                                    {% if lens_material.name in request.session %}
-                                                        <tr>
-                                                            <td style="padding-bottom:1em">
-                                                                {{ lens_material.name }}
-                                                            </td>
-                                                            <td style="padding-bottom:1em">
-                                                                <span style="color:green">{{ lens_material.default_price }}</span>
-                                                            </td>
-                                                            <td style="padding-bottom:1em">
-                                                                <form action="/" method="POST">
-                                                                    {% csrf_token %}
-                                                                    <input type="hidden" name="no_{{ lens_material.name }}" value="true">
-                                                                    <button type="submit" class="btn btn-danger btn-sm">X</button>
-                                                                </form>
-                                                            </td>
-                                                        </tr>
-                                                    {% endif %}
-                                                {% endfor %}
-                                            {% endif %}
-                                            {% if request.session.keys %}
-                                                <tr>
-                                                    <th>Lens Add-Ons</th>
-                                                </tr>
-                                                {% for lens_add_on in lens_add_ons %}
-                                                    {% if lens_add_on.name in request.session %}
-                                                        <tr>
-                                                            <td style="padding-bottom:1em">
-                                                                {{ lens_add_on.name }}
-                                                            </td>
-                                                            <td style="padding-bottom:1em">
-                                                                <span style="color:green">{{ lens_add_on.default_price }}</span>
-                                                            </td>
-                                                            <td style="padding-bottom:1em">
-                                                                <form action="/" method="POST">
-                                                                    {% csrf_token %}
-                                                                    <input type="hidden" name="no_{{ lens_add_on.name }}" value="true">
-                                                                    <button type="submit" class="btn btn-danger btn-sm">X</button>
-                                                                </form>
-                                                            </td>
-                                                        </tr>
-                                                    {% endif %}
-                                                {% endfor %}
-                                            {% endif %}
-                                            {% if request.session.keys %}
-                                                <tr>
-                                                    <th>Lens Packages</th>
-                                                </tr>
-                                                {% for lens_package in lens_packages %}
-                                                    {% if lens_package.name in request.session %}
-                                                        <tr>
-                                                            <td style="padding-bottom:1em">
-                                                                {{ lens_package.name }}
-                                                            </td>
-                                                            <td style="padding-bottom:1em">
-                                                                <span style="color:green">{{ lens_package.default_price }}</span>
-                                                            </td>
-                                                            <td style="padding-bottom:1em">
-                                                                <form action="/" method="POST">
-                                                                    {% csrf_token %}
-                                                                    <input type="hidden" name="no_{{ lens_package.name }}" value="true">
-                                                                    <button type="submit" class="btn btn-danger btn-sm">X</button>
-                                                                </form>
-                                                            </td>
-                                                        </tr>
-                                                    {% endif %}
-                                                {% endfor %}
-                                            {% endif %}
-                                        </table>
-                                        {% if request.session.keys %}
-                                            <form style="float:right; padding-left: 1em;" action="/" method="POST">
-                                                {% csrf_token %}
-                                                <input type="hidden" name="send_to_front" value="true">
-                                                <button type="submit" class="btn btn-success btn-sm">
-                                                    I'm Done!
-                                                </button>
-                                            </form>
-                                        {% endif %}
-                                    </div>
                                 </div>
                             </div>
                         </div>
