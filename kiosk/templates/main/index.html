@@ -241,6 +241,7 @@
                                                         <div style="float:left; display:block">
                                                             <h2>Lens Types</h2>
                                                             {% for lens_type in lens_types %}
+                                                                <h4>{{ lens_type.name }}</h4>
                                                                 <div style="float: left; padding-top: 1em; padding-right:1em;">
                                                                     <form action="/" method="POST" style="padding-right:1em;">
                                                                         {% csrf_token %}
@@ -266,6 +267,7 @@
                                                         <div style="float:left; display:block">
                                                             <h2>Lens Materials</h2>
                                                             {% for lens_material in lens_materials %}
+                                                                <h4>{{ lens_material.name }}</h4>
                                                                 <div style="float: left; padding-top: 1em; padding-right:1em;">
                                                                     <form action="/" method="POST" style="padding-right:1em;">
                                                                         {% csrf_token %}
