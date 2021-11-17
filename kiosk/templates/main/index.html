@@ -241,8 +241,8 @@
                                                         <div style="float:left; display:block">
                                                             <h2>Lens Types</h2>
                                                             {% for lens_type in lens_types %}
-                                                                <h4>{{ lens_type.name }}</h4>
                                                                 <div style="float: left; padding-top: 1em; padding-right:1em;">
+                                                                    <h4>{{ lens_type.name }}</h4>
                                                                     <form action="/" method="POST" style="padding-right:1em;">
                                                                         {% csrf_token %}
                                                                         <input type="hidden" name="{{ lens_type.name }}" value="true">
@@ -267,8 +267,8 @@
                                                         <div style="float:left; display:block">
                                                             <h2>Lens Materials</h2>
                                                             {% for lens_material in lens_materials %}
-                                                                <h4>{{ lens_material.name }}</h4>
                                                                 <div style="float: left; padding-top: 1em; padding-right:1em;">
+                                                                    <h4>{{ lens_material.name }}</h4>
                                                                     <form action="/" method="POST" style="padding-right:1em;">
                                                                         {% csrf_token %}
                                                                         <input type="hidden" name="{{ lens_material.name }}" value="true">
@@ -293,8 +293,8 @@
                                                         <div style="float:left; display:block">
                                                             <h2>Lens Add-Ons</h2>
                                                             {% for lens_add_on in lens_add_ons %}
-                                                                <h4>{{ lens_add_on.name }}</h4>
                                                                 <div style="float: left; padding-top: 1em; padding-right:1em;">
+                                                                    <h4>{{ lens_add_on.name }}</h4>
                                                                     <form action="/" method="POST" style="padding-right:1em;">
                                                                         {% csrf_token %}
                                                                         <input type="hidden" name="{{ lens_add_on.name }}" value="true">
@@ -319,8 +319,8 @@
                                                         <div style="float:left; display:block">
                                                             <h2>Lens Packages</h2>
                                                             {% for lens_package in lens_package %}
-                                                                <h4>{{ lens_package.name }}</h4>
                                                                 <div style="float: left; padding-top: 1em; padding-right:1em;">
+                                                                    <h4>{{ lens_package.name }}</h4>
                                                                     <form action="/" method="POST" style="padding-right:1em;">
                                                                         {% csrf_token %}
                                                                         <input type="hidden" name="{{ lens_package.name }}" value="true">
