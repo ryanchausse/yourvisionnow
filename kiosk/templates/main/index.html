@@ -86,13 +86,26 @@
                                 <div class="card-body">
                                     <div id="card_body_content_wrapper_name">
                                         <table width="100%" height="100%">
-                                            <form class="user">
-                                                <div class="form-group">
-                                                    <input type="email" class="form-control form-control-user"
-                                                        id="first_name" aria-describedby="firstNameHelp"
-                                                        placeholder="Enter your first name">
-                                                </div>
-                                            </form>
+                                            {% if first_name in request.session %}
+                                                <form class="user" action="/" method="post">
+                                                    {% csrf_token %}
+                                                    <div class="form-group">
+                                                        <input type="text" class="form-control form-control-user"
+                                                            id="first_name" name="first_name" aria-describedby="firstNameHelp"
+                                                            placeholder="Enter your first name">
+                                                    </div>
+                                                </form>
+                                            {% else %}
+                                                <form class="user" action="/" method="post">
+                                                    {% csrf_token %}
+                                                    <div class="form-group">
+                                                        <input type="text" class="form-control form-control-user"
+                                                            id="first_name" name="first_name" aria-describedby="firstNameHelp"
+                                                            placeholder="Enter your first name"
+                                                            value="{{ first_name }}">
+                                                    </div>
+                                                </form>
+                                            {% endif %}
                                         </table>
                                     </div>
                                 </div>

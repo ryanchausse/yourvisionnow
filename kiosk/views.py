@@ -5,6 +5,7 @@ from django.views.generic import TemplateView
 from django.shortcuts import redirect
 from django.shortcuts import render
 from django.template import RequestContext
+import logging
 from .models import LensType
 from .models import LensMaterial
 from .models import LensAddOns
@@ -18,6 +19,7 @@ class KioskPage(TemplateView):
     First page at root - kiosk view
     """
     template_name = 'index.html'
+    logger = logging.getLogger(__name__)
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -29,6 +31,10 @@ class KioskPage(TemplateView):
 
     def post(self, request, *args, **kwargs):
         context = self.get_context_data(**kwargs)
+        if 'first_name' in request.POST:
+            first_name = request.POST.get('first_name')
+            request.session['first_name'] = first_name
+            context['first_name'] = first_name
         if 'start_over' in request.POST and request.POST['start_over'] == 'true':
             # Delete session
             request.session.flush()
@@ -65,7 +71,11 @@ class KioskPage(TemplateView):
                     del request.session[lens_package.name]
             if request.POST.get(lens_package.name) and request.POST.get(lens_package.name) not in request.session:
                 request.session[lens_package.name] = True
-        print(request.session.keys())
+        for key, value in request.session.items():
+            print('{} => {}'.format(key, value))
+        for item in context:
+            print(type(item))
+            print('item with value {} found in context'.format(item))
         return render(request, 'index.html', context)
 
 
