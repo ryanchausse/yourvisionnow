@@ -107,9 +107,8 @@ class CustomerOrder(models.Model):
 class Order(models.Model):
     name = models.CharField(max_length=60)
     customer = models.ForeignKey(Customer, null=True, on_delete=models.CASCADE)
+    lens_package = models.ForeignKey(LensPackage, on_delete=models.CASCADE)
     notes = models.CharField(max_length=255)
-    promo_price = models.DecimalField(max_digits=8, decimal_places=2)
-    retail_price = models.DecimalField(max_digits=8, decimal_places=2)
 
     def __str__(self):
         return self.name

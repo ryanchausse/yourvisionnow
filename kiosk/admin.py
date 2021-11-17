@@ -1,7 +1,6 @@
 from django.contrib import admin
 from .models import Customer
 from .models import Order
-from .models import CustomerOrder
 from .models import LensType
 from .models import LensMaterial
 from .models import LensAddOns
@@ -12,7 +11,6 @@ admin.site.register(Customer)
 admin.site.register(LensType)
 admin.site.register(LensMaterial)
 admin.site.register(LensAddOns)
-admin.site.register(CustomerOrder)
 admin.site.register(LensPackage)
 admin.site.register(LensPackageItem)
 admin.site.register(Order)
