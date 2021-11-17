@@ -10,8 +10,6 @@ from .models import LensType
 from .models import LensMaterial
 from .models import LensAddOns
 from .models import LensPackage
-from .models import Customer
-from .models import CustomerLensPackage
 
 
 class KioskPage(TemplateView):
@@ -67,11 +65,6 @@ class KioskPage(TemplateView):
                     del request.session[lens_package.name]
             if request.POST.get(lens_package.name) and request.POST.get(lens_package.name) not in request.session:
                 request.session[lens_package.name] = True
-        for key, value in request.session.items():
-            print('{} => {}'.format(key, value))
-        for item in context:
-            print(type(item))
-            print('item with value {} found in context'.format(item))
         if 'first_name' in request.POST:
             first_name = request.POST.get('first_name')
             request.session['first_name'] = first_name

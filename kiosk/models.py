@@ -49,9 +49,6 @@ class LensAddOns(models.Model):
 class LensPackage(models.Model):
     name = models.CharField(max_length=60)
     description = models.CharField(max_length=255)
-    lens_type = models.ForeignKey(LensType, on_delete=models.CASCADE)
-    lens_material = models.ForeignKey(LensMaterial, on_delete=models.CASCADE)
-    lens_add_on = models.ForeignKey(LensAddOns, on_delete=models.CASCADE)
     promo_price = models.DecimalField(max_digits=8, decimal_places=2)
     retail_price = models.DecimalField(max_digits=8, decimal_places=2)
     static_img_url = models.CharField(max_length=255, default='multiple_lenses.jpg')
@@ -65,9 +62,25 @@ class LensPackage(models.Model):
         verbose_name_plural = 'Lens Packages'
 
 
+class LensPackageItem(models.Model):
+    # Relational table
+    lens_package = models.ForeignKey(LensPackage, on_delete=models.CASCADE, null=True)
+    lens_type = models.ForeignKey(LensType, on_delete=models.CASCADE, null=True)
+    lens_material = models.ForeignKey(LensMaterial, on_delete=models.CASCADE, null=True)
+    lens_add_on = models.ForeignKey(LensAddOns, on_delete=models.CASCADE, null=True)
+
+    def __str__(self):
+        return f'{self.lens_package} / {self.lens_type} / {self.lens_material} / {self.lens_add_on }'
+
+    class Meta:
+        verbose_name = 'Lens Package Items'
+        verbose_name_plural = 'Lens Package Items'
+
+
 class Customer(models.Model):
     first_name = models.CharField(max_length=255)
-    last_name = models.CharField(max_length=255)
+    last_name = models.CharField(max_length=255, null=True)
+    email = models.CharField(max_length=255, null=True)
 
     def __str__(self):
         return f'{self.first_name} {self.last_name}'
@@ -77,7 +90,8 @@ class Customer(models.Model):
         verbose_name_plural = 'Customers'
 
 
-class CustomerLensPackage(models.Model):
+class CustomerOrder(models.Model):
+    # Relational table
     order_name = models.CharField(max_length=255, null=True)
     customer = models.ForeignKey(Customer, on_delete=models.CASCADE)
     lens_package = models.ForeignKey(LensPackage, on_delete=models.CASCADE)
@@ -86,5 +100,20 @@ class CustomerLensPackage(models.Model):
         return self.order_name
 
     class Meta:
-        verbose_name = 'Customer and their Lens Package'
-        verbose_name_plural = 'Customers and their Lens Packages'
+        verbose_name = 'Customer and their Order'
+        verbose_name_plural = 'Customers and their Order'
+
+
+class Order(models.Model):
+    name = models.CharField(max_length=60)
+    customer = models.ForeignKey(Customer, null=True, on_delete=models.CASCADE)
+    notes = models.CharField(max_length=255)
+    promo_price = models.DecimalField(max_digits=8, decimal_places=2)
+    retail_price = models.DecimalField(max_digits=8, decimal_places=2)
+
+    def __str__(self):
+        return self.name
+
+    class Meta:
+        verbose_name = 'Order'
+        verbose_name_plural = 'Orders'
