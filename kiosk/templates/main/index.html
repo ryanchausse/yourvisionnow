@@ -90,10 +90,7 @@
                                                 <form class="user" action="/" method="post">
                                                     {% csrf_token %}
                                                     <div class="form-group">
-                                                        <input type="text" class="form-control form-control-user"
-                                                            id="first_name" name="first_name" aria-describedby="firstNameHelp"
-                                                            placeholder="Enter your first name"
-                                                            value="{{ user.first_name }}">
+                                                        <p>Welcome to Your Vision Now, {{ user.first_name }}</p>
                                                     </div>
                                                 </form>
                                             {% elif first_name in request.session %}
