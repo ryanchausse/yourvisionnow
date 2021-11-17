@@ -73,8 +73,8 @@ class LensPackageItem(models.Model):
         return f'{self.lens_package} / {self.lens_type} / {self.lens_material} / {self.lens_add_on }'
 
     class Meta:
-        verbose_name = 'Lens Package Items'
-        verbose_name_plural = 'Lens Package Items'
+        verbose_name = 'Lens Packages and their items'
+        verbose_name_plural = 'Lens Packages and their items'
 
 
 class Customer(models.Model):
