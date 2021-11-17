@@ -31,10 +31,6 @@ class KioskPage(TemplateView):
 
     def post(self, request, *args, **kwargs):
         context = self.get_context_data(**kwargs)
-        if 'first_name' in request.POST:
-            first_name = request.POST.get('first_name')
-            request.session['first_name'] = first_name
-            context['first_name'] = first_name
         if 'start_over' in request.POST and request.POST['start_over'] == 'true':
             # Delete session
             request.session.flush()
@@ -76,6 +72,13 @@ class KioskPage(TemplateView):
         for item in context:
             print(type(item))
             print('item with value {} found in context'.format(item))
+        if 'first_name' in request.POST:
+            first_name = request.POST.get('first_name')
+            request.session['first_name'] = first_name
+            context['first_name'] = first_name
+        elif 'first_name' in request.session:
+            context['first_name'] = request.session['first_name']
+
         return render(request, 'index.html', context)
 
 
