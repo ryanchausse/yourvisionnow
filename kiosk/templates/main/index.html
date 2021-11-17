@@ -241,21 +241,23 @@
                                                         <div style="float:left; display:block">
                                                             <h2>Lens Types</h2>
                                                             {% for lens_type in lens_types %}
-                                                                <div style="float: left; padding-top: 1em; padding-right:1em;">
-                                                                    <h4>{{ lens_type.name }}</h4>
-                                                                    <form action="/" method="POST" style="padding-right:1em;">
-                                                                        {% csrf_token %}
-                                                                        <input type="hidden" name="{{ lens_type.name }}" value="true">
-                                                                        {% if lens_type.uploaded_img %}
-                                                                            <input type="image" src="{{ lens_type.uploaded_img.url }}" alt="{{ lens_type.name }}" style="max-height: 167px; max-width:300px;" />
-                                                                        {% elif lens_type.static_img_url %}
-                                                                            <input type="image" src="{% static 'img/'|add:lens_type.static_img_url %}" alt="{{ lens_type.name }}" style="max-height: 167px; max-width:300px;" />
-                                                                        {% else %}
-                                                                            <input type="image" src="" alt="Lens Type" style="max-height: 167px; max-width:300px;" />
-                                                                        {% endif %}
-                                                                    </form>
-                                                                    <p>{{ lens_type.description }}</p>
-                                                                </div>
+                                                                {% if lens_type.name not in request.session %}
+                                                                    <div style="float: left; padding-top: 1em; padding-right:1em;">
+                                                                        <h4>{{ lens_type.name }}</h4>
+                                                                        <form action="/" method="POST" style="padding-right:1em;">
+                                                                            {% csrf_token %}
+                                                                            <input type="hidden" name="{{ lens_type.name }}" value="true">
+                                                                            {% if lens_type.uploaded_img %}
+                                                                                <input type="image" src="{{ lens_type.uploaded_img.url }}" alt="{{ lens_type.name }}" style="max-height: 167px; max-width:300px;" />
+                                                                            {% elif lens_type.static_img_url %}
+                                                                                <input type="image" src="{% static 'img/'|add:lens_type.static_img_url %}" alt="{{ lens_type.name }}" style="max-height: 167px; max-width:300px;" />
+                                                                            {% else %}
+                                                                                <input type="image" src="" alt="Lens Type" style="max-height: 167px; max-width:300px;" />
+                                                                            {% endif %}
+                                                                        </form>
+                                                                        <p>{{ lens_type.description }}</p>
+                                                                    </div>
+                                                                {% endif %}
                                                             {% endfor %}
                                                         </div>
                                                     </td>
@@ -267,21 +269,23 @@
                                                         <div style="float:left; display:block">
                                                             <h2>Lens Materials</h2>
                                                             {% for lens_material in lens_materials %}
-                                                                <div style="float: left; padding-top: 1em; padding-right:1em;">
-                                                                    <h4>{{ lens_material.name }}</h4>
-                                                                    <form action="/" method="POST" style="padding-right:1em;">
-                                                                        {% csrf_token %}
-                                                                        <input type="hidden" name="{{ lens_material.name }}" value="true">
-                                                                        {% if lens_material.uploaded_img %}
-                                                                            <input type="image" src="{{ lens_material.uploaded_img.url }}" alt="{{ lens_material.name }}" style="max-height: 167px; max-width:300px;" />
-                                                                        {% elif lens_material.static_img_url %}
-                                                                            <input type="image" src="{% static 'img/'|add:lens_material.static_img_url %}" alt="{{ lens_material.name }}" style="max-height: 167px; max-width:300px;" />
-                                                                        {% else %}
-                                                                            <input type="image" src="" alt="Lens Material" style="max-height: 167px; max-width:300px;" />
-                                                                        {% endif %}
-                                                                    </form>
-                                                                    <p>{{ lens_material.description }}</p>
-                                                                </div>
+                                                                {% if lens_material.name not in request.session %}
+                                                                    <div style="float: left; padding-top: 1em; padding-right:1em;">
+                                                                        <h4>{{ lens_material.name }}</h4>
+                                                                        <form action="/" method="POST" style="padding-right:1em;">
+                                                                            {% csrf_token %}
+                                                                            <input type="hidden" name="{{ lens_material.name }}" value="true">
+                                                                            {% if lens_material.uploaded_img %}
+                                                                                <input type="image" src="{{ lens_material.uploaded_img.url }}" alt="{{ lens_material.name }}" style="max-height: 167px; max-width:300px;" />
+                                                                            {% elif lens_material.static_img_url %}
+                                                                                <input type="image" src="{% static 'img/'|add:lens_material.static_img_url %}" alt="{{ lens_material.name }}" style="max-height: 167px; max-width:300px;" />
+                                                                            {% else %}
+                                                                                <input type="image" src="" alt="Lens Material" style="max-height: 167px; max-width:300px;" />
+                                                                            {% endif %}
+                                                                        </form>
+                                                                        <p>{{ lens_material.description }}</p>
+                                                                    </div>
+                                                                {% endif %}
                                                             {% endfor %}
                                                         </div>
                                                     </td>
@@ -293,21 +297,23 @@
                                                         <div style="float:left; display:block">
                                                             <h2>Lens Add-Ons</h2>
                                                             {% for lens_add_on in lens_add_ons %}
-                                                                <div style="float: left; padding-top: 1em; padding-right:1em;">
-                                                                    <h4>{{ lens_add_on.name }}</h4>
-                                                                    <form action="/" method="POST" style="padding-right:1em;">
-                                                                        {% csrf_token %}
-                                                                        <input type="hidden" name="{{ lens_add_on.name }}" value="true">
-                                                                        {% if lens_add_on.uploaded_img %}
-                                                                            <input type="image" src="{{ lens_add_on.uploaded_img.url }}" alt="{{ lens_add_on.name }}" style="max-height: 167px; max-width:300px;" />
-                                                                        {% elif lens_add_on.static_img_url %}
-                                                                            <input type="image" src="{% static 'img/'|add:lens_add_on.static_img_url %}" alt="{{ lens_add_on.name }}" style="max-height: 167px; max-width:300px;" />
-                                                                        {% else %}
-                                                                            <input type="image" src="" alt="Lens Add-On" style="max-height: 167px; max-width:300px;" />
-                                                                        {% endif %}
-                                                                    </form>
-                                                                    <p>{{ lens_add_on.description }}</p>
-                                                                </div>
+                                                                {% if lens_add_on.name not in request.session %}
+                                                                    <div style="float: left; padding-top: 1em; padding-right:1em;">
+                                                                        <h4>{{ lens_add_on.name }}</h4>
+                                                                        <form action="/" method="POST" style="padding-right:1em;">
+                                                                            {% csrf_token %}
+                                                                            <input type="hidden" name="{{ lens_add_on.name }}" value="true">
+                                                                            {% if lens_add_on.uploaded_img %}
+                                                                                <input type="image" src="{{ lens_add_on.uploaded_img.url }}" alt="{{ lens_add_on.name }}" style="max-height: 167px; max-width:300px;" />
+                                                                            {% elif lens_add_on.static_img_url %}
+                                                                                <input type="image" src="{% static 'img/'|add:lens_add_on.static_img_url %}" alt="{{ lens_add_on.name }}" style="max-height: 167px; max-width:300px;" />
+                                                                            {% else %}
+                                                                                <input type="image" src="" alt="Lens Add-On" style="max-height: 167px; max-width:300px;" />
+                                                                            {% endif %}
+                                                                        </form>
+                                                                        <p>{{ lens_add_on.description }}</p>
+                                                                    </div>
+                                                                {% endif %}
                                                             {% endfor %}
                                                         </div>
                                                     </td>
@@ -319,21 +325,23 @@
                                                         <div style="float:left; display:block">
                                                             <h2>Lens Packages</h2>
                                                             {% for lens_package in lens_package %}
-                                                                <div style="float: left; padding-top: 1em; padding-right:1em;">
-                                                                    <h4>{{ lens_package.name }}</h4>
-                                                                    <form action="/" method="POST" style="padding-right:1em;">
-                                                                        {% csrf_token %}
-                                                                        <input type="hidden" name="{{ lens_package.name }}" value="true">
-                                                                        {% if lens_package.uploaded_img %}
-                                                                            <input type="image" src="{{ lens_package.uploaded_img.url }}" alt="{{ lens_package.name }}" style="max-height: 167px; max-width:300px;" />
-                                                                        {% elif lens_package.static_img_url %}
-                                                                            <input type="image" src="{% static 'img/'|add:lens_type.static_img_url %}" alt="{{ lens_package.name }}" style="max-height: 167px; max-width:300px;" />
-                                                                        {% else %}
-                                                                            <input type="image" src="" alt="Lens Package" style="max-height: 167px; max-width:300px;" />
-                                                                        {% endif %}
-                                                                    </form>
-                                                                    <p>{{ lens_package.description }}</p>
-                                                                </div>
+                                                                {% if lens_package.name not in request.session %}
+                                                                    <div style="float: left; padding-top: 1em; padding-right:1em;">
+                                                                        <h4>{{ lens_package.name }}</h4>
+                                                                        <form action="/" method="POST" style="padding-right:1em;">
+                                                                            {% csrf_token %}
+                                                                            <input type="hidden" name="{{ lens_package.name }}" value="true">
+                                                                            {% if lens_package.uploaded_img %}
+                                                                                <input type="image" src="{{ lens_package.uploaded_img.url }}" alt="{{ lens_package.name }}" style="max-height: 167px; max-width:300px;" />
+                                                                            {% elif lens_package.static_img_url %}
+                                                                                <input type="image" src="{% static 'img/'|add:lens_type.static_img_url %}" alt="{{ lens_package.name }}" style="max-height: 167px; max-width:300px;" />
+                                                                            {% else %}
+                                                                                <input type="image" src="" alt="Lens Package" style="max-height: 167px; max-width:300px;" />
+                                                                            {% endif %}
+                                                                        </form>
+                                                                        <p>{{ lens_package.description }}</p>
+                                                                    </div>
+                                                                {% endif %}
                                                             {% endfor %}
                                                         </div>
                                                     </td>
