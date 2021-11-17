@@ -90,24 +90,10 @@ class Customer(models.Model):
         verbose_name_plural = 'Customers'
 
 
-class CustomerOrder(models.Model):
-    # Relational table
-    order_name = models.CharField(max_length=255, null=True)
-    customer = models.ForeignKey(Customer, on_delete=models.CASCADE)
-    lens_package = models.ForeignKey(LensPackage, on_delete=models.CASCADE)
-
-    def __str__(self):
-        return self.order_name
-
-    class Meta:
-        verbose_name = 'Customer and their Order'
-        verbose_name_plural = 'Customers and their Order'
-
-
 class Order(models.Model):
     name = models.CharField(max_length=60)
-    customer = models.ForeignKey(Customer, null=True, on_delete=models.CASCADE)
-    lens_package = models.ForeignKey(LensPackage, on_delete=models.CASCADE)
+    customer = models.ForeignKey(Customer, default=None, on_delete=models.CASCADE)
+    lens_package = models.ForeignKey(LensPackage, default=None, on_delete=models.CASCADE)
     notes = models.CharField(max_length=255)
 
     def __str__(self):
