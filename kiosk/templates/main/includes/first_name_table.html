@@ -1,0 +1,38 @@
+{% load static %}
+{% if user.is_authenticated %}
+    <form class="user" action="/" method="post">
+        {% csrf_token %}
+        <div class="form-group">
+            <p>Welcome to Your Vision Now, {{ user.first_name }}</p>
+        </div>
+    </form>
+{% elif first_name in request.session %}
+    <form class="user" action="/" method="post">
+        {% csrf_token %}
+        <div class="form-group">
+            <input type="text" class="form-control form-control-user"
+                id="first_name" name="first_name" aria-describedby="firstNameHelp"
+                placeholder="Enter your first name"
+                value="{{ request.session.first_name }}">
+        </div>
+    </form>
+{% elif first_name %}
+    <form class="user" action="/" method="post">
+        {% csrf_token %}
+        <div class="form-group">
+            <input type="text" class="form-control form-control-user"
+                id="first_name" name="first_name" aria-describedby="firstNameHelp"
+                placeholder="Enter your first name"
+                value="{{ first_name }}">
+        </div>
+    </form>
+{% else %}
+    <form class="user" action="/" method="post">
+        {% csrf_token %}
+        <div class="form-group">
+            <input type="text" class="form-control form-control-user"
+                id="first_name" name="first_name" aria-describedby="firstNameHelp"
+                placeholder="Enter your first name" >
+        </div>
+    </form>
+{% endif %}
