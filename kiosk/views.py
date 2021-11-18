@@ -6,10 +6,14 @@ from django.shortcuts import redirect
 from django.shortcuts import render
 from django.template import RequestContext
 import logging
+from django.conf import settings
+from .models import Customer
 from .models import LensType
 from .models import LensMaterial
 from .models import LensAddOns
 from .models import LensPackage
+from .models import LensPackageItem
+from .models import Order
 
 
 class KioskPage(TemplateView):
@@ -32,13 +36,18 @@ class KioskPage(TemplateView):
         if 'start_over' in request.POST and request.POST['start_over'] == 'true':
             # Delete session
             request.session.flush()
-        if 'send_to_front' in request.POST and request.POST['send_to_front'] == 'true':
+        if 'done' in request.POST and request.POST['done'] == 'true':
+            session_info = ''
+            for key, value in request.session.items():
+                session_info += f'{ key }: { value }\n'
+            print(session_info)
+            print(settings.EMAIL_HOST_USER)
             send_mail(
                 'Customer order',
-                'Here is the message.',
-                'test@beta.yourvisionnow.com',
-                ['chausse@gmail.com'],
-                fail_silently=True,
+                f'New order:\n\n{ session_info }',
+                settings.EMAIL_HOST_USER,
+                [settings.EMAIL_HOST_USER],
+                fail_silently=False,
             )
             request.session.flush()
         for lens_type in context['lens_types']:

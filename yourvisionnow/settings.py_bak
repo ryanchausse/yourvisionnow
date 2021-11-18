@@ -12,8 +12,6 @@ https://docs.djangoproject.com/en/3.2/ref/settings/
 
 from pathlib import Path
 import os
-from dotenv import load_dotenv
-load_dotenv()
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -28,7 +26,7 @@ SECRET_KEY = 'django-insecure-n*e&=06f4!s@@9$g1(9wn&a&(795!-s5n6u#r1*+^pvitnyxf+
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['beta.yourvisionnow.com']
+ALLOWED_HOSTS = ['beta.yourvisionnow.com', '127.0.0.1']
 
 
 # Application definition
@@ -45,6 +43,7 @@ INSTALLED_APPS = [
     'allauth.account',
     'allauth.socialaccount',
     'allauth.socialaccount.providers.google',
+    'kiosk',
 ]
 
 MIDDLEWARE = [
@@ -86,17 +85,18 @@ DATABASES = {
 
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
 
-        'NAME': os.getenv('POSTGRES_DATABASE'),
+        'NAME': 'xxxxxxxxxx',
 
-        'USER': os.getenv('POSTGRES_USER'),
+        'USER': 'xxxxxxxxxx',
 
-        'PASSWORD': os.getenv('POSTGRES_PASSWORD'),
+        'PASSWORD': 'xxxxxxxxxx',
 
         'HOST': '127.0.0.1',
 
         'PORT': '5432',
 
     }
+
     # 'default': {
     #     'ENGINE': 'django.db.backends.mysql',
     #     'NAME': os.environ.get('MYSQL_DATABASE'),
@@ -145,16 +145,18 @@ USE_L10N = True
 
 USE_TZ = True
 
-
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.2/howto/static-files/
 
 STATIC_URL = '/static/'
-#STATICFILES_DIRS = [
-#    BASE_DIR / "kiosk/templates/static"
-#]
-STATIC_ROOT = os.path.join(BASE_DIR, 'kiosk/templates/static')
+STATICFILES_DIRS = [
+   BASE_DIR / "kiosk/templates/static"
+]
 
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+MEDIA_URL = '/media/'
+
+# STATIC_ROOT = os.path.join(BASE_DIR, "kiosk/templates/static")
 # Default primary key field type
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
 
@@ -173,8 +175,8 @@ AUTHENTICATION_BACKENDS = [
 SOCIALACCOUNT_PROVIDERS = {
     'google': {
         'APP': {
-            'client_id': 'xxxxxxxxxxxxxxx',
-            'secret': 'xxxxxxxxxxxxxx',
+            'client_id': 'xxxxxxxxxx',
+            'secret': 'xxxxxxxxxx',
             'key': ''
         },
         'SCOPE': [
@@ -187,15 +189,24 @@ SOCIALACCOUNT_PROVIDERS = {
     }
 }
 
-ACCOUNT_USER_MODEL_USERNAME_FIELD = False
+# Social Auth via django-allauth
 ACCOUNT_USERNAME_REQUIRED = False
 ACCOUNT_AUTHENTICATION_METHOD = 'email'
+ACCOUNT_SIGNUP_PASSWORD_VERIFICATION = True
 ACCOUNT_EMAIL_REQUIRED = True
+ACCOUNT_EMAIL_VERIFICATION = False
 ACCOUNT_UNIQUE_EMAIL = True
 ACCOUNT_LOGIN_ATTEMPTS_LIMIT = 5
 ACCOUNT_LOGIN_ATTEMPTS_TIMEOUT = 86400  # 1 day in seconds
+SOCIALACCOUNT_EMAIL_REQUIRED = True
 SOCIALACCOUNT_ADAPTER = 'yourvisionnow.adapters.override_default_login.YourVisionNowSocialAccountAdapter'
 SOCIALACCOUNT_AUTO_SIGNUP = True
-
-ACCOUNT_LOGOUT_REDIRECT_URL = '/'
 LOGIN_REDIRECT_URL = '/'
+ACCOUNT_LOGOUT_REDIRECT_URL = '/'
+
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_PORT = 465
+EMAIL_HOST_USER = 'xxxxxxxxxx'
+EMAIL_HOST_PASSWORD = 'xxxxxxxxxx'
+EMAIL_USE_SSL = True
