@@ -48,6 +48,7 @@ class KioskPage(TemplateView):
                 fail_silently=False,
             )
             request.session.flush()
+
         for lens_type in context['lens_types']:
             if f'no_{lens_type.name}' in request.POST:
                 if request.session[lens_type.name]:
@@ -64,6 +65,14 @@ class KioskPage(TemplateView):
             if request.POST.get(lens_material.name) and request.POST.get(lens_material.name) not in request.session:
                 request.session['lens_material_selected'] = True
                 request.session[lens_material.name] = True
+            if 'no_lens_materials' in request.POST and request.POST.get('no_lens_materials') == 'true':
+                if lens_material.name in request.session:
+                    del request.session[lens_material.name]
+                request.session['lens_material_selected'] = True
+                request.session['no_lens_materials'] = True
+            if 'reset_lens_materials' in request.POST and request.POST.get('reset_lens_materials') == 'true':
+                request.session['lens_material_selected'] = False
+                request.session['no_lens_materials'] = False
         for lens_add_on in context['lens_add_ons']:
             if f'no_{lens_add_on.name}' in request.POST:
                 if request.session[lens_add_on.name]:
@@ -72,6 +81,14 @@ class KioskPage(TemplateView):
             if request.POST.get(lens_add_on.name) and request.POST.get(lens_add_on.name) not in request.session:
                 request.session['lens_add_on_selected'] = True
                 request.session[lens_add_on.name] = True
+            if 'no_lens_add_ons' in request.POST and request.POST.get('no_lens_add_ons') == 'true':
+                if lens_add_on.name in request.session:
+                    del request.session[lens_add_on.name]
+                request.session['lens_add_on_selected'] = True
+                request.session['no_lens_add_ons'] = True
+            if 'reset_lens_add_ons' in request.POST and request.POST.get('reset_lens_add_ons') == 'true':
+                request.session['lens_add_on_selected'] = False
+                request.session['no_lens_add_ons'] = False
         for lens_package in context['lens_packages']:
             if f'no_{lens_package.name}' in request.POST:
                 if request.session[lens_package.name]:
@@ -80,6 +97,15 @@ class KioskPage(TemplateView):
             if request.POST.get(lens_package.name) and request.POST.get(lens_package.name) not in request.session:
                 request.session['lens_package_selected'] = True
                 request.session[lens_package.name] = True
+            if 'no_lens_packages' in request.POST and request.POST.get('no_lens_packages') == 'true':
+                if lens_package.name in request.session:
+                    del request.session[lens_package.name]
+                request.session['lens_package_selected'] = True
+                request.session['no_lens_packages'] = True
+            if 'reset_lens_packages' in request.POST and request.POST.get('reset_lens_packages') == 'true':
+                request.session['lens_package_selected'] = False
+                request.session['no_lens_packages'] = False
+
         if 'first_name' in request.POST:
             first_name = request.POST.get('first_name')
             request.session['first_name'] = first_name

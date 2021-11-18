@@ -26,4 +26,15 @@
             </div>
         </td>
     </tr>
+    <tr>
+        <td>
+            <div style="float:left; display:block">
+                <form action="/" method="POST" style="padding-right:1em;">
+                    {% csrf_token %}
+                    <input type="hidden" name="no_lens_materials" value="true">
+                    <button type="submit" class="btn btn-sm btn-danger">No Lens Materials</button>
+                </form>
+            </div>
+        </td>
+    </tr>
 {% endif %}
