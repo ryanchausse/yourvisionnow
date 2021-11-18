@@ -40,8 +40,6 @@ class KioskPage(TemplateView):
             session_info = ''
             for key, value in request.session.items():
                 session_info += f'{ key }: { value }\n'
-            print(session_info)
-            print(settings.EMAIL_HOST_USER)
             send_mail(
                 'Customer order',
                 f'New order:\n\n{ session_info }',
@@ -53,26 +51,34 @@ class KioskPage(TemplateView):
         for lens_type in context['lens_types']:
             if f'no_{lens_type.name}' in request.POST:
                 if request.session[lens_type.name]:
+                    request.session['lens_type_selected'] = False
                     del request.session[lens_type.name]
             if request.POST.get(lens_type.name) and request.POST.get(lens_type.name) not in request.session:
+                request.session['lens_type_selected'] = True
                 request.session[lens_type.name] = True
         for lens_material in context['lens_materials']:
             if f'no_{lens_material.name}' in request.POST:
                 if request.session[lens_material.name]:
+                    request.session['lens_material_selected'] = False
                     del request.session[lens_material.name]
             if request.POST.get(lens_material.name) and request.POST.get(lens_material.name) not in request.session:
+                request.session['lens_material_selected'] = True
                 request.session[lens_material.name] = True
         for lens_add_on in context['lens_add_ons']:
             if f'no_{lens_add_on.name}' in request.POST:
                 if request.session[lens_add_on.name]:
+                    request.session['lens_add_on_selected'] = False
                     del request.session[lens_add_on.name]
             if request.POST.get(lens_add_on.name) and request.POST.get(lens_add_on.name) not in request.session:
+                request.session['lens_add_on_selected'] = True
                 request.session[lens_add_on.name] = True
         for lens_package in context['lens_packages']:
             if f'no_{lens_package.name}' in request.POST:
                 if request.session[lens_package.name]:
+                    request.session['lens_package_selected'] = False
                     del request.session[lens_package.name]
             if request.POST.get(lens_package.name) and request.POST.get(lens_package.name) not in request.session:
+                request.session['lens_package_selected'] = True
                 request.session[lens_package.name] = True
         if 'first_name' in request.POST:
             first_name = request.POST.get('first_name')

@@ -1,0 +1,29 @@
+{% load static %}
+{% if lens_types %}
+    <tr>
+        <td>
+            <div style="float:left; display:block">
+                <h2>Lens Types</h2>
+                {% for lens_type in lens_types %}
+                    {% if lens_type.name not in request.session %}
+                        <div style="float: left; padding-top: 1em; padding-right:1em;">
+                            <h4>{{ lens_type.name }}</h4>
+                            <form action="/" method="POST" style="padding-right:1em;">
+                                {% csrf_token %}
+                                <input type="hidden" name="{{ lens_type.name }}" value="true">
+                                {% if lens_type.uploaded_img %}
+                                    <input type="image" src="{{ lens_type.uploaded_img.url }}" alt="{{ lens_type.name }}" style="max-height: 167px; max-width:300px;" />
+                                {% elif lens_type.static_img_url %}
+                                    <input type="image" src="{% static 'img/'|add:lens_type.static_img_url %}" alt="{{ lens_type.name }}" style="max-height: 167px; max-width:300px;" />
+                                {% else %}
+                                    <input type="image" src="" alt="Lens Type" style="max-height: 167px; max-width:300px;" />
+                                {% endif %}
+                            </form>
+                            <p>{{ lens_type.description }}</p>
+                        </div>
+                    {% endif %}
+                {% endfor %}
+            </div>
+        </td>
+    </tr>
+{% endif %}
