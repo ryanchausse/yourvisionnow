@@ -20,5 +20,7 @@ from . import views
 urlpatterns = [
     path('', views.KioskPage.as_view(), name='kiosk'),
     path('kiosk/', views.KioskPage.as_view(), name='kiosk'),
+    path('submit_order', views.SubmitOrder.as_view(), name='submit_order'),
     path('index.html', views.KioskPage.as_view(), name='index'),
+    path('manager', views.ManagerPage.as_view(), name='manager'),
 ]

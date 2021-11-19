@@ -3,7 +3,17 @@
     <form class="user" action="/" method="post">
         {% csrf_token %}
         <div class="form-group">
-            <p>Welcome to Your Vision Now, {{ user.first_name }}</p>
+            <p>
+                Welcome to Your Vision Now, {{ user.first_name }}
+            </p>
+            {% if user_is_admin %}
+                <p>
+                    You are a <a href="./manager">manager</a>.
+                </p>
+                <p>
+                    You have access to edit <a href="./admin">data</a>.
+                </p>
+            {% endif %}
         </div>
     </form>
 {% elif first_name in request.session %}

@@ -1,4 +1,5 @@
 from django.shortcuts import render
+from django.contrib.auth.models import User, Group
 from django.core.mail import send_mail
 from django.http import HttpResponse
 from django.views.generic import TemplateView
@@ -25,6 +26,8 @@ class KioskPage(TemplateView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
+        if self.request.user.groups.filter(name='Admin').exists:
+            context['user_is_admin'] = True
         context['lens_types'] = LensType.objects.all()
         context['lens_materials'] = LensMaterial.objects.all()
         context['lens_add_ons'] = LensAddOns.objects.all()
@@ -35,18 +38,6 @@ class KioskPage(TemplateView):
         context = self.get_context_data(**kwargs)
         if 'start_over' in request.POST and request.POST['start_over'] == 'true':
             # Delete session
-            request.session.flush()
-        if 'done' in request.POST and request.POST['done'] == 'true':
-            session_info = ''
-            for key, value in request.session.items():
-                session_info += f'{ key }: { value }\n'
-            send_mail(
-                'Customer order',
-                f'New order:\n\n{ session_info }',
-                settings.EMAIL_HOST_USER,
-                [settings.EMAIL_HOST_USER],
-                fail_silently=False,
-            )
             request.session.flush()
 
         for lens_type in context['lens_types']:
@@ -113,7 +104,65 @@ class KioskPage(TemplateView):
         elif 'first_name' in request.session:
             context['first_name'] = request.session['first_name']
 
+        if request.user.groups.filter(name='Admin').exists:
+            context['user_is_admin'] = True
+
         return render(request, 'index.html', context)
+
+
+class SubmitOrder(TemplateView):
+    template_name = 'index.html'
+
+    def post(self, request, *args, **kwargs):
+        context = self.get_context_data(**kwargs)
+        if 'done' in request.POST and request.POST['done'] == 'true':
+            # First, get or create Customer if none exists
+            first_name = ''
+            last_name = ''
+            email = ''
+            if request.user.is_authenticated:
+                if request.user.first_name:
+                    first_name = request.user.first_name
+                if request.user.last_name:
+                    last_name = request.user.last_name
+                if request.user.email:
+                    email = request.user.email
+            else:
+                if 'first_name' in request.session:
+                    first_name = request.session.first_name
+                if 'last_name' in request.session:
+                    last_name = request.session.last_name
+                if 'email' in request.session:
+                    email = request.session.email
+            customer, created = Customer.objects.get_or_create(
+                first_name=first_name,
+                last_name=last_name,
+                email=email
+            )
+            if created:
+                print(f'New customer created: {customer.first_name} {customer.last_name}')
+            print(customer.first_name)
+
+            # Next, make notes for Order
+            order_notes = ''
+            for key, value in request.session.items():
+                if key[0] != '_':
+                    order_notes += key + ' '
+            order = Order.objects.create(
+                name=customer.first_name + '\'s order',
+                customer=customer,
+                notes=order_notes
+            )
+            order.save()
+            send_mail(
+                'Customer order',
+                f'New order:\n\n{order_notes}',
+                settings.EMAIL_HOST_USER,
+                [settings.EMAIL_HOST_USER],
+                fail_silently=False,
+            )
+            request.session.flush()
+        return redirect('/index.html')
 
 
 class WelcomePage(TemplateView):
@@ -121,6 +170,23 @@ class WelcomePage(TemplateView):
     First / Login page at root
     """
     template_name = 'index.html'
+
+
+class ManagerPage(TemplateView):
+    """
+    Front desk / manager page to list orders
+    """
+    template_name = 'manager.html'
+
+    def get(self, request, *args, **kwargs):
+        if self.request.user.groups.filter(name='Admins').exists():
+            context = self.get_context_data(**kwargs)
+            context['orders'] = Order.objects.all().order_by('-created_at')
+            return render(request,
+                          template_name=self.template_name,
+                          context=context)
+        else:
+            return redirect('/index.html')
 
 
 def handler404(request, exception, template_name="404.html"):
