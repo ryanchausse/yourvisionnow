@@ -1,4 +1,5 @@
 {% load static %}
+{% load space_to_newline %}
 {% block pagecontent %}
 
     <!-- Begin Page Content -->
@@ -55,7 +56,7 @@
                                             </td>
                                             <td>
                                                 {% if order.notes %}
-                                                    {{ order.notes }}
+                                                    {{ order.notes|space_to_newline }}
                                                 {% endif %}
                                             </td>
                                             <td>

@@ -23,7 +23,7 @@
             <input type="text" class="form-control form-control-user"
                 id="first_name" name="first_name" aria-describedby="firstNameHelp"
                 placeholder="Enter your first name"
-                value="{{ request.session.first_name }}">
+                value="{{ request.session.first_name }}" required>
         </div>
     </form>
 {% elif first_name %}
@@ -33,7 +33,7 @@
             <input type="text" class="form-control form-control-user"
                 id="first_name" name="first_name" aria-describedby="firstNameHelp"
                 placeholder="Enter your first name"
-                value="{{ first_name }}">
+                value="{{ first_name }}" required>
         </div>
     </form>
 {% else %}
@@ -42,7 +42,7 @@
         <div class="form-group">
             <input type="text" class="form-control form-control-user"
                 id="first_name" name="first_name" aria-describedby="firstNameHelp"
-                placeholder="Enter your first name" >
+                placeholder="Enter your first name" required>
         </div>
     </form>
 {% endif %}

@@ -129,11 +129,11 @@ class SubmitOrder(TemplateView):
                     email = request.user.email
             else:
                 if 'first_name' in request.session:
-                    first_name = request.session.first_name
+                    first_name = request.session['first_name']
                 if 'last_name' in request.session:
-                    last_name = request.session.last_name
+                    last_name = request.session['last_name']
                 if 'email' in request.session:
-                    email = request.session.email
+                    email = request.session['email']
             customer, created = Customer.objects.get_or_create(
                 first_name=first_name,
                 last_name=last_name,
