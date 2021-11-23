@@ -26,7 +26,7 @@ class KioskPage(TemplateView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        if self.request.user.groups.filter(name='Admins').exists:
+        if self.request.user.groups.filter(name='Admins').exists():
             context['user_is_in_admins'] = True
         else:
             context['user_is_in_admins'] = False
@@ -102,7 +102,7 @@ class KioskPage(TemplateView):
         elif 'first_name' in request.session:
             context['first_name'] = request.session['first_name']
 
-        if request.user.groups.filter(name='Admins').exists:
+        if request.user.groups.filter(name='Admins').exists():
             context['user_is_in_admins'] = True
         else:
             context['user_is_in_admins'] = False
