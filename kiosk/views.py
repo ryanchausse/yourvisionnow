@@ -38,10 +38,6 @@ class KioskPage(TemplateView):
 
     def post(self, request, *args, **kwargs):
         context = self.get_context_data(**kwargs)
-        if request.user.groups.filter(name='Admins').exists:
-            context['user_is_in_admins'] = True
-        else:
-            context['user_is_in_admins'] = False
         for lens_type in context['lens_types']:
             if f'no_{lens_type.name}' in request.POST:
                 if request.session[lens_type.name]:
@@ -105,6 +101,11 @@ class KioskPage(TemplateView):
             context['first_name'] = first_name
         elif 'first_name' in request.session:
             context['first_name'] = request.session['first_name']
+
+        if request.user.groups.filter(name='Admins').exists:
+            context['user_is_in_admins'] = True
+        else:
+            context['user_is_in_admins'] = False
 
         return render(request, 'index.html', context)
 
