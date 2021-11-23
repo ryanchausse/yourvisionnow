@@ -15,11 +15,4 @@
             </button>
         </form>
     {% endif %}
-    <form style="float:right; padding-left: 1em;" action="/" method="POST">
-        {% csrf_token %}
-        <input type="hidden" name="start_over" value="true">
-        <button type="submit" class="btn btn-secondary btn-sm">
-            Start Over
-        </button>
-    </form>
 </td>

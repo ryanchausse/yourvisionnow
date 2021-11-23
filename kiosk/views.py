@@ -26,9 +26,10 @@ class KioskPage(TemplateView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['user_is_in_admins'] = False
         if self.request.user.groups.filter(name='Admins').exists:
             context['user_is_in_admins'] = True
+        else:
+            context['user_is_in_admins'] = False
         context['lens_types'] = LensType.objects.all()
         context['lens_materials'] = LensMaterial.objects.all()
         context['lens_add_ons'] = LensAddOns.objects.all()
@@ -37,12 +38,10 @@ class KioskPage(TemplateView):
 
     def post(self, request, *args, **kwargs):
         context = self.get_context_data(**kwargs)
-        context['user_is_in_admins'] = False
-        if 'start_over' in request.POST and request.POST['start_over'] == 'true':
-            # Delete session
-            request.session.flush()
-            if request.user.groups.filter(name='Admins').exists:
-                context['user_is_in_admins'] = True
+        if request.user.groups.filter(name='Admins').exists:
+            context['user_is_in_admins'] = True
+        else:
+            context['user_is_in_admins'] = False
         for lens_type in context['lens_types']:
             if f'no_{lens_type.name}' in request.POST:
                 if request.session[lens_type.name]:
@@ -106,9 +105,6 @@ class KioskPage(TemplateView):
             context['first_name'] = first_name
         elif 'first_name' in request.session:
             context['first_name'] = request.session['first_name']
-
-        if request.user.groups.filter(name='Admins').exists:
-            context['user_is_in_admins'] = True
 
         return render(request, 'index.html', context)
 
