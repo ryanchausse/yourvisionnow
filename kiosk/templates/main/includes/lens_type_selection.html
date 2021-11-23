@@ -6,7 +6,7 @@
                 <h2>Lens Types</h2>
                 {% for lens_type in lens_types %}
                     {% if lens_type.name not in request.session %}
-                        <div style="float: left; padding-top: 1em; padding-right:1em;">
+                        <div style="float: left; padding-top: 1em; padding-right:1em; max-height:450px; max-width: 350px;">
                             <h4>{{ lens_type.name }}</h4>
                             <form action="/" method="POST" style="padding-right:1em;">
                                 {% csrf_token %}
@@ -19,7 +19,7 @@
                                     <input type="image" src="" alt="Lens Type" style="max-height: 167px; max-width:300px;" />
                                 {% endif %}
                             </form>
-                            <p style="max-height: 167px; max-width:300px;">{{ lens_type.description }}</p>
+                            <p>{{ lens_type.description }}</p>
                         </div>
                     {% endif %}
                 {% endfor %}
