@@ -140,14 +140,18 @@ class SubmitOrder(TemplateView):
                 email=email
             )
             if created:
-                print(f'New customer created: {customer.first_name} {customer.last_name}')
-            print(customer.first_name)
+            #     print(f'New customer created: {customer.first_name} {customer.last_name}')
+            # print(customer.first_name)
 
             # Next, make notes for Order
             order_notes = ''
             for key, value in request.session.items():
+                # First statement to see whether variable is framework-based;
+                # second statement to remove vars that have been set and used only internally
                 if key[0] != '_' and "_" not in key:
                     order_notes += key + ', '
+            if order_notes[-2::] == ', ':
+                order_notes = order_notes[:-2]
             order = Order.objects.create(
                 name=customer.first_name + '\'s order',
                 customer=customer,
