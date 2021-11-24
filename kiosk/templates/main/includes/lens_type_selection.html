@@ -2,13 +2,13 @@
 {% if lens_types %}
     <tr>
         <td>
-            <div style="float:left; display:block">
+            <div class="container">
                 <h2>Lens Types</h2>
                 {% for lens_type in lens_types %}
                     {% if lens_type.name not in request.session %}
-                        <div style="float: left; padding-top: 1em; padding-right:1em; height:450px; width: 350px;">
+                        <div style="float: left; width: 300px;padding-right:1em;">
                             <h4>{{ lens_type.name }}</h4>
-                            <form action="/" method="POST" style="padding-right:1em;">
+                            <form action="/" method="POST">
                                 {% csrf_token %}
                                 <input type="hidden" name="{{ lens_type.name }}" value="true">
                                 {% if lens_type.uploaded_img %}
@@ -19,7 +19,7 @@
                                     <input type="image" src="" alt="Lens Type" style="max-height: 167px; max-width:300px;" />
                                 {% endif %}
                             </form>
-                            <p>{{ lens_type.description }}</p>
+                            <div>{{ lens_type.description }}</div>
                         </div>
                     {% endif %}
                 {% endfor %}

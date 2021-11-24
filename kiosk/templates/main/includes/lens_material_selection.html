@@ -2,13 +2,13 @@
 {% if lens_materials %}
     <tr>
         <td>
-            <div style="float:left; display:block">
+            <div class="container">
                 <h2>Lens Materials</h2>
                 {% for lens_material in lens_materials %}
                     {% if lens_material.name not in request.session %}
-                        <div style="float: left; padding-top: 1em; padding-right:1em; height:450px; width: 350px;">
+                        <div style="float: left; width: 300px;padding-right:1em;">
                             <h4>{{ lens_material.name }}</h4>
-                            <form action="/" method="POST" style="padding-right:1em;">
+                            <form action="/" method="POST">
                                 {% csrf_token %}
                                 <input type="hidden" name="{{ lens_material.name }}" value="true">
                                 {% if lens_material.uploaded_img %}
@@ -19,7 +19,7 @@
                                     <input type="image" src="" alt="Lens Material" style="max-height: 167px; max-width:300px;" />
                                 {% endif %}
                             </form>
-                            <p>{{ lens_material.description }}</p>
+                            <div>{{ lens_material.description }}</div>
                         </div>
                     {% endif %}
                 {% endfor %}

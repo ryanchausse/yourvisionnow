@@ -2,13 +2,13 @@
 {% if lens_add_ons %}
     <tr>
         <td>
-            <div style="float:left; display:block">
+            <div class="container">
                 <h2>Lens Add-Ons</h2>
                 {% for lens_add_on in lens_add_ons %}
                     {% if lens_add_on.name not in request.session %}
-                        <div style="float: left; padding-top: 1em; padding-right:1em; height:450px; width: 350px;">
+                        <div style="float: left; width: 300px;padding-right:1em;">
                             <h4>{{ lens_add_on.name }}</h4>
-                            <form action="/" method="POST" style="padding-right:1em;">
+                            <form action="/" method="POST">
                                 {% csrf_token %}
                                 <input type="hidden" name="{{ lens_add_on.name }}" value="true">
                                 {% if lens_add_on.uploaded_img %}
@@ -19,7 +19,7 @@
                                     <input type="image" src="" alt="Lens Add-On" style="max-height: 167px; max-width:300px;" />
                                 {% endif %}
                             </form>
-                            <p>{{ lens_add_on.description }}</p>
+                            <div>{{ lens_add_on.description }}</div>
                         </div>
                     {% endif %}
                 {% endfor %}
