@@ -6,7 +6,7 @@
                 <h2>Lens Add-Ons</h2>
                 {% for lens_add_on in lens_add_ons %}
                     {% if lens_add_on.name not in request.session %}
-                        <div style="float: left; width: 300px; padding-top:1em; padding-right:1em;">
+                        <div style="float: left; width: 300px; padding-top:1em; padding-bottom:1em; padding-right:1em;">
                             <h4>{{ lens_add_on.name }}</h4>
                             <form action="/" method="POST">
                                 {% csrf_token %}
