@@ -6,7 +6,7 @@
                 <h2>Lens Materials</h2>
                 {% for lens_material in lens_materials %}
                     {% if lens_material.name not in request.session %}
-                        <div style="float: left; width: 300px;padding-right:1em;">
+                        <div style="float: left; width: 300px; padding-top:1em; padding-right:1em;">
                             <h4>{{ lens_material.name }}</h4>
                             <form action="/" method="POST">
                                 {% csrf_token %}
