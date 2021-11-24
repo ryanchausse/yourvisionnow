@@ -150,7 +150,7 @@ class SubmitOrder(TemplateView):
                 # second statement to remove vars that have been set and used only internally
                 if key[0] != '_' and "_" not in key:
                     order_notes += key + ', '
-            if order_notes[-2::] == ', ':
+            if order_notes and order_notes[-2::] == ', ':
                 order_notes = order_notes[:-2]
             order = Order.objects.create(
                 name=customer.first_name + '\'s order',
