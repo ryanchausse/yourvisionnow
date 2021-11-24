@@ -14,7 +14,7 @@
             <form action="/" method="POST">
                 {% csrf_token %}
                 <input type="hidden" name="reset_lens_packages" value="true">
-                <button type="submit" class="btn btn-danger btn-sm">X</button>
+                <button type="submit" class="btn close" aria-label="remove"><span aria-hidden="true">&times;</span></button>
             </form>
         </td>
     </tr>
@@ -32,7 +32,7 @@
                     <form action="/" method="POST">
                         {% csrf_token %}
                         <input type="hidden" name="no_{{ lens_package.name }}" value="true">
-                        <button type="submit" class="btn close"><span aria-hidden="true">&times;</span></button>
+                        <button type="submit"  class="btn close" aria-label="remove"><span aria-hidden="true">&times;</span></button>
                     </form>
                 </td>
             </tr>
