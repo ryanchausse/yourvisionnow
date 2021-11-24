@@ -146,8 +146,8 @@ class SubmitOrder(TemplateView):
             # Next, make notes for Order
             order_notes = ''
             for key, value in request.session.items():
-                if key[0] != '_':
-                    order_notes += key + ' '
+                if key[0] != '_' and "_" not in key:
+                    order_notes += key + ', '
             order = Order.objects.create(
                 name=customer.first_name + '\'s order',
                 customer=customer,
