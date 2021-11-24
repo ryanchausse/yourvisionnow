@@ -1,40 +1,38 @@
 {% load static %}
 {% if lens_add_ons %}
-    <tr>
-        <td>
-            <div class="container">
-                <h2>Lens Add-Ons</h2>
-                {% for lens_add_on in lens_add_ons %}
-                    {% if lens_add_on.name not in request.session %}
-                        <div style="float: left; width: 300px; padding-top:1em; padding-bottom:1em; padding-right:1em;">
-                            <h4>{{ lens_add_on.name }}</h4>
-                            <form action="/" method="POST">
-                                {% csrf_token %}
-                                <input type="hidden" name="{{ lens_add_on.name }}" value="true">
-                                {% if lens_add_on.uploaded_img %}
-                                    <input type="image" src="{{ lens_add_on.uploaded_img.url }}" alt="{{ lens_add_on.name }}" style="max-height: 167px; max-width:300px;" />
-                                {% elif lens_add_on.static_img_url %}
-                                    <input type="image" src="{% static 'img/'|add:lens_add_on.static_img_url %}" alt="{{ lens_add_on.name }}" style="max-height: 167px; max-width:300px;" />
-                                {% else %}
-                                    <input type="image" src="" alt="Lens Add-On" style="max-height: 167px; max-width:300px;" />
-                                {% endif %}
-                            </form>
-                            <div>{{ lens_add_on.description }}</div>
-                        </div>
-                    {% endif %}
-                {% endfor %}
-            </div>
-        </td>
-    </tr>
-    <tr>
-        <td>
-            <div style="float:left; display:block">
-                <form action="/" method="POST" style="padding-right:1em;">
-                    {% csrf_token %}
-                    <input type="hidden" name="no_lens_add_ons" value="true">
-                    <button type="submit" class="btn btn-sm btn-danger">No Lens Add-Ons</button>
-                </form>
-            </div>
-        </td>
-    </tr>
+    <div class="container-fluid">
+        <div class="row">
+            <h2>Lens Add-Ons</h2>
+        </div>
+        <div class="row">
+            {% for lens_add_on in lens_add_ons %}
+                {% if lens_add_on.name not in request.session %}
+                    <div style="float: left; width: 300px; padding-top:1em; padding-bottom:1em; padding-right:1em;">
+                        <h4>{{ lens_add_on.name }}</h4>
+                        <form action="/" method="POST">
+                            {% csrf_token %}
+                            <input type="hidden" name="{{ lens_add_on.name }}" value="true">
+                            {% if lens_add_on.uploaded_img %}
+                                <input type="image" src="{{ lens_add_on.uploaded_img.url }}" alt="{{ lens_add_on.name }}" style="max-height: 167px; max-width:300px;" />
+                            {% elif lens_add_on.static_img_url %}
+                                <input type="image" src="{% static 'img/'|add:lens_add_on.static_img_url %}" alt="{{ lens_add_on.name }}" style="max-height: 167px; max-width:300px;" />
+                            {% else %}
+                                <input type="image" src="" alt="Lens Add-On" style="max-height: 167px; max-width:300px;" />
+                            {% endif %}
+                        </form>
+                        <div>{{ lens_add_on.description }}</div>
+                    </div>
+                {% endif %}
+            {% endfor %}
+        </div>
+    </div>
+    <div class="row">
+        <div style="float:left; display:block">
+            <form action="/" method="POST" style="padding-right:1em;">
+                {% csrf_token %}
+                <input type="hidden" name="no_lens_add_ons" value="true">
+                <button type="submit" class="btn btn-sm btn-danger">No Lens Add-Ons</button>
+            </form>
+        </div>
+    </div>
 {% endif %}
