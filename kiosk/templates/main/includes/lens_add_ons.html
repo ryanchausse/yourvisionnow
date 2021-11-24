@@ -32,7 +32,7 @@
                     <form action="/" method="POST">
                         {% csrf_token %}
                         <input type="hidden" name="no_{{ lens_add_on.name }}" value="true">
-                        <button type="submit" class="btn btn-danger btn-sm">X</button>
+                        <button type="submit" class="btn close"><span aria-hidden="true">&times;</span></button>
                     </form>
                 </td>
             </tr>
