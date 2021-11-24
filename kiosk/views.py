@@ -140,8 +140,8 @@ class SubmitOrder(TemplateView):
                 email=email
             )
             if created:
-            #     print(f'New customer created: {customer.first_name} {customer.last_name}')
-            # print(customer.first_name)
+                print(f'New customer created: {customer.first_name} {customer.last_name}')
+            print(customer.first_name)
 
             # Next, make notes for Order
             order_notes = ''
