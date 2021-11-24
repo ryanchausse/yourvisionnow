@@ -15,18 +15,14 @@
         -->
     </div>
     <div class="card-body">
-        <row>
-            <table>
-                {% if not request.session.lens_type_selected %}
-                    {% include 'includes/lens_type_selection.html' %}
-                {% elif request.session.lens_type_selected and not request.session.lens_material_selected %}
-                    {% include 'includes/lens_material_selection.html' %}
-                {% elif request.session.lens_type_selected and request.session.lens_material_selected and not request.session.lens_add_on_selected %}
-                    {% include 'includes/lens_add_on_selection.html' %}
-                {% elif request.session.lens_type_selected and request.session.lens_material_selected and request.session.lens_add_on_selected and not request.session.lens_package_selected %}
-                    {% include 'includes/lens_package_selection.html' %}
-                {% endif %}
-            </table>
-        </row>
+        {% if not request.session.lens_type_selected %}
+            {% include 'includes/lens_type_selection.html' %}
+        {% elif request.session.lens_type_selected and not request.session.lens_material_selected %}
+            {% include 'includes/lens_material_selection.html' %}
+        {% elif request.session.lens_type_selected and request.session.lens_material_selected and not request.session.lens_add_on_selected %}
+            {% include 'includes/lens_add_on_selection.html' %}
+        {% elif request.session.lens_type_selected and request.session.lens_material_selected and request.session.lens_add_on_selected and not request.session.lens_package_selected %}
+            {% include 'includes/lens_package_selection.html' %}
+        {% endif %}
     </div>
 </div>
