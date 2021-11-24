@@ -23,4 +23,5 @@ urlpatterns = [
     path('submit_order', views.SubmitOrder.as_view(), name='submit_order'),
     path('index.html', views.KioskPage.as_view(), name='index'),
     path('manager', views.ManagerPage.as_view(), name='manager'),
+    path('manager/lens_packages', views.ManagerLensPackagePage.as_view(), name='manager_lens_packages'),
 ]

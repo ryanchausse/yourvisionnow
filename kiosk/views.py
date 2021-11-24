@@ -192,6 +192,23 @@ class ManagerPage(TemplateView):
             return redirect('/index.html')
 
 
+class ManagerLensPackagePage(TemplateView):
+    """
+    Manager's CRUD for Lens Packages
+    """
+    template_name = 'manager_lens_packages.html'
+
+    def get(self, request, *args, **kwargs):
+        if self.request.user.groups.filter(name='Admins').exists():
+            context = self.get_context_data(**kwargs)
+            context['lens_packages'] = LensPackage.objects.all().order_by('-created_at')
+            return render(request,
+                          template_name=self.template_name,
+                          context=context)
+        else:
+            return redirect('/index.html')
+
+
 def handler404(request, exception, template_name="404.html"):
     """
     Custom 404 page
