@@ -75,9 +75,9 @@ class LensPackage(models.Model):
 class LensPackageItem(models.Model):
     # Relational table
     lens_package = models.ForeignKey(LensPackage, on_delete=models.CASCADE)
-    lens_type = models.ForeignKey(LensType, on_delete=models.CASCADE, null=True)
-    lens_material = models.ForeignKey(LensMaterial, on_delete=models.CASCADE, null=True)
-    lens_add_on = models.ForeignKey(LensAddOns, on_delete=models.CASCADE, null=True)
+    lens_type = models.ForeignKey(LensType, on_delete=models.CASCADE, null=True, blank=True)
+    lens_material = models.ForeignKey(LensMaterial, on_delete=models.CASCADE, null=True, blank=True)
+    lens_add_on = models.ForeignKey(LensAddOns, on_delete=models.CASCADE, null=True, blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
