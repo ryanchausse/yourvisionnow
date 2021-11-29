@@ -89,7 +89,8 @@ class LensPackageItem(models.Model):
         if (self.lens_type and self.lens_material) \
                 or (self.lens_type and self.lens_add_on) \
                 or (self.lens_material and self.lens_add_on):
-            raise ValidationError('Only one of lens_type, lens_material, or lens_add_on can be set.')
+            raise ValidationError('Only one of lens_type, lens_material, or lens_add_on can be set. '
+                                  'Please make separate records for the items in a lens package.')
 
     class Meta:
         verbose_name = 'Lens Packages and their items'
