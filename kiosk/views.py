@@ -38,6 +38,9 @@ class KioskPage(TemplateView):
 
     def post(self, request, *args, **kwargs):
         context = self.get_context_data(**kwargs)
+        lens_type, lens_package, lens_material, lens_add_ons = dict(), dict(), dict(), dict()
+        choices = [lens_type, lens_package, lens_material, lens_add_ons]
+
         for lens_type in context['lens_types']:
             if f'no_{lens_type.name}' in request.POST:
                 if request.session[lens_type.name]:

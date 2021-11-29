@@ -1,4 +1,6 @@
 from django.db import models
+from django.core.validators import ValidationError
+from django.db.models import Q
 
 
 class LensType(models.Model):
@@ -72,7 +74,7 @@ class LensPackage(models.Model):
 
 class LensPackageItem(models.Model):
     # Relational table
-    lens_package = models.ForeignKey(LensPackage, on_delete=models.CASCADE, null=True)
+    lens_package = models.ForeignKey(LensPackage, on_delete=models.CASCADE)
     lens_type = models.ForeignKey(LensType, on_delete=models.CASCADE, null=True)
     lens_material = models.ForeignKey(LensMaterial, on_delete=models.CASCADE, null=True)
     lens_add_on = models.ForeignKey(LensAddOns, on_delete=models.CASCADE, null=True)
@@ -80,7 +82,55 @@ class LensPackageItem(models.Model):
     updated_at = models.DateTimeField(auto_now=True)
 
     def __str__(self):
-        return f'{self.lens_package} / {self.lens_type} / {self.lens_material} / {self.lens_add_on }'
+        return f'{ self.lens_package} / { self.lens_type} / { self.lens_material} / { self.lens_add_on }'
+
+    def clean(self):
+        # Only a single lens_type, lens_material, or lens_add_on can be set for each lens_package (relational)
+        if (self.lens_type and self.lens_material) \
+                or (self.lens_type and self.lens_add_on) \
+                or (self.lens_material and self.lens_add_on):
+            raise ValidationError('Only one of lens_type, lens_material, or lens_add_on can be set.')
+
+    class Meta:
+        verbose_name = 'Lens Packages and their items'
+        verbose_name_plural = 'Lens Packages and their items'
+        # constraints = [
+        #     models.UniqueConstraint(
+        #         fields=['lens_package', 'lens_type', 'lens_material, lens_add_on'],
+        #         name='lens_package_item_relational'
+        #     ),
+        #     models.CheckConstraint(
+        #         check=(
+        #                     Q(lens_type__isnull=True) &
+        #                     Q(lens_material__isnull=False) &
+        #                     Q(lens_add_on__isnull=False)
+        #               ) | (
+        #                     Q(lens_type__isnull=False) &
+        #                     Q(lens_material__isnull=True) &
+        #                     Q(lens_add_on__isnull=False)
+        #               ) | (
+        #                     Q(lens_type__isnull=False) &
+        #                     Q(lens_material__isnull=False) &
+        #                     Q(lens_add_on__isnull=True)
+        #         ),
+        #         name='only_one_of_three_lens_categories_allowed'
+        #     )
+        # ]
+
+
+class Stages:
+    # To allow admins to change the order of top level items as presented to the customer
+    lens_package = models.ForeignKey(LensPackage, on_delete=models.CASCADE, null=True)
+    lens_type = models.ForeignKey(LensType, on_delete=models.CASCADE, null=True)
+    lens_material = models.ForeignKey(LensMaterial, on_delete=models.CASCADE, null=True)
+    lens_add_on = models.ForeignKey(LensAddOns, on_delete=models.CASCADE, null=True)
+    order_position = models.IntegerField(null=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+    def __str__(self):
+        return f'{ self.lens_package} / { self.lens_type} / { self.lens_material} /' \
+               f' { self.lens_add_on } / { self.order_position }'
 
     class Meta:
         verbose_name = 'Lens Packages and their items'
