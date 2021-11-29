@@ -94,6 +94,24 @@ class LensPackageItem(models.Model):
     class Meta:
         verbose_name = 'Lens Packages and their items'
         verbose_name_plural = 'Lens Packages and their items'
+        constraints = [
+            models.CheckConstraint(
+                check=(
+                            Q(lens_type__isnull=True) &
+                            Q(lens_material__isnull=False) &
+                            Q(lens_add_on__isnull=False)
+                      ) | (
+                            Q(lens_type__isnull=False) &
+                            Q(lens_material__isnull=True) &
+                            Q(lens_add_on__isnull=False)
+                      ) | (
+                            Q(lens_type__isnull=False) &
+                            Q(lens_material__isnull=False) &
+                            Q(lens_add_on__isnull=True)
+                ),
+                name='only_one_of_three_lens_categories_allowed'
+            )
+        ]
 
 
 class Stages:
