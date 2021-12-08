@@ -37,7 +37,7 @@ class KioskPage(TemplateView):
         context['lens_add_ons'] = LensAddOns.objects.all().order_by('-default_price')
         # context['lens_packages'] = LensPackage.objects.all().order_by('-retail_price')
         context['lens_designs'] = LensDesign.objects.all().order_by('-retail_price')
-        context['lens_design_items'] = LensDesignItem.objects.all().order_by('-retail_price')
+        context['lens_design_items'] = LensDesignItem.objects.all()
         return context
 
     def post(self, request, *args, **kwargs):
