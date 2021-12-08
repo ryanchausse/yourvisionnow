@@ -15,6 +15,7 @@ from .models import LensAddOns
 from .models import LensPackage
 from .models import LensPackageItem
 from .models import Order
+from .models import LensDesign
 
 
 class KioskPage(TemplateView):
@@ -34,12 +35,17 @@ class KioskPage(TemplateView):
         context['lens_materials'] = LensMaterial.objects.all().order_by('-default_price')
         context['lens_add_ons'] = LensAddOns.objects.all().order_by('-default_price')
         context['lens_packages'] = LensPackage.objects.all().order_by('-retail_price')
+        context['lens_designs'] = LensDesign.objects.all().order_by('retail_price')
         return context
 
     def post(self, request, *args, **kwargs):
+        """
+            1. Present user with lens type choice
+            2. Present user with lens design choice
+            3. Lens material choice
+            4. Lens add-on choice
+        """
         context = self.get_context_data(**kwargs)
-        lens_type, lens_package, lens_material, lens_add_ons = dict(), dict(), dict(), dict()
-        choices = [lens_type, lens_package, lens_material, lens_add_ons]
 
         for lens_type in context['lens_types']:
             if f'no_{lens_type.name}' in request.POST:
@@ -49,6 +55,22 @@ class KioskPage(TemplateView):
             if request.POST.get(lens_type.name) and request.POST.get(lens_type.name) not in request.session:
                 request.session['lens_type_selected'] = True
                 request.session[lens_type.name] = True
+        for lens_design in context['lens_designs']:
+            if f'no_{lens_design.name}' in request.POST:
+                if request.session[lens_design.name]:
+                    request.session['lens_design_selected'] = False
+                    del request.session[lens_design.name]
+            if request.POST.get(lens_design.name) and request.POST.get(lens_design.name) not in request.session:
+                request.session['lens_design_selected'] = True
+                request.session[lens_design.name] = True
+            if 'no_lens_designs' in request.POST and request.POST.get('no_lens_designs') == 'true':
+                if lens_design.name in request.session:
+                    del request.session[lens_design.name]
+                request.session['lens_design_selected'] = True
+                request.session['no_lens_designs'] = True
+            if 'reset_lens_designs' in request.POST and request.POST.get('reset_lens_designs') == 'true':
+                request.session['lens_design_selected'] = False
+                request.session['no_lens_designs'] = False
         for lens_material in context['lens_materials']:
             if f'no_{lens_material.name}' in request.POST:
                 if request.session[lens_material.name]:
@@ -81,22 +103,6 @@ class KioskPage(TemplateView):
             if 'reset_lens_add_ons' in request.POST and request.POST.get('reset_lens_add_ons') == 'true':
                 request.session['lens_add_on_selected'] = False
                 request.session['no_lens_add_ons'] = False
-        for lens_package in context['lens_packages']:
-            if f'no_{lens_package.name}' in request.POST:
-                if request.session[lens_package.name]:
-                    request.session['lens_package_selected'] = False
-                    del request.session[lens_package.name]
-            if request.POST.get(lens_package.name) and request.POST.get(lens_package.name) not in request.session:
-                request.session['lens_package_selected'] = True
-                request.session[lens_package.name] = True
-            if 'no_lens_packages' in request.POST and request.POST.get('no_lens_packages') == 'true':
-                if lens_package.name in request.session:
-                    del request.session[lens_package.name]
-                request.session['lens_package_selected'] = True
-                request.session['no_lens_packages'] = True
-            if 'reset_lens_packages' in request.POST and request.POST.get('reset_lens_packages') == 'true':
-                request.session['lens_package_selected'] = False
-                request.session['no_lens_packages'] = False
 
         if 'first_name' in request.POST:
             first_name = request.POST.get('first_name')

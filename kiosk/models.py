@@ -54,6 +54,24 @@ class LensAddOns(models.Model):
         verbose_name_plural = 'Lens Add-Ons'
 
 
+class LensDesign(models.Model):
+    name = models.CharField(max_length=60)
+    description = models.CharField(max_length=255)
+    promo_price = models.DecimalField(max_digits=8, decimal_places=2)
+    retail_price = models.DecimalField(max_digits=8, decimal_places=2)
+    static_img_url = models.CharField(max_length=255, default='multiple_lenses.jpg')
+    uploaded_img = models.ImageField(upload_to='images/', blank=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+    def __str__(self):
+        return self.name
+
+    class Meta:
+        verbose_name = 'Lens Design'
+        verbose_name_plural = 'Lens Designs'
+
+
 class LensPackage(models.Model):
     name = models.CharField(max_length=60)
     description = models.CharField(max_length=255)
