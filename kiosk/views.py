@@ -16,6 +16,7 @@ from .models import LensPackage
 from .models import LensPackageItem
 from .models import Order
 from .models import LensDesign
+from .models import LensDesignItem
 
 
 class KioskPage(TemplateView):
@@ -34,8 +35,9 @@ class KioskPage(TemplateView):
         context['lens_types'] = LensType.objects.all().order_by('-default_price')
         context['lens_materials'] = LensMaterial.objects.all().order_by('-default_price')
         context['lens_add_ons'] = LensAddOns.objects.all().order_by('-default_price')
-        context['lens_packages'] = LensPackage.objects.all().order_by('-retail_price')
-        context['lens_designs'] = LensDesign.objects.all().order_by('retail_price')
+        # context['lens_packages'] = LensPackage.objects.all().order_by('-retail_price')
+        context['lens_designs'] = LensDesign.objects.all().order_by('-retail_price')
+        context['lens_design_items'] = LensDesignItem.objects.all().order_by('-retail_price')
         return context
 
     def post(self, request, *args, **kwargs):
