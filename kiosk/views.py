@@ -77,7 +77,7 @@ class KioskPage(TemplateView):
                         lens_material_items = LensDesignItem.objects.filter(
                             lens_design=LensDesign.objects.get(name=lens_design.name),
                             lens_type=LensType.objects.get(name=lens_type.name)
-                        ).distinct('lens_type')
+                        ).distinct('lens_material')
                         context['lens_material_choices'] = lens_material_items
         for lens_material in context['lens_materials']:
             if request.POST.get(lens_material.name) and request.POST.get(lens_material.name) not in request.session:
