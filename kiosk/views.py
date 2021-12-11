@@ -98,7 +98,8 @@ class KioskPage(TemplateView):
 
         return render(request, 'index.html', context)
 
-    def no_on_item(self, item, item_name, request, context):
+    @staticmethod
+    def no_on_item(item, item_name, request, context):
         print(f'no on item: { item_name }')
         if item == 'lens_type':
             if item_name in request.session:
@@ -117,7 +118,8 @@ class KioskPage(TemplateView):
                 request.session['lens_add_on_selected'] = False
                 del request.session[item_name]
 
-    def set_item(self, item, item_name, request, context):
+    @staticmethod
+    def set_item(item, item_name, request, context):
         print(f'set item: { item_name }')
         if item == 'lens_type':
             request.session['lens_type_selected'] = True
@@ -132,7 +134,8 @@ class KioskPage(TemplateView):
             request.session['lens_add_on_selected'] = True
             request.session[item_name] = True
 
-    def none_button_selected(self, item_name, request, context):
+    @staticmethod
+    def none_button_selected(item_name, request, context):
         # when the user hits e.g. 'No lens Add-Ons'
         if item_name == 'lens_design':
             if item_name in request.session:
@@ -150,7 +153,8 @@ class KioskPage(TemplateView):
             request.session['lens_add_on_selected'] = True
             request.session['no_lens_add_ons'] = True
 
-    def reset_items(self, item_name, request, context):
+    @staticmethod
+    def reset_items(item_name, request, context):
         if item_name == 'lens_types':
             request.session['lens_type_selected'] = False
             request.session['no_lens_types'] = False
@@ -210,7 +214,8 @@ class KioskPage(TemplateView):
             request.session['lens_add_on_selected'] = False
             request.session['no_add_ons'] = False
 
-    def set_first_name(self, request, context):
+    @staticmethod
+    def set_first_name(request, context):
         if 'first_name' in request.POST:
             first_name = request.POST.get('first_name')
             request.session['first_name'] = first_name
@@ -218,7 +223,8 @@ class KioskPage(TemplateView):
         elif 'first_name' in request.session:
             context['first_name'] = request.session['first_name']
 
-    def set_admin(self, request, context):
+    @staticmethod
+    def set_admin(request, context):
         if request.user.groups.filter(name='Admins').exists():
             context['user_is_in_admins'] = True
         else:
