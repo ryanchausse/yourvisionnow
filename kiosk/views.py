@@ -55,6 +55,11 @@ class KioskPage(TemplateView):
                 self.hierarchical_reset('lens_type', request, context)
             if request.POST.get(lens_type.name) and request.POST.get(lens_type.name) not in request.session:
                 self.set_item('lens_type', lens_type.name, request, context)
+            if lens_type.name in request.session:
+                lens_design_items = LensDesignItem.objects.filter(
+                    lens_type=LensType.objects.get(name=lens_type.name)
+                )
+                context['lens_type_design_choices'] = lens_design_items
         for lens_design in context['lens_designs']:
             if request.POST.get(lens_design.name) and request.POST.get(lens_design.name) not in request.session:
                 self.set_item('lens_design', lens_design.name, request, context)
@@ -67,13 +72,30 @@ class KioskPage(TemplateView):
             # The latter fields will depend on the selected Lens Design and derive from
             # the LensDesignItem model
             if lens_design.name in request.session:
-                lens_design_items = LensDesignItem.objects.filter(
-                    lens_design=LensDesign.objects.get(name=lens_design.name)
-                )
-                context['lens_design_items'] = lens_design_items
+                for lens_type in context['lens_types']:
+                    if lens_type.name in request.session:
+                        lens_design_items = LensDesignItem.objects.filter(
+                            lens_design=LensDesign.objects.get(name=lens_design.name),
+                            lens_type=LensType.objects.get(name=lens_type.name)
+                        )
+                        context['lens_design_items'] = lens_design_items
         for lens_material in context['lens_materials']:
             if request.POST.get(lens_material.name) and request.POST.get(lens_material.name) not in request.session:
                 self.set_item('lens_material', lens_material.name, request, context)
+            if lens_material.name in request.session:
+                for lens_type in context['lens_types']:
+                    if lens_type.name in request.session:
+                        lens_type_name = lens_type.name
+                for lens_design in context['lens_designs']:
+                    if lens_design.name in request.session:
+                        lens_design_name = lens_design.name
+                lens_material_name = lens_material.name
+                lens_add_on_items = LensDesignItem.objects.filter(
+                    lens_type=LensType.objects.get(name=lens_type_name),
+                    lens_design=LensDesign.objects.get(name=lens_design_name),
+                    lens_material=LensMaterial.objects.get(name=lens_material_name)
+                )
+                context['lens_add_on_design_choices'] = lens_add_on_items
             if 'no_lens_materials' in request.POST and request.POST.get('no_lens_materials') == 'true':
                 self.none_button_selected('lens_material', request, context)
             if 'reset_lens_materials' in request.POST and request.POST.get('reset_lens_materials') == 'true':
@@ -92,9 +114,23 @@ class KioskPage(TemplateView):
 
         self.set_first_name(request, context)
         self.set_admin(request, context)
-        print(context)
-
         return render(request, 'index.html', context)
+
+    @staticmethod
+    def set_item(item, item_name, request, context):
+        print(f'set item: { item_name }')
+        if item == 'lens_type':
+            request.session['lens_type_selected'] = True
+            request.session[item_name] = True
+        if item == 'lens_design':
+            request.session['lens_design_selected'] = True
+            request.session[item_name] = True
+        if item == 'lens_material':
+            request.session['lens_material_selected'] = True
+            request.session[item_name] = True
+        if item == 'lens_add_on':
+            request.session['lens_add_on_selected'] = True
+            request.session[item_name] = True
 
     @staticmethod
     def no_on_item(item, item_name, request, context):
@@ -115,22 +151,6 @@ class KioskPage(TemplateView):
             if item_name in request.session:
                 request.session['lens_add_on_selected'] = False
                 del request.session[item_name]
-
-    @staticmethod
-    def set_item(item, item_name, request, context):
-        print(f'set item: { item_name }')
-        if item == 'lens_type':
-            request.session['lens_type_selected'] = True
-            request.session[item_name] = True
-        if item == 'lens_design':
-            request.session['lens_design_selected'] = True
-            request.session[item_name] = True
-        if item == 'lens_material':
-            request.session['lens_material_selected'] = True
-            request.session[item_name] = True
-        if item == 'lens_add_on':
-            request.session['lens_add_on_selected'] = True
-            request.session[item_name] = True
 
     @staticmethod
     def none_button_selected(item_name, request, context):

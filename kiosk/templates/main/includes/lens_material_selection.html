@@ -6,17 +6,9 @@
         </div>
         <div class="row">
             {% if lens_design_items %}
-            test lens_design_items
-            {{ lens_design_items }}
                 {% for item in lens_design_items %}
-                    test item in lens_design_items
-                    {{ item }}
                     {% if item.lens_material %}
-                        test item is lens material
-                        {{ item.lens_material }}
                         {% if item.lens_material.name not in request.session %}
-                            test lens_material.name not in request.session
-                            {{ item.lens_material.name }}
                             <div style="float: left; width: 300px; padding-top:1em; padding-bottom:1em; padding-right:1em;">
                                 <h4>{{ item.lens_material }}</h4>
                                 <form action="/" method="POST">
@@ -36,7 +28,9 @@
                     {% endif %}
                 {% endfor %}
             {% else %}
-                context lens_design_items not found
+                <div class="row">
+                    <h5>No matching Lens Designs</h5>
+                </div>
             {% endif %}
         </div>
     </div>
