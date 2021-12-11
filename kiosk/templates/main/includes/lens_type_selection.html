@@ -8,7 +8,8 @@
             {% for lens_type in lens_types %}
                 {% if lens_type.name not in request.session %}
                     <div style="float: left; width: 300px; padding-top: 1em; padding-bottom:1em; padding-right:1em;">
-                        <h4>{{ lens_type.name }}</h4>
+                        <div style="color:gray; font-size: 1.1em;">{{ lens_type.name }}</div>
+                        <div style="color:green; font-size: 1.1em;">${{ lens_type.default_price }}</div>
                         <form action="/" method="POST">
                             {% csrf_token %}
                             <input type="hidden" name="{{ lens_type.name }}" value="true">

@@ -10,7 +10,8 @@
                     {% if item.lens_design %}
                         {% if item.lens_design.name not in request.session %}
                             <div style="float: left; width: 300px; padding-top:1em; padding-bottom:1em; padding-right:1em;">
-                                <h4>{{ item.lens_design }}</h4>
+                                <div style="color:gray; font-size: 1.1em;">{{ item.lens_design.name }}</div>
+                                <div style="color:green; font-size: 1.1em;">${{ item.lens_design.retail_price }}</div>
                                 <form action="/" method="POST">
                                     {% csrf_token %}
                                     <input type="hidden" name="{{ item.lens_design.name }}" value="true">
@@ -22,19 +23,14 @@
                                         <input type="image" src="" alt="Lens Design" style="max-height: 167px; max-width:300px;" />
                                     {% endif %}
                                 </form>
-                                <div class="row">
-                                    {{ item.lens_design.retail_price }}
-                                </div>
-                                <div class="row">
-                                    {{ item.lens_design.description }}
-                                </div>
+                                <div>{{ item.lens_design.description }}</div>
                             </div>
                         {% endif %}
                     {% endif %}
                 {% endfor %}
             {% else %}
-                <div class="row">
-                    <h5>No matching Lens Designs</h5>
+                <div>
+                    <p>No matching Lens Designs</p>
                 </div>
             {% endif %}
         </div>
