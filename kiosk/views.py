@@ -68,7 +68,7 @@ class KioskPage(TemplateView):
             # the LensDesignItem model
             if lens_design.name in request.session:
                 lens_design_items = LensDesignItem.objects.filter(
-                    lens_design=request.session[lens_design.name]
+                    lens_design=LensDesign.objects.get(name=lens_design.name)
                 )
                 context['lens_design_items'] = lens_design_items
         for lens_material in context['lens_materials']:
