@@ -6,9 +6,13 @@
         </div>
         <div class="row">
             {% if lens_design_items %}
+            test lens_design_items
                 {% for item in lens_design_items %}
+                    test item in lens_design_items
                     {% if item.lens_material %}
+                        test item is lens material
                         {% if item.lens_material.name not in request.session %}
+                            test lens_material.name not in request.session
                             <div style="float: left; width: 300px; padding-top:1em; padding-bottom:1em; padding-right:1em;">
                                 <h4>{{ item.lens_material }}</h4>
                                 <form action="/" method="POST">
