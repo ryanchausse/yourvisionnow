@@ -5,8 +5,8 @@
             <h2>Lens Designs</h2>
         </div>
         <div class="row">
-            {% if lens_type_design_choices %}
-                {% for item in lens_type_design_choices %}
+            {% if lens_design_choices %}
+                {% for item in lens_design_choices %}
                     {% if item.lens_design %}
                         {% if item.lens_design.name not in request.session %}
                             <div style="float: left; width: 300px; padding-top:1em; padding-bottom:1em; padding-right:1em;">
@@ -22,7 +22,12 @@
                                         <input type="image" src="" alt="Lens Design" style="max-height: 167px; max-width:300px;" />
                                     {% endif %}
                                 </form>
-                                <div>{{ item.lens_design.description }}</div>
+                                <div class="row">
+                                    {{ item.lens_design.retail_price }}
+                                </div>
+                                <div class="row">
+                                    {{ item.lens_design.description }}
+                                </div>
                             </div>
                         {% endif %}
                     {% endif %}
