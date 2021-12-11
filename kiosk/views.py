@@ -295,9 +295,11 @@ class SubmitOrder(TemplateView):
                 notes=order_notes
             )
             order.save()
+            if customer.first_name:
+                first_name = customer.first_name
             send_mail(
                 'Customer order',
-                f'New order:\n\n{order_notes}',
+                f'New order:\n\n{order_notes}\n\nCustomer info (if applicable):\n\n{first_name} {customer.last_name}',
                 settings.EMAIL_HOST_USER,
                 [settings.EMAIL_HOST_USER],
                 fail_silently=False,
