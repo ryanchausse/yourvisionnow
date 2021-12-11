@@ -306,7 +306,7 @@ class SubmitOrder(TemplateView):
                 f'New order:\n\n'
                 f'{order_notes}\n\n'
                 f'Customer info (if applicable):\n\n'
-                f'Name: {first_name} {last_name}'
+                f'Name: {first_name} {last_name}\n\n'
                 f'Email: {email}',
                 settings.EMAIL_HOST_USER,
                 [settings.EMAIL_HOST_USER],
