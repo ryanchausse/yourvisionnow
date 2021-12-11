@@ -86,37 +86,9 @@ class LensDesignItem(models.Model):
     def __str__(self):
         return f'{ self.lens_design} / { self.lens_type} / { self.lens_material} / { self.lens_add_on }'
 
-    def clean(self):
-        # After a lens_design has been selected, only a single lens_type, lens_material,
-        # or lens_add_on can be set for each Lens Design (relational table rules)
-        if (self.lens_type and self.lens_material) \
-            or (self.lens_type and self.lens_material) \
-            or (self.lens_type and self.lens_add_on) \
-                or (self.lens_material and self.lens_add_on):
-            raise ValidationError('Only one of lens_type, lens_material, or lens_add_on can be set. '
-                                  'Please make separate records for the items in a lens design package.')
-
     class Meta:
         verbose_name = 'Lens Designs and their items'
         verbose_name_plural = 'Lens Designs and their items'
-        constraints = [
-            models.CheckConstraint(
-                check=(
-                            Q(lens_type__isnull=False) &
-                            Q(lens_material__isnull=True) &
-                            Q(lens_add_on__isnull=True)
-                      ) | (
-                            Q(lens_type__isnull=True) &
-                            Q(lens_material__isnull=False) &
-                            Q(lens_add_on__isnull=True)
-                      ) | (
-                            Q(lens_type__isnull=True) &
-                            Q(lens_material__isnull=True) &
-                            Q(lens_add_on__isnull=False)
-                ),
-                name='lens_design_only_one_of_three_lens_categories_allowed'
-            )
-        ]
 
 
 class LensPackage(models.Model):
@@ -149,35 +121,9 @@ class LensPackageItem(models.Model):
     def __str__(self):
         return f'{ self.lens_package} / { self.lens_type} / { self.lens_material} / { self.lens_add_on }'
 
-    def clean(self):
-        # Only a single lens_type, lens_material, or lens_add_on can be set for each lens_package (relational)
-        if (self.lens_type and self.lens_material) \
-                or (self.lens_type and self.lens_add_on) \
-                or (self.lens_material and self.lens_add_on):
-            raise ValidationError('Only one of lens_type, lens_material, or lens_add_on can be set. '
-                                  'Please make separate records for the items in a lens package.')
-
     class Meta:
         verbose_name = 'Lens Packages and their items'
         verbose_name_plural = 'Lens Packages and their items'
-        constraints = [
-            models.CheckConstraint(
-                check=(
-                            Q(lens_type__isnull=False) &
-                            Q(lens_material__isnull=True) &
-                            Q(lens_add_on__isnull=True)
-                      ) | (
-                            Q(lens_type__isnull=True) &
-                            Q(lens_material__isnull=False) &
-                            Q(lens_add_on__isnull=True)
-                      ) | (
-                            Q(lens_type__isnull=True) &
-                            Q(lens_material__isnull=True) &
-                            Q(lens_add_on__isnull=False)
-                ),
-                name='lens_package_only_one_of_three_lens_categories_allowed'
-            )
-        ]
 
 
 class Stages:
