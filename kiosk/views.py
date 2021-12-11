@@ -74,11 +74,11 @@ class KioskPage(TemplateView):
             if lens_design.name in request.session:
                 for lens_type in context['lens_types']:
                     if lens_type.name in request.session:
-                        lens_design_items = LensDesignItem.objects.filter(
+                        lens_material_items = LensDesignItem.objects.filter(
                             lens_design=LensDesign.objects.get(name=lens_design.name),
                             lens_type=LensType.objects.get(name=lens_type.name)
                         )
-                        context['lens_design_items'] = lens_design_items
+                        context['lens_material_choices'] = lens_material_items
         for lens_material in context['lens_materials']:
             if request.POST.get(lens_material.name) and request.POST.get(lens_material.name) not in request.session:
                 self.set_item('lens_material', lens_material.name, request, context)
@@ -89,13 +89,12 @@ class KioskPage(TemplateView):
                 for lens_design in context['lens_designs']:
                     if lens_design.name in request.session:
                         lens_design_name = lens_design.name
-                lens_material_name = lens_material.name
                 lens_add_on_items = LensDesignItem.objects.filter(
                     lens_type=LensType.objects.get(name=lens_type_name),
                     lens_design=LensDesign.objects.get(name=lens_design_name),
-                    lens_material=LensMaterial.objects.get(name=lens_material_name)
+                    lens_material=LensMaterial.objects.get(name=lens_material.name)
                 )
-                context['lens_add_on_design_choices'] = lens_add_on_items
+                context['lens_add_on_choices'] = lens_add_on_items
             if 'no_lens_materials' in request.POST and request.POST.get('no_lens_materials') == 'true':
                 self.none_button_selected('lens_material', request, context)
             if 'reset_lens_materials' in request.POST and request.POST.get('reset_lens_materials') == 'true':
