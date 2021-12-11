@@ -66,14 +66,6 @@ class KioskPage(TemplateView):
                 self.none_button_selected('lens_design', request, context)
             if 'reset_lens_designs' in request.POST and request.POST.get('reset_lens_designs') == 'true':
                 self.reset_items('lens_design', request, context)
-            # The next fields will depend on the selected Lens Design and derive from
-            # the relational LensDesignItem model
-            if 'lens_type_selected' in request.session and 'lens_design_selected' in request.session \
-                    and request.session['lens_type_selected'] and request.session['lens_design_selected']:
-                lens_design_items = LensDesignItem.objects.filter(
-                    lens_design=request.session[lens_design.name]
-                )
-                context['lens_design_items'] = lens_design_items
         for lens_material in context['lens_materials']:
             if f'no_{lens_material.name}' in request.POST:
                 self.no_on_item('lens_material', lens_material.name, request, context)
@@ -94,6 +86,14 @@ class KioskPage(TemplateView):
                 self.none_button_selected('lens_add_on', request, context)
             if 'reset_lens_add_ons' in request.POST and request.POST.get('reset_lens_add_ons') == 'true':
                 self.reset_items('lens_add_on', request, context)
+        # The next fields will depend on the selected Lens Design and derive from
+        # the relational LensDesignItem model
+        if 'lens_type_selected' in request.session and 'lens_design_selected' in request.session \
+                and request.session['lens_type_selected'] and request.session['lens_design_selected']:
+            lens_design_items = LensDesignItem.objects.filter(
+                lens_design=request.session[lens_design.name]
+            )
+            context['lens_design_items'] = lens_design_items
 
         self.set_first_name(request, context)
         self.set_admin(request, context)
