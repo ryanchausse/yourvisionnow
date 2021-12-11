@@ -64,6 +64,13 @@ class KioskPage(TemplateView):
                 self.reset_items('lens_design', request, context)
             if f'no_{lens_design.name}' in request.POST:
                 self.hierarchical_reset('lens_design', request, context)
+            # The latter fields will depend on the selected Lens Design and derive from
+            # the LensDesignItem model
+            if lens_design.name in request.session:
+                lens_design_items = LensDesignItem.objects.filter(
+                    lens_design=request.session[lens_design.name]
+                )
+                context['lens_design_items'] = lens_design_items
         for lens_material in context['lens_materials']:
             if request.POST.get(lens_material.name) and request.POST.get(lens_material.name) not in request.session:
                 self.set_item('lens_material', lens_material.name, request, context)
@@ -82,17 +89,10 @@ class KioskPage(TemplateView):
                 self.reset_items('lens_add_on', request, context)
             if f'no_{lens_add_on.name}' in request.POST:
                 self.hierarchical_reset('lens_add_on', request, context)
-        # The next fields will depend on the selected Lens Design and derive from
-        # the LensDesignItem model
-        for lens_design in context['lens_designs']:
-            if lens_design.name in request.session:
-                lens_design_items = LensDesignItem.objects.filter(
-                    lens_design=request.session[lens_design.name]
-                )
-                context['lens_design_items'] = lens_design_items
 
         self.set_first_name(request, context)
         self.set_admin(request, context)
+        print(context)
 
         return render(request, 'index.html', context)
 
