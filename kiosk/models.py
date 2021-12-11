@@ -74,10 +74,12 @@ class LensDesign(models.Model):
 
 class LensDesignItem(models.Model):
     # Relational table
-    lens_type = models.ForeignKey(LensType, on_delete=models.CASCADE, null=True, blank=True)
     lens_design = models.ForeignKey(LensDesign, on_delete=models.CASCADE)
+    lens_type = models.ForeignKey(LensType, on_delete=models.CASCADE, null=True, blank=True)
     lens_material = models.ForeignKey(LensMaterial, on_delete=models.CASCADE, null=True, blank=True)
     lens_add_on = models.ForeignKey(LensAddOns, on_delete=models.CASCADE, null=True, blank=True)
+    promo_price = models.DecimalField(max_digits=8, decimal_places=2)
+    retail_price = models.DecimalField(max_digits=8, decimal_places=2)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
@@ -85,12 +87,14 @@ class LensDesignItem(models.Model):
         return f'{ self.lens_design} / { self.lens_type} / { self.lens_material} / { self.lens_add_on }'
 
     def clean(self):
-        # Only a single lens_type, lens_material, or lens_add_on can be set for each lens_package (relational)
+        # After a lens_design has been selected, only a single lens_type, lens_material,
+        # or lens_add_on can be set for each Lens Design (relational table rules)
         if (self.lens_type and self.lens_material) \
-                or (self.lens_type and self.lens_add_on) \
+            or (self.lens_type and self.lens_material) \
+            or (self.lens_type and self.lens_add_on) \
                 or (self.lens_material and self.lens_add_on):
             raise ValidationError('Only one of lens_type, lens_material, or lens_add_on can be set. '
-                                  'Please make separate records for the items in a lens package.')
+                                  'Please make separate records for the items in a lens design package.')
 
     class Meta:
         verbose_name = 'Lens Designs and their items'
