@@ -93,7 +93,7 @@ class KioskPage(TemplateView):
                     lens_type=LensType.objects.get(name=lens_type_name),
                     lens_design=LensDesign.objects.get(name=lens_design_name),
                     lens_material=LensMaterial.objects.get(name=lens_material.name)
-                ).distinct('lens_material')
+                ).distinct('lens_add_on')
                 context['lens_add_on_choices'] = lens_add_on_items
             if 'no_lens_materials' in request.POST and request.POST.get('no_lens_materials') == 'true':
                 self.none_button_selected('lens_material', request, context)
