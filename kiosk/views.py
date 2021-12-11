@@ -83,15 +83,13 @@ class KioskPage(TemplateView):
             if f'no_{lens_add_on.name}' in request.POST:
                 self.hierarchical_reset('lens_add_on', request, context)
         # The next fields will depend on the selected Lens Design and derive from
-        # the relational LensDesignItem model
-        if 'lens_type_selected' in request.session and 'lens_design_selected' in request.session \
-                and request.session['lens_type_selected'] and request.session['lens_design_selected']:
-            for lens_design in context['lens_designs']:
-                if lens_design.name in request.session:
-                    lens_design_items = LensDesignItem.objects.filter(
-                        lens_design=request.session[lens_design.name]
-                    )
-                    context['lens_design_items'] = lens_design_items
+        # the LensDesignItem model
+        for lens_design in context['lens_designs']:
+            if lens_design.name in request.session:
+                lens_design_items = LensDesignItem.objects.filter(
+                    lens_design=request.session[lens_design.name]
+                )
+                context['lens_design_items'] = lens_design_items
 
         self.set_first_name(request, context)
         self.set_admin(request, context)
