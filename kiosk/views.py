@@ -34,11 +34,11 @@ class KioskPage(TemplateView):
             context['user_is_in_admins'] = True
         else:
             context['user_is_in_admins'] = False
-        context['lens_types'] = LensType.objects.all().order_by('-default_price')
-        context['lens_materials'] = LensMaterial.objects.all().order_by('-default_price')
-        context['lens_add_ons'] = LensAddOns.objects.all().order_by('-default_price')
+        context['lens_types'] = LensType.objects.all().order_by('-order_position')
+        context['lens_materials'] = LensMaterial.objects.all().order_by('-order_position')
+        context['lens_add_ons'] = LensAddOns.objects.all().order_by('-order_position')
         # context['lens_packages'] = LensPackage.objects.all().order_by('-retail_price')
-        context['lens_designs'] = LensDesign.objects.all().order_by('-retail_price')
+        context['lens_designs'] = LensDesign.objects.all().order_by('-order_position')
         return context
 
     def post(self, request, *args, **kwargs):

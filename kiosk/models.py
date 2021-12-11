@@ -9,6 +9,7 @@ class LensType(models.Model):
     default_price = models.DecimalField(max_digits=8, decimal_places=2)
     static_img_url = models.CharField(max_length=255, default='multiple_lenses.jpg')
     uploaded_img = models.ImageField(upload_to='images/', blank=True)
+    order_position = models.IntegerField(null=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
@@ -26,6 +27,7 @@ class LensMaterial(models.Model):
     default_price = models.DecimalField(max_digits=8, decimal_places=2)
     static_img_url = models.CharField(max_length=255, default='multiple_lenses.jpg')
     uploaded_img = models.ImageField(upload_to='images/', blank=True)
+    order_position = models.IntegerField(null=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
@@ -43,6 +45,7 @@ class LensAddOns(models.Model):
     default_price = models.DecimalField(max_digits=8, decimal_places=2)
     static_img_url = models.CharField(max_length=255, default='multiple_lenses.jpg')
     uploaded_img = models.ImageField(upload_to='images/', blank=True)
+    order_position = models.IntegerField(null=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
@@ -61,6 +64,7 @@ class LensDesign(models.Model):
     retail_price = models.DecimalField(max_digits=8, decimal_places=2)
     static_img_url = models.CharField(max_length=255, default='multiple_lenses.jpg')
     uploaded_img = models.ImageField(upload_to='images/', blank=True)
+    order_position = models.IntegerField(null=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
@@ -98,6 +102,7 @@ class LensPackage(models.Model):
     retail_price = models.DecimalField(max_digits=8, decimal_places=2)
     static_img_url = models.CharField(max_length=255, default='multiple_lenses.jpg')
     uploaded_img = models.ImageField(upload_to='images/', blank=True)
+    order_position = models.IntegerField(null=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
