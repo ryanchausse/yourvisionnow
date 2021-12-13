@@ -9,7 +9,7 @@
                 {{ lens_material.name }}
             </td>
             <td style="padding-bottom:1em">
-                <span style="color:green">{{ lens_material.retail_price }}</span>
+                <span style="color:green">{% if lens_material.retail_price == 0.00 %}FREE{% else %}${{ lens_material.retail_price }}{% endif %}</span>
             </td>
             <td style="padding-bottom:1em">
                 <form action="/" method="POST">
