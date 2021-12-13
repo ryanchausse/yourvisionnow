@@ -14,8 +14,6 @@ from .models import Customer
 from .models import LensType
 from .models import LensMaterial
 from .models import LensAddOns
-from .models import LensPackage
-from .models import LensPackageItem
 from .models import Order
 from .models import LensDesign
 from .models import LensDesignItem
@@ -37,7 +35,6 @@ class KioskPage(TemplateView):
         context['lens_types'] = LensType.objects.all().order_by('-order_position')
         context['lens_materials'] = LensMaterial.objects.all().order_by('-order_position')
         context['lens_add_ons'] = LensAddOns.objects.all().order_by('-order_position')
-        # context['lens_packages'] = LensPackage.objects.all().order_by('-retail_price')
         context['lens_designs'] = LensDesign.objects.all().order_by('-order_position')
         return context
 
@@ -283,8 +280,8 @@ class SubmitOrder(TemplateView):
             # Next, make notes for Order
             order_notes = ''
             for key, value in request.session.items():
-                # First statement to see whether variable is framework-based;
-                # second statement to remove vars that have been set and used only internally
+                # First expression to see whether variable is framework-based;
+                # second expression to remove vars that have been set and used only internally
                 if key[0] != '_' and "_" not in key:
                     order_notes += key + ', '
             if order_notes and order_notes[-2::] == ', ':
@@ -333,23 +330,6 @@ class ManagerPage(TemplateView):
         if self.request.user.groups.filter(name='Admins').exists():
             context = self.get_context_data(**kwargs)
             context['orders'] = Order.objects.all().order_by('-created_at')
-            return render(request,
-                          template_name=self.template_name,
-                          context=context)
-        else:
-            return redirect('/index.html')
-
-
-class ManagerLensPackagePage(TemplateView):
-    """
-    Manager's CRUD for Lens Packages
-    """
-    template_name = 'manager_lens_packages.html'
-
-    def get(self, request, *args, **kwargs):
-        if self.request.user.groups.filter(name='Admins').exists():
-            context = self.get_context_data(**kwargs)
-            context['lens_packages'] = LensPackage.objects.all().order_by('-created_at')
             return render(request,
                           template_name=self.template_name,
                           context=context)
