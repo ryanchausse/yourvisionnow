@@ -3,6 +3,9 @@
     {% if request.session.lens_type_selected %}
         {% include 'includes/lens_types.html' %}
     {% endif %}
+    {% if request.session.magnification_level_selected %}
+        {% include 'includes/magnification_levels.html' %}
+    {% endif %}
     {% if request.session.lens_design_selected %}
         {% include 'includes/lens_designs.html' %}
     {% endif %}

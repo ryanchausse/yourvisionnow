@@ -17,6 +17,7 @@ from .models import LensAddOns
 from .models import Order
 from .models import LensDesign
 from .models import LensDesignItem
+from .models import MagnificationLevel
 
 
 class KioskPage(TemplateView):
@@ -36,6 +37,7 @@ class KioskPage(TemplateView):
         context['lens_materials'] = LensMaterial.objects.all().order_by('-order_position')
         context['lens_add_ons'] = LensAddOns.objects.all().order_by('-order_position')
         context['lens_designs'] = LensDesign.objects.all().order_by('-order_position')
+        context['magnification_levels'] = MagnificationLevel.objects.all().order_by('-order_position')
         return context
 
     def post(self, request, *args, **kwargs):
@@ -57,6 +59,16 @@ class KioskPage(TemplateView):
                     lens_type=LensType.objects.get(name=lens_type.name)
                 ).distinct('lens_design')
                 context['lens_design_choices'] = lens_design_items
+                if lens_type.name == "Reader":
+                    for magnification_level in context['magnification_levels']:
+                        if request.POST.get(magnification_level.name) and request.POST.get(magnification_level.name) not in request.session:
+                            self.set_item('magnification_level', magnification_level.name, request, context)
+                        if 'no_magnification_levels' in request.POST and request.POST.get('no_magnification_levels') == 'true':
+                            self.none_button_selected('magnification_level', request, context)
+                        if 'reset_magnification_levels' in request.POST and request.POST.get('reset_magnification_levels') == 'true':
+                            self.reset_items('magnification_level', request, context)
+                        if f'no_{magnification_level.name}' in request.POST:
+                            self.hierarchical_reset('magnification_level', request, context)
         for lens_design in context['lens_designs']:
             if request.POST.get(lens_design.name) and request.POST.get(lens_design.name) not in request.session:
                 self.set_item('lens_design', lens_design.name, request, context)
@@ -118,6 +130,9 @@ class KioskPage(TemplateView):
         if item == 'lens_type':
             request.session['lens_type_selected'] = True
             request.session[item_name] = True
+        if item == 'magnification_level':
+            request.session['magnification_level_selected'] = True
+            request.session[item_name] = True
         if item == 'lens_design':
             request.session['lens_design_selected'] = True
             request.session[item_name] = True
@@ -134,6 +149,10 @@ class KioskPage(TemplateView):
         if item == 'lens_type':
             if item_name in request.session:
                 request.session['lens_type_selected'] = False
+                del request.session[item_name]
+        if item == 'magnification_level':
+            if item_name in request.session:
+                request.session['magnification_level_selected'] = False
                 del request.session[item_name]
         if item == 'lens_design':
             if item_name in request.session:
@@ -172,6 +191,9 @@ class KioskPage(TemplateView):
         if item_name == 'lens_types':
             request.session['lens_type_selected'] = False
             request.session['no_lens_types'] = False
+        if item_name == 'magnification_level':
+            request.session['magnification_level_selected'] = False
+            request.session['no_magnification_levels'] = False
         if item_name == 'lens_designs':
             request.session['lens_design_selected'] = False
             request.session['no_lens_designs'] = False
@@ -188,6 +210,23 @@ class KioskPage(TemplateView):
                 self.no_on_item('lens_type', lens_type.name, request, context)
             request.session['lens_type_selected'] = False
             request.session['no_lens_types'] = False
+            for lens_design in context['lens_designs']:
+                self.no_on_item('lens_design', lens_design.name, request, context)
+            request.session['lens_design_selected'] = False
+            request.session['no_lens_designs'] = False
+            for lens_material in context['lens_materials']:
+                self.no_on_item('lens_material', lens_material.name, request, context)
+            request.session['lens_material_selected'] = False
+            request.session['no_lens_materials'] = False
+            for lens_add_on in context['lens_add_ons']:
+                self.no_on_item('lens_add_on', lens_add_on.name, request, context)
+            request.session['lens_add_on_selected'] = False
+            request.session['no_add_ons'] = False
+        if item == 'magnification_level':
+            for magnification_level in context['magnification_levels']:
+                self.no_on_item('magnification_level', magnification_level.name, request, context)
+            request.session['magnification_level_selected'] = False
+            request.session['no_magnification_levels'] = False
             for lens_design in context['lens_designs']:
                 self.no_on_item('lens_design', lens_design.name, request, context)
             request.session['lens_design_selected'] = False
