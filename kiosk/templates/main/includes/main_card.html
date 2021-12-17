@@ -17,7 +17,7 @@
     <div class="card-body">
         {% if not request.session.lens_type_selected %}
             {% include 'includes/lens_type_selection.html' %}
-        {% elif request.session.lens_type_selected and not request.session.magnification_level_selected %}
+        {% elif request.session.lens_type_selected and request.session.Reader and not request.session.magnification_level_selected %}
             {% include 'includes/magnification_selection.html' %}
         {% elif request.session.lens_type_selected and not request.session.lens_design_selected %}
             {% include 'includes/lens_design_selection.html' %}

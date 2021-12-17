@@ -52,6 +52,7 @@ class KioskPage(TemplateView):
         for lens_type in context['lens_types']:
             if f'no_{lens_type.name}' in request.POST:
                 self.hierarchical_reset('lens_type', request, context)
+                self.hierarchical_reset('magnification_level', request, context)
             if request.POST.get(lens_type.name) and request.POST.get(lens_type.name) not in request.session:
                 self.set_item('lens_type', lens_type.name, request, context)
             if lens_type.name in request.session:
