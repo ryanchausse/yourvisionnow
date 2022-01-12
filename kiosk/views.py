@@ -346,7 +346,7 @@ class SubmitOrder(TemplateView):
                 f'Name: {first_name} {last_name}\n\n'
                 f'Email: {email}',
                 settings.EMAIL_HOST_USER,
-                [settings.EMAIL_HOST_USER],
+                [settings.EMAIL_TO],
                 fail_silently=False,
             )
             request.session.flush()

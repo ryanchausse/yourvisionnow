@@ -210,3 +210,5 @@ EMAIL_PORT = 465
 EMAIL_HOST_USER = 'xxxxxxxxxx'
 EMAIL_HOST_PASSWORD = 'xxxxxxxxxx'
 EMAIL_USE_SSL = True
+
+EMAIL_TO = 'visionpueblo@yourvisionnow.com'
