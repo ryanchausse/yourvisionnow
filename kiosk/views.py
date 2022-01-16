@@ -79,8 +79,6 @@ class KioskPage(TemplateView):
                 self.reset_items('lens_design', request, context)
             if f'no_{lens_design.name}' in request.POST:
                 self.hierarchical_reset('lens_design', request, context)
-            # The latter fields will depend on the selected Lens Design and derive from
-            # the LensDesignItem model
             if lens_design.name in request.session:
                 for lens_type in context['lens_types']:
                     if lens_type.name in request.session:
@@ -120,6 +118,45 @@ class KioskPage(TemplateView):
                 self.reset_items('lens_add_on', request, context)
             if f'no_{lens_add_on.name}' in request.POST:
                 self.hierarchical_reset('lens_add_on', request, context)
+
+        # Calculate price for displayed items in the user selection panel
+        # will depend on LensDesignItem (packages) pricing
+        # user_selection_prices = {'lens_type': 1.00, 'lens_design': 2.00, 'lens_material': 3.00}
+        # figure a way to do custom lens add on pricing. maybe if only one record found
+
+        if 'lens_add_on_items' in locals():
+            print('lens_add_on_item price')
+            # Set your_selections lens_type price (based on first result)
+            # Set your_selections lens_design price (based on first result)
+            # Set your_selections lens_material price (based on first result)
+            # Don't set add-on price because there are multiple choices there. Rely on default.
+            if lens_add_on_items[0].lens_type_retail_price is None:
+                lens_type_price = 'FREE'
+            else:
+                lens_type_price = lens_add_on_items[0].lens_type_retail_price
+            context['user_selection_prices'] = {'lens_type': lens_type_price,
+                                                'lens_design': lens_add_on_items[0].lens_design.retail_price,
+                                                'lens_material': lens_add_on_items[0].lens_material_retail_price}
+        elif 'lens_material_items' in locals():
+            print('lens_material_item price')
+            # Set your_selections lens_type price (based on first result)
+            # Set your_selections lens_design price (based on first result)
+            if lens_add_on_items[0].lens_type_retail_price is None:
+                lens_type_price = 'FREE'
+            else:
+                lens_type_price = lens_add_on_items[0].lens_type_retail_price
+            context['user_selection_prices'] = {'lens_type': lens_material_items[0].lens_type_retail_price,
+                                                'lens_design': lens_material_items[0].lens_design.retail_price}
+        elif 'lens_design_items' in locals():
+            print('lens_design_item price')
+            # Set your_selections lens_type price (based on first result)
+            if lens_add_on_items[0].lens_type_retail_price is None:
+                lens_type_price = 'FREE'
+            else:
+                lens_type_price = lens_add_on_items[0].lens_type_retail_price
+            context['user_selection_prices'] = {'lens_type': lens_design_items[0].lens_type_retail_price}
+        else:
+            context['user_selection_prices'] = {}
 
         self.set_first_name(request, context)
         self.set_admin(request, context)
