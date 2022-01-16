@@ -141,19 +141,19 @@ class KioskPage(TemplateView):
             print('lens_material_item price')
             # Set your_selections lens_type price (based on first result)
             # Set your_selections lens_design price (based on first result)
-            if lens_add_on_items[0].lens_type_retail_price is None:
+            if lens_material_items[0].lens_type_retail_price is None:
                 lens_type_price = 'FREE'
             else:
-                lens_type_price = lens_add_on_items[0].lens_type_retail_price
+                lens_type_price = lens_material_items[0].lens_type_retail_price
             context['user_selection_prices'] = {'lens_type': lens_material_items[0].lens_type_retail_price,
                                                 'lens_design': lens_material_items[0].lens_design.retail_price}
         elif 'lens_design_items' in locals():
             print('lens_design_item price')
             # Set your_selections lens_type price (based on first result)
-            if lens_add_on_items[0].lens_type_retail_price is None:
+            if lens_design_items[0].lens_type_retail_price is None:
                 lens_type_price = 'FREE'
             else:
-                lens_type_price = lens_add_on_items[0].lens_type_retail_price
+                lens_type_price = lens_design_items[0].lens_type_retail_price
             context['user_selection_prices'] = {'lens_type': lens_design_items[0].lens_type_retail_price}
         else:
             context['user_selection_prices'] = {}
