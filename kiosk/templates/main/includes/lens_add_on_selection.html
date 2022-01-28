@@ -12,9 +12,9 @@
                             <div style="float: left; width: 300px; padding-top:1em; padding-bottom:1em; padding-right:1em;">
                                 <div style="color:gray; font-size: 1.1em;">{{ item.lens_add_on.name }}</div>
                                 {% if item.lens_add_on_retail_price %}
-                                    <div style="color:green; font-size: 1.1em;">{% if item.lens_add_on_retail_price == 0.00 %}FREE{% else %}${{ item.lens_add_on_retail_price }}{% endif %}</div>
+                                    <div style="color:green; font-size: 1.1em;">{% if item.lens_add_on_retail_price == 0.00 %}INCLUDED{% else %}${{ item.lens_add_on_retail_price }}{% endif %}</div>
                                 {% else %}
-                                    <div style="color:green; font-size: 1.1em;">{% if item.lens_add_on.retail_price == 0.00 %}FREE{% else %}${{ item.lens_add_on.retail_price }}{% endif %}</div>
+                                    <div style="color:green; font-size: 1.1em;">{% if item.lens_add_on.retail_price == 0.00 %}INCLUDED{% else %}${{ item.lens_add_on.retail_price }}{% endif %}</div>
                                 {% endif %}
                                 <form action="/" method="POST">
                                     {% csrf_token %}
@@ -33,9 +33,7 @@
                     {% endif %}
                 {% endfor %}
             {% else %}
-                <div class="row">
-                    <p>No matching Lens Add-Ons</p>
-                </div>
+                <p>No matching Lens Add-Ons</p>
             {% endif %}
         </div>
     </div>
