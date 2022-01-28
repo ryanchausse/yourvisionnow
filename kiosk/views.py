@@ -147,7 +147,7 @@ class KioskPage(TemplateView):
             # Set your_selections lens_type price (based on first result)
             # Set your_selections lens_design price (based on first result)
             if lens_material_items:
-                if lens_material_items[0].lens_desigm_retail_price is None:
+                if lens_material_items[0].lens_design_retail_price is None:
                     lens_design_price = lens_material_items[0].lens_design.retail_price
                 else:
                     lens_design_price = lens_material_items[0].lens_design_retail_price
