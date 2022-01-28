@@ -127,18 +127,18 @@ class KioskPage(TemplateView):
             print('lens_add_on_item price')
             # Don't set add-on price because there are multiple choices there. Rely on default.
             if lens_add_on_items:
-                if lens_add_on_items[0].lens_material_retail_price is None:
-                    lens_material_price = lens_add_on_items[0].lens_material.retail_price
-                else:
+                if lens_add_on_items[0].lens_material_retail_price:
                     lens_material_price = lens_add_on_items[0].lens_material_retail_price
-                if lens_add_on_items[0].lens_add_on_retail_price is None:
-                    lens_design_price = lens_add_on_items[0].lens_design.retail_price
                 else:
+                    lens_material_price = lens_add_on_items[0].lens_material.retail_price
+                if lens_add_on_items[0].lens_add_on_retail_price:
                     lens_design_price = lens_add_on_items[0].lens_design_retail_price
-                if lens_add_on_items[0].lens_type_retail_price is None:
-                    lens_type_price = lens_add_on_items[0].lens_type.retail_price
                 else:
+                    lens_design_price = lens_add_on_items[0].lens_design.retail_price
+                if lens_add_on_items[0].lens_type_retail_price:
                     lens_type_price = lens_add_on_items[0].lens_type_retail_price
+                else:
+                    lens_type_price = lens_add_on_items[0].lens_type.retail_price
             context['user_selection_prices'] = {'lens_type': lens_type_price,
                                                 'lens_design': lens_design_price,
                                                 'lens_material': lens_material_price}
@@ -147,14 +147,14 @@ class KioskPage(TemplateView):
             # Set your_selections lens_type price (based on first result)
             # Set your_selections lens_design price (based on first result)
             if lens_material_items:
-                if lens_material_items[0].lens_design_retail_price is None:
-                    lens_design_price = lens_material_items[0].lens_design.retail_price
-                else:
+                if lens_material_items[0].lens_design_retail_price:
                     lens_design_price = lens_material_items[0].lens_design_retail_price
-                if lens_material_items[0].lens_type_retail_price is None:
-                    lens_type_price = lens_material_items[0].lens_type.retail_price
                 else:
+                    lens_design_price = lens_material_items[0].lens_design.retail_price
+                if lens_material_items[0].lens_type_retail_price:
                     lens_type_price = lens_material_items[0].lens_type_retail_price
+                else:
+                    lens_type_price = lens_material_items[0].lens_type.retail_price
                 context['user_selection_prices'] = {'lens_type': lens_type_price,
                                                     'lens_design': lens_design_price}
             else:
@@ -164,10 +164,10 @@ class KioskPage(TemplateView):
             print('lens_design_item price')
             # Set your_selections lens_type price (based on first result)
             if lens_design_items:
-                if lens_design_items[0].lens_type_retail_price is None:
-                    lens_type_price = lens_design_items[0].lens_type.retail_price
-                else:
+                if lens_design_items[0].lens_type_retail_price:
                     lens_type_price = lens_design_items[0].lens_type_retail_price
+                else:
+                    lens_type_price = lens_design_items[0].lens_type.retail_price
                 context['user_selection_prices'] = {'lens_type': lens_type_price}
             else:
                 context['user_selection_prices'] = {'lens_type': None}
