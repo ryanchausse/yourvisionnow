@@ -108,6 +108,8 @@ class LensDesignItem(models.Model):
     promo_price = models.DecimalField(max_digits=8, decimal_places=2, null=True, blank=True)
     lens_type_retail_price = models.DecimalField(max_digits=8, decimal_places=2, null=True, blank=True)
     lens_type_promo_price = models.DecimalField(max_digits=8, decimal_places=2, null=True, blank=True)
+    lens_design_retail_price = models.DecimalField(max_digits=8, decimal_places=2, null=True, blank=True)
+    lens_design_promo_price = models.DecimalField(max_digits=8, decimal_places=2, null=True, blank=True)
     lens_material_retail_price = models.DecimalField(max_digits=8, decimal_places=2, null=True, blank=True)
     lens_material_promo_price = models.DecimalField(max_digits=8, decimal_places=2, null=True, blank=True)
     lens_add_on_retail_price = models.DecimalField(max_digits=8, decimal_places=2, null=True, blank=True)
