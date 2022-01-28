@@ -128,6 +128,8 @@ class KioskPage(TemplateView):
             if lens_add_on_items:
                 if lens_add_on_items[0].lens_material_retail_price or lens_add_on_items[0].lens_material_retail_price == 0.00:
                     lens_material_price = lens_add_on_items[0].lens_material_retail_price
+                    print('lens material price')
+                    print(lens_add_on_items[0].lens_material_retail_price)
                 else:
                     lens_material_price = lens_add_on_items[0].lens_material.retail_price
                 if lens_add_on_items[0].lens_add_on_retail_price or lens_add_on_items[0].lens_add_on_retail_price == 0.00:
