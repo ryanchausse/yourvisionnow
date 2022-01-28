@@ -123,31 +123,40 @@ class KioskPage(TemplateView):
         # will depend on LensDesignItem (packages) pricing
         # user_selection_prices = {'lens_type': 1.00, 'lens_design': 2.00, 'lens_material': 3.00}
         # figure a way to do custom lens add on pricing. maybe if only one record found
-
         if 'lens_add_on_items' in locals():
             print('lens_add_on_item price')
-            # Set your_selections lens_type price (based on first result)
-            # Set your_selections lens_design price (based on first result)
-            # Set your_selections lens_material price (based on first result)
             # Don't set add-on price because there are multiple choices there. Rely on default.
-            if lens_add_on_items and lens_add_on_items[0].lens_type_retail_price is None:
-                lens_type_price = lens_add_on_items[0].lens_type.retail_price
-            else:
-                lens_type_price = lens_add_on_items[0].lens_type_retail_price
+            if lens_add_on_items:
+                if lens_add_on_items[0].lens_material_retail_price is None:
+                    lens_material_price = lens_add_on_items[0].lens_material.retail_price
+                else:
+                    lens_material_price = lens_add_on_items[0].lens_material_retail_price
+                if lens_add_on_items[0].lens_add_on_retail_price is None:
+                    lens_design_price = lens_add_on_items[0].lens_design.retail_price
+                else:
+                    lens_design_price = lens_add_on_items[0].lens_design_retail_price
+                if lens_add_on_items[0].lens_type_retail_price is None:
+                    lens_type_price = lens_add_on_items[0].lens_type.retail_price
+                else:
+                    lens_type_price = lens_add_on_items[0].lens_type_retail_price
             context['user_selection_prices'] = {'lens_type': lens_type_price,
-                                                'lens_design': lens_add_on_items[0].lens_design.retail_price,
-                                                'lens_material': lens_add_on_items[0].lens_material_retail_price}
+                                                'lens_design': lens_design_price,
+                                                'lens_material': lens_material_price}
         elif 'lens_material_items' in locals():
             print('lens_material_item price')
             # Set your_selections lens_type price (based on first result)
             # Set your_selections lens_design price (based on first result)
             if lens_material_items:
+                if lens_material_items[0].lens_desigm_retail_price is None:
+                    lens_design_price = lens_material_items[0].lens_design.retail_price
+                else:
+                    lens_design_price = lens_material_items[0].lens_design_retail_price
                 if lens_material_items[0].lens_type_retail_price is None:
                     lens_type_price = lens_material_items[0].lens_type.retail_price
                 else:
                     lens_type_price = lens_material_items[0].lens_type_retail_price
-                    context['user_selection_prices'] = {'lens_type': lens_material_items[0].lens_type_retail_price,
-                                                        'lens_design': lens_material_items[0].lens_design.retail_price}
+                context['user_selection_prices'] = {'lens_type': lens_type_price,
+                                                    'lens_design': lens_design_price}
             else:
                 context['user_selection_prices'] = {'lens_type': None,
                                                     'lens_design': None}
@@ -159,7 +168,7 @@ class KioskPage(TemplateView):
                     lens_type_price = lens_design_items[0].lens_type.retail_price
                 else:
                     lens_type_price = lens_design_items[0].lens_type_retail_price
-                    context['user_selection_prices'] = {'lens_type': lens_design_items[0].lens_type_retail_price}
+                context['user_selection_prices'] = {'lens_type': lens_type_price}
             else:
                 context['user_selection_prices'] = {'lens_type': None}
         else:

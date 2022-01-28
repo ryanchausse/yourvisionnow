@@ -10,9 +10,9 @@
             </td>
             <td style="padding-bottom:1em">
                 {% if user_selection_prices %}
-                    <span style="color:green">{% if user_selection_prices.lens_material == 0.00 or user_selection_prices.lens_material == 'FREE' %}FREE{% else %}${{ user_selection_prices.lens_material }}{% endif %}</span>
+                    <span style="color:green">{% if user_selection_prices.lens_material == 0.00 %}INCLUDED{% else %}${{ user_selection_prices.lens_material }}{% endif %}</span>
                 {% else %}
-                    <span style="color:green">{% if lens_material.retail_price == 0.00 %}FREE{% else %}${{ lens_material.retail_price }}{% endif %}</span>
+                    <span style="color:green">{% if lens_material.retail_price == 0.00 %}INCLUDED{% else %}${{ lens_material.retail_price }}{% endif %}</span>
                 {% endif %}
             </td>
             <td style="padding-bottom:1em">
