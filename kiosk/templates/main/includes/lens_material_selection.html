@@ -12,7 +12,7 @@
                             {% if item.lens_material.name not in request.session %}
                                 <div style="float: left; width: 300px; padding-top:1em; padding-bottom:1em; padding-right:1em;">
                                     <div style="color:gray; font-size: 1.1em;">{{ item.lens_material.name }}</div>
-                                    {% if item.lens_material_retail_price %}
+                                    {% if item.lens_material_retail_price or item.lens_material_retail_price == 0.00 %}
                                         <div style="color:green; font-size: 1.1em;">{% if item.lens_material_retail_price == 0.00 %}INCLUDED{% else %}${{ item.lens_material_retail_price }}{% endif %}</div>
                                     {% else %}
                                         <div style="color:green; font-size: 1.1em;">{% if item.lens_material.retail_price == 0.00 %}INCLUDED{% else %}${{ item.lens_material.retail_price }}{% endif %}</div>
