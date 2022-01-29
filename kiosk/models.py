@@ -114,6 +114,7 @@ class LensDesignItem(models.Model):
     lens_material_promo_price = models.DecimalField(max_digits=8, decimal_places=2, null=True, blank=True)
     lens_add_on_retail_price = models.DecimalField(max_digits=8, decimal_places=2, null=True, blank=True)
     lens_add_on_promo_price = models.DecimalField(max_digits=8, decimal_places=2, null=True, blank=True)
+    order_position = models.IntegerField(null=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
