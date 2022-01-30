@@ -18,6 +18,7 @@ from .models import Order
 from .models import LensDesign
 from .models import LensDesignItem
 from .models import MagnificationLevel
+from django.db.models import Subquery
 
 
 class KioskPage(TemplateView):
@@ -57,8 +58,12 @@ class KioskPage(TemplateView):
                 self.set_item('lens_type', lens_type.name, request, context)
             if lens_type.name in request.session:
                 lens_design_items = LensDesignItem.objects.filter(
-                    lens_type=LensType.objects.get(name=lens_type.name)
-                ).order_by('lens_design', '-order_position').distinct('lens_design')
+                    pk__in=Subquery(
+                        LensDesignItem.objects.filter(
+                            lens_type=LensType.objects.get(name=lens_type.name)
+                        ).distinct('lens_design_id').values('pk')
+                    )
+                ).order_by('-order_position')
                 context['lens_design_choices'] = lens_design_items
                 if lens_type.name == "Reader":
                     for magnification_level in context['magnification_levels']:
@@ -85,7 +90,7 @@ class KioskPage(TemplateView):
                         lens_material_items = LensDesignItem.objects.filter(
                             lens_design=LensDesign.objects.get(name=lens_design.name),
                             lens_type=LensType.objects.get(name=lens_type.name)
-                        ).order_by('lens_material', '-order_position').distinct('lens_material')
+                        ).distinct('lens_material')
                         context['lens_material_choices'] = lens_material_items
         for lens_material in context['lens_materials']:
             if request.POST.get(lens_material.name) and request.POST.get(lens_material.name) not in request.session:
@@ -101,7 +106,7 @@ class KioskPage(TemplateView):
                     lens_type=LensType.objects.get(name=lens_type_name),
                     lens_design=LensDesign.objects.get(name=lens_design_name),
                     lens_material=LensMaterial.objects.get(name=lens_material.name)
-                ).order_by('lens_add_on', '-order_position').distinct('lens_add_on')
+                ).distinct('lens_add_on')
                 context['lens_add_on_choices'] = lens_add_on_items
             if 'no_lens_materials' in request.POST and request.POST.get('no_lens_materials') == 'true':
                 self.none_button_selected('lens_material', request, context)
@@ -129,7 +134,6 @@ class KioskPage(TemplateView):
                 if lens_add_on_items[0].lens_material_retail_price or lens_add_on_items[0].lens_material_retail_price == 0.00:
                     lens_material_price = lens_add_on_items[0].lens_material_retail_price
                     print('lens material price')
-                    print(lens_add_on_items[0].lens_material_retail_price)
                 else:
                     lens_material_price = lens_add_on_items[0].lens_material.retail_price
                 if lens_add_on_items[0].lens_add_on_retail_price or lens_add_on_items[0].lens_add_on_retail_price == 0.00:
