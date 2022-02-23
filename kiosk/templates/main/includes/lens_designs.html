@@ -22,14 +22,14 @@
     {% for lens_design in lens_designs %}
         {% if lens_design.name in request.session %}
             <tr>
-                <td style="padding-bottom:1em; font-size:1.5em;">
+                <td style="padding-bottom:1em; font-size:1.5em; color:black;">
                     {{ lens_design.name }}
                 </td>
                 <td style="padding-bottom:1em; font-size:1.5em;">
                     {% if user_selection_prices.lens_design or user_selection_prices.lens_design == 0.00 %}
-                        <span style="color:green">{% if user_selection_prices.lens_design == 0.00 %}INCLUDED{% else %}${{ user_selection_prices.lens_design }}{% endif %}</span>
+                        <span class="selection_price" style="color:green">{% if user_selection_prices.lens_design == 0.00 %}INCLUDED{% else %}${{ user_selection_prices.lens_design }}{% endif %}</span>
                     {% else %}
-                        <span style="color:green">{% if lens_design.retail_price == 0.00 %}INCLUDED{% else %}${{ lens_design.retail_price }}{% endif %}</span>
+                        <span class="selection_price" style="color:green">{% if lens_design.retail_price == 0.00 %}INCLUDED{% else %}${{ lens_design.retail_price }}{% endif %}</span>
                     {% endif %}
                 </td>
                 <td style="padding-bottom:1em; font-size:1.5em;">
