@@ -34,11 +34,11 @@ class KioskPage(TemplateView):
             context['user_is_in_admins'] = True
         else:
             context['user_is_in_admins'] = False
-        context['lens_types'] = LensType.objects.all().order_by('-order_position')
-        context['lens_materials'] = LensMaterial.objects.all().order_by('-order_position')
-        context['lens_add_ons'] = LensAddOns.objects.all().order_by('-order_position')
-        context['lens_designs'] = LensDesign.objects.all().order_by('-order_position')
-        context['magnification_levels'] = MagnificationLevel.objects.all().order_by('-order_position')
+        context['lens_types'] = LensType.objects.all().order_by('order_position')
+        context['lens_materials'] = LensMaterial.objects.all().order_by('order_position')
+        context['lens_add_ons'] = LensAddOns.objects.all().order_by('order_position')
+        context['lens_designs'] = LensDesign.objects.all().order_by('order_position')
+        context['magnification_levels'] = MagnificationLevel.objects.all().order_by('order_position')
         return context
 
     def post(self, request, *args, **kwargs):
@@ -63,7 +63,7 @@ class KioskPage(TemplateView):
                             lens_type=LensType.objects.get(name=lens_type.name)
                         ).distinct('lens_design_id').values('pk')
                     )
-                ).order_by('-order_position')
+                ).order_by('order_position')
                 context['lens_design_choices'] = lens_design_items
                 if lens_type.name == "Reader":
                     for magnification_level in context['magnification_levels']:
