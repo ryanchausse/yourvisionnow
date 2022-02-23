@@ -15,4 +15,7 @@
     {% if request.session.lens_add_on_selected %}
         {% include 'includes/lens_add_ons.html' %}
     {% endif %}
+    {% if request.session.lens_type_selected %}
+        {% include 'includes/price_total.html' %}
+    {% endif %}
 </table>
