@@ -4,17 +4,17 @@
 </tr>
 {% if request.session.no_lens_designs %}
     <tr>
-        <td style="padding-bottom:1em">
+        <td style="padding-bottom:1em; font-size:1.5em;">
             No lens designs
         </td>
-        <td style="padding-bottom:1em">
-            <span style="color:green">0.00</span>
+        <td style="padding-bottom:1em; font-size:1.5em;">
+            <span style="color:green; font-size:1.5em;">0.00</span>
         </td>
-        <td style="padding-bottom:1em">
+        <td style="padding-bottom:1em; font-size:1.5em;">
             <form action="/" method="POST">
                 {% csrf_token %}
                 <input type="hidden" name="reset_lens_designs" value="true">
-                <button type="submit" class="btn close" aria-label="remove"><span aria-hidden="true">&times;</span></button>
+                <button type="submit" class="btn close" aria-label="remove"><span style="font-size:2em;">&times;</span></button>
             </form>
         </td>
     </tr>
@@ -22,21 +22,21 @@
     {% for lens_design in lens_designs %}
         {% if lens_design.name in request.session %}
             <tr>
-                <td style="padding-bottom:1em">
+                <td style="padding-bottom:1em; font-size:1.5em;">
                     {{ lens_design.name }}
                 </td>
-                <td style="padding-bottom:1em">
+                <td style="padding-bottom:1em; font-size:1.5em;">
                     {% if user_selection_prices.lens_design or user_selection_prices.lens_design == 0.00 %}
                         <span style="color:green">{% if user_selection_prices.lens_design == 0.00 %}INCLUDED{% else %}${{ user_selection_prices.lens_design }}{% endif %}</span>
                     {% else %}
                         <span style="color:green">{% if lens_design.retail_price == 0.00 %}INCLUDED{% else %}${{ lens_design.retail_price }}{% endif %}</span>
                     {% endif %}
                 </td>
-                <td style="padding-bottom:1em">
+                <td style="padding-bottom:1em; font-size:1.5em;">
                     <form action="/" method="POST">
                         {% csrf_token %}
                         <input type="hidden" name="no_{{ lens_design.name }}" value="true">
-                        <button type="submit"  class="btn close" aria-label="remove"><span aria-hidden="true">&times;</span></button>
+                        <button type="submit"  class="btn close" aria-label="remove"><span style="font-size:2em;">&times;</span></button>
                     </form>
                 </td>
             </tr>

@@ -4,17 +4,17 @@
 </tr>
 {% if request.session.no_lens_add_ons %}
     <tr>
-        <td style="padding-bottom:1em">
+        <td style="padding-bottom:1em; font-size:1.5em;">
             No lens add-ons
         </td>
-        <td style="padding-bottom:1em">
-            <span style="color:green">0.00</span>
+        <td style="padding-bottom:1em; font-size:1.5em;">
+            <span style="color:green; font-size:1.5em;">0.00</span>
         </td>
-        <td style="padding-bottom:1em">
+        <td style="padding-bottom:1em; font-size:1.5em;">
             <form action="/" method="POST">
                 {% csrf_token %}
                 <input type="hidden" name="reset_lens_add_ons" value="true">
-                <button type="submit" class="btn close" aria-label="remove"><span aria-hidden="true">&times;</span></button>
+                <button type="submit" class="btn close" aria-label="remove"><span style="font-size:2em;">&times;</span></button>
             </form>
         </td>
     </tr>
@@ -22,17 +22,17 @@
     {% for lens_add_on in lens_add_ons %}
         {% if lens_add_on.name in request.session %}
             <tr>
-                <td style="padding-bottom:1em">
+                <td style="padding-bottom:1em; font-size:1.5em;">
                     {{ lens_add_on.name }}
                 </td>
-                <td style="padding-bottom:1em">
-                    <span style="color:green">{% if lens_add_on.retail_price == 0.00 %}INCLUDED{% else %}${{ lens_add_on.retail_price }}{% endif %}</span>
+                <td style="padding-bottom:1em; font-size:1.5em;">
+                    <span style="color:green;">{% if lens_add_on.retail_price == 0.00 %}INCLUDED{% else %}${{ lens_add_on.retail_price }}{% endif %}</span>
                 </td>
-                <td style="padding-bottom:1em">
+                <td style="padding-bottom:1em; font-size:1.5em;">
                     <form action="/" method="POST">
                         {% csrf_token %}
                         <input type="hidden" name="no_{{ lens_add_on.name }}" value="true">
-                        <button type="submit" class="btn close" aria-label="remove"><span aria-hidden="true">&times;</span></button>
+                        <button type="submit" class="btn close" aria-label="remove"><span style="font-size:2em;">&times;</span></button>
                     </form>
                 </td>
             </tr>
