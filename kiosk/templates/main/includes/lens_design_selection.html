@@ -12,9 +12,9 @@
                             <div style="float: left; width: 300px; padding-top:1em; padding-bottom:1em; padding-right:1em;">
                                 <div style="color:gray; font-size: 1.4em;">{{ item.lens_design.name }}</div>
                                 {% if item.lens_design_retail_price or item.lens_design_retail_price == 0.00 %}
-                                    <div style="color:green; font-size: 1.4em;">{% if item.lens_design_retail_price == 0.00 %}INCLUDED{% else %}${{ item.lens_design_retail_price }}{% endif %}</div>
+                                    <div style="color:green; font-size: 1.4em;">{% if item.lens_design_retail_price == 0.00 %}INCLUDED{% else %}+${{ item.lens_design_retail_price }}{% endif %}</div>
                                 {% else %}
-                                    <div style="color:green; font-size: 1.4em;">{% if item.lens_design.retail_price == 0.00 %}INCLUDED{% else %}${{ item.lens_design.retail_price }}{% endif %}</div>
+                                    <div style="color:green; font-size: 1.4em;">{% if item.lens_design.retail_price == 0.00 %}INCLUDED{% else %}+${{ item.lens_design.retail_price }}{% endif %}</div>
                                 {% endif %}
                                 <form action="/" method="POST">
                                     {% csrf_token %}

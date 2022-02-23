@@ -8,7 +8,7 @@
             {% for magnification_level in magnification_levels %}
                 {% if magnification_level.name not in request.session %}
                     <div style="float: left; width: 300px; padding-top: 1em; padding-bottom:1em; padding-right:1em;">
-                        <div style="color:green; font-size: 1.4em;">{% if magnification_level.retail_price == 0.00 %}{% else %}${{ magnification_level.retail_price }}{% endif %}</div>
+                        <div style="color:green; font-size: 1.4em;">{% if magnification_level.retail_price == 0.00 %}{% else %}+${{ magnification_level.retail_price }}{% endif %}</div>
                         <form type="hidden" action="/" method="POST">
                             {% csrf_token %}
                             <input type="hidden" name="{{ magnification_level.name }}" value="true">
