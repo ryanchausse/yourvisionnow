@@ -3,14 +3,14 @@
     {% if user.is_authenticated %}
         <form style="float:right; padding-left: 1em;" action="/accounts/logout/" method="POST">
             {% csrf_token %}
-            <button type="submit" class="btn btn-google btn-sm">
+            <button type="submit" class="btn btn-google btn-lg">
                 Log out, {{ user.first_name }}
             </button>
         </form>
     {% else %}
         <form style="float:right; padding-left: 1em;" action="/accounts/google/login/" method="POST">
             {% csrf_token %}
-            <button type="submit" class="btn btn-google btn-sm">
+            <button type="submit" class="btn btn-google btn-lg">
                 <i class="fab fa-google fa-fw"></i> Log In
             </button>
         </form>
