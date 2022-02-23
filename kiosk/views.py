@@ -446,6 +446,15 @@ class ThankYouPage(TemplateView):
       return context
 
 
+class ResetToIndex(TemplateView):
+    template_name = 'thankyou.html'
+
+    def get(self, request, *args, **kwargs):
+        request.session.flush()
+
+        return redirect('/')
+
+
 def handler404(request, exception, template_name="404.html"):
     """
     Custom 404 page

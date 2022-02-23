@@ -24,4 +24,5 @@ urlpatterns = [
     path('index.html', views.KioskPage.as_view(), name='index'),
     path('manager', views.ManagerPage.as_view(), name='manager'),
     path('thankyou', views.ThankYouPage.as_view(), name='thankyou'),
+    path('reset_to_index', views.ResetToIndex.as_view(), name='reset_to_index'),
 ]
