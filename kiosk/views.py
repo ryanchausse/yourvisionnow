@@ -408,7 +408,7 @@ class SubmitOrder(TemplateView):
                 fail_silently=False,
             )
             request.session.flush()
-        return redirect('/index.html')
+        return redirect('/thankyou')
 
 
 class WelcomePage(TemplateView):
@@ -433,6 +433,17 @@ class ManagerPage(TemplateView):
                           context=context)
         else:
             return redirect('/index.html')
+
+
+class ThankYouPage(TemplateView):
+  """
+  For a thank you screen that the user sees after they click I'm Done
+  """
+  template_name = 'thankyou.html'
+
+  def get_context_data(self, **kwargs):
+      context = super().get_context_data(**kwargs)
+      return context
 
 
 def handler404(request, exception, template_name="404.html"):

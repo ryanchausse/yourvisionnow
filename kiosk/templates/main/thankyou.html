@@ -1,0 +1,64 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    {% include 'includes/header_kiosk.html' %}
+
+</head>
+
+<body id="page-top">
+
+    <!-- Page Wrapper -->
+    <div id="wrapper">
+
+        <!-- Content Wrapper -->
+        <div id="content-wrapper" class="d-flex flex-column">
+
+            <!-- Main Content -->
+            <div id="content">
+
+                <!-- Begin Page Content -->
+                <div class="container-fluid">
+
+                    <!-- Page Heading -->
+                    <h1 class="h3 mb-2 text-gray-800" style="padding: 10px;">
+                        <a href="/">
+                            <img src="{% static 'img/VisionNow_kiosk_size.png' %}"
+                                 alt="Your Vision Now - Kiosk"
+                             />
+                        </a>
+                    </h1>
+
+                    <!-- Content Row -->
+                    <div class="row">
+                        <div class="col-xl-3"></div>
+                        <div class="col-xl-6 col-lg-5">
+                            <div style="margin:auto">
+                                <p style="font-size:2em;">Thank you for your selections!</p>
+                                <p style="font-size:1.5em;">The front desk will help you now</p>
+                            </div>
+                        </div>
+                        <div class="col-xl-3"></div>
+                    </div>
+
+                </div>
+                <!-- /.container-fluid -->
+
+            </div>
+            <!-- End of Main Content -->
+
+            {% include 'includes/footer_kiosk.html' %}
+
+        </div>
+        <!-- End of Content Wrapper -->
+
+    </div>
+    <!-- End of Page Wrapper -->
+
+    {% include 'includes/javascripts.html' %}
+
+</body>
+
+</html>
