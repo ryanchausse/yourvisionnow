@@ -436,14 +436,14 @@ class ManagerPage(TemplateView):
 
 
 class ThankYouPage(TemplateView):
-  """
-  For a thank you screen that the user sees after they click I'm Done
-  """
-  template_name = 'thankyou.html'
+    """
+    For a 'thank you' screen that the user sees after they click I'm Done
+    """
+    template_name = 'thankyou.html'
 
-  def get_context_data(self, **kwargs):
-      context = super().get_context_data(**kwargs)
-      return context
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        return context
 
 
 class ResetToIndex(TemplateView):
